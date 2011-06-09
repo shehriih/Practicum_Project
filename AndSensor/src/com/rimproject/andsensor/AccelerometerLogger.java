@@ -1,9 +1,12 @@
 package com.rimproject.andsensor;
 
+import AccelerometerLogger;
+
 import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import AccelerometerLogger.DataLogger;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -39,7 +42,7 @@ import android.hardware.SensorEventListener;
  */
 
 
-public class AccelerometerLogger extends TimerTask implements SensorEventListener
+public class AccelerometerLogger extends TimerTask
 {
 	private Timer delayBetweenLoggingTimer; // Timer 1
 	private long delayBetweenLogging;
@@ -51,13 +54,10 @@ public class AccelerometerLogger extends TimerTask implements SensorEventListene
 	{
 		super();		
 		
-		setDelayBetweenLogging(10*1000);
-		setLoggingDuration(3 * 1000);
-		
-		dataLogger = new DataLogger();
-		
-		delayBetweenLoggingTimer = new Timer();
-		delayBetweenLoggingTimer.scheduleAtFixedRate(this,0 , getDelayBetweenLogging());
+		this.delayBetweenLogging = 10 * 1000;
+		this.loggingDuration = 3 * 1000;
+		this.delayBetweenLoggingTimer = new Timer();
+		this.delayBetweenLoggingTimer.scheduleAtFixedRate(this, 0, this.delayBetweenLogging); //0 == triggers immediately
 	}
 	
 	class DataLogger extends TimerTask
@@ -66,17 +66,21 @@ public class AccelerometerLogger extends TimerTask implements SensorEventListene
 		public DataLogger()
 		{
 			this.loggingDurationTimer = new Timer();
+			this.loggingDurationTimer.scheduleAtFixedRate(this, loggingDuration, loggingDuration);
+			startLogging();
 		}
 		
-		public void triggerLogging(long loggingDuration)
-		{
-			this.loggingDurationTimer.scheduleAtFixedRate(this, loggingDuration, loggingDuration);
+		public void startLogging() {
+			System.out.println(Calendar.getInstance().getTime()+" @ Logging Started");
+		}
+		
+		public void terminateLogging() {
+			System.out.println(Calendar.getInstance().getTime()+" @ Logging Stopped");
 		}
 		
 		public void run()
 		{
-			// actual sensor logging
-			System.out.println("Logging @"+Calendar.getInstance().getTime());
+			terminateLogging();
 			
 			//stop the timer as we don't want timer 2 to repeat
 			this.loggingDurationTimer.cancel();
@@ -84,20 +88,12 @@ public class AccelerometerLogger extends TimerTask implements SensorEventListene
 		
 	}
 
-	public Timer getDelayBetweenLoggingTimer() {
-		return delayBetweenLoggingTimer;
-	}
-
-	public void setDelayBetweenLoggingTimer(Timer delayBetweenLoggingTmer) {
-		this.delayBetweenLoggingTimer = delayBetweenLoggingTmer;
-	}
-
 	public long getDelayBetweenLogging() {
 		return delayBetweenLogging;
 	}
 
 	public void setDelayBetweenLogging(long delayBetweenLogging) {
-		this.delayBetweenLogging=delayBetweenLogging;
+		this.delayBetweenLogging = delayBetweenLogging;
 	}
 
 	public long getLoggingDuration() {
@@ -113,22 +109,8 @@ public class AccelerometerLogger extends TimerTask implements SensorEventListene
 	@Override
 	public void run() {
 		//timer 1
-		System.out.println(Calendar.getInstance().getTime());
-		this.dataLogger.triggerLogging(getLoggingDuration());
-	}
-
-
-	@Override
-	public void onAccuracyChanged(Sensor arg0, int arg1) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void onSensorChanged(SensorEvent event) {
-		// TODO Auto-generated method stub
-		
+		System.out.println(Calendar.getInstance().getTime()+" @ Trigger Logging");
+		this.dataLogger = new DataLogger();
 	}
 
 }
