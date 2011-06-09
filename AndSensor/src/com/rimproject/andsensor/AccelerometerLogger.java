@@ -1,12 +1,8 @@
 package com.rimproject.andsensor;
 
-import AccelerometerLogger;
-
 import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import AccelerometerLogger.DataLogger;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
