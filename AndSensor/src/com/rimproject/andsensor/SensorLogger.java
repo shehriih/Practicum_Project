@@ -32,7 +32,7 @@ public class SensorLogger
 	        System.out.println("Terminating logging from "+pairs.getKey());
 	        
 	        LoggerInterface logger = (LoggerInterface) pairs.getValue();
-	        logger.terminateRepeatedLogging();
+	        logger.terminateRepeatedLogging(true);
 	    }
 	}
 	  

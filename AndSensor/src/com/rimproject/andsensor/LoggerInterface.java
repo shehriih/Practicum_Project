@@ -2,5 +2,5 @@ package com.rimproject.andsensor;
 
 public interface LoggerInterface {
 	public void initiateRepeatedLogging();
-	public void terminateRepeatedLogging();
+	public void terminateRepeatedLogging(boolean immidiate);
 }

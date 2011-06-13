@@ -4,6 +4,8 @@ import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import android.R.bool;
+
 /* Example of how this class and its timer's will work:
  * 
  * Timer 1 -> 10 seconds has passed 
@@ -57,10 +59,13 @@ public abstract class BasicLogger extends TimerTask  implements LoggerInterface
 		this.delayBetweenLoggingTimer.scheduleAtFixedRate(this, 0, this.delayBetweenLogging); //0 == triggers immediately
 	}
 	
-	public void terminateRepeatedLogging() 
+	public void terminateRepeatedLogging(boolean immidiate) 
 	{
-		System.out.println(Calendar.getInstance().getTime()+" @ Logging Terminated");
 		this.delayBetweenLoggingTimer.cancel();
+		if (immidiate) {
+			this.dataLogger.run();
+		}
+		System.out.println(Calendar.getInstance().getTime()+" @ Logging Terminated");
 	}
 	
 	protected void startLogging() 
