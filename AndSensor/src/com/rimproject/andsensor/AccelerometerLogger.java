@@ -47,13 +47,13 @@ public class AccelerometerLogger extends TimerTask
 	{
 		super();		
 		
-		this.delayBetweenLogging = 10 * 1000;
-		this.loggingDuration = 3 * 1000;
+		this.delayBetweenLogging = 60 * 1000;
+		this.loggingDuration = 10 * 1000;
 		this.delayBetweenLoggingTimer = new Timer();
 		this.delayBetweenLoggingTimer.scheduleAtFixedRate(this, 0, this.delayBetweenLogging); //0 == triggers immediately
 	}
 	
-	class DataLogger extends TimerTask
+	class DataLogger extends TimerTask implements LoggerInterface
 	{
 		private Timer loggingDurationTimer; // Timer 2
 		public DataLogger()
