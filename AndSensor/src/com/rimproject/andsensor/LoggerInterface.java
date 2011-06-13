@@ -1,6 +1,6 @@
 package com.rimproject.andsensor;
 
 public interface LoggerInterface {
-	public void startLogging();
-	public void terminateLogging();
+	public void initiateRepeatedLogging();
+	public void terminateRepeatedLogging();
 }

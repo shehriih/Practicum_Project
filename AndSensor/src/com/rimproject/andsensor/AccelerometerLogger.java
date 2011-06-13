@@ -35,75 +35,19 @@ import java.util.TimerTask;
  */
 
 
-public class AccelerometerLogger extends TimerTask
+public class AccelerometerLogger extends BasicLogger
 {
-	private Timer delayBetweenLoggingTimer; // Timer 1
-	private long delayBetweenLogging;
-	private long loggingDuration;
-	private DataLogger dataLogger;
-	
-
 	public AccelerometerLogger() 
 	{
-		super();		
-		
-		this.delayBetweenLogging = 60 * 1000;
-		this.loggingDuration = 10 * 1000;
-		this.delayBetweenLoggingTimer = new Timer();
-		this.delayBetweenLoggingTimer.scheduleAtFixedRate(this, 0, this.delayBetweenLogging); //0 == triggers immediately
+		super();
 	}
 	
-	class DataLogger extends TimerTask implements LoggerInterface
-	{
-		private Timer loggingDurationTimer; // Timer 2
-		public DataLogger()
-		{
-			this.loggingDurationTimer = new Timer();
-			this.loggingDurationTimer.scheduleAtFixedRate(this, loggingDuration, loggingDuration);
-			startLogging();
-		}
-		
-		public void startLogging() {
-			System.out.println(Calendar.getInstance().getTime()+" @ Logging Started");
-		}
-		
-		public void terminateLogging() {
-			System.out.println(Calendar.getInstance().getTime()+" @ Logging Stopped");
-		}
-		
-		public void run()
-		{
-			terminateLogging();
-			
-			//stop the timer as we don't want timer 2 to repeat
-			this.loggingDurationTimer.cancel();
-		}
-		
-	}
-
-	public long getDelayBetweenLogging() {
-		return delayBetweenLogging;
-	}
-
-	public void setDelayBetweenLogging(long delayBetweenLogging) {
-		this.delayBetweenLogging = delayBetweenLogging;
-	}
-
-	public long getLoggingDuration() {
-		return loggingDuration;
-	}
-
-
-	public void setLoggingDuration(long loggingDuration) {
-		this.loggingDuration = loggingDuration;
-	}
-
-	
-	@Override
-	public void run() {
-		//timer 1
-		System.out.println(Calendar.getInstance().getTime()+" @ Trigger Logging");
-		this.dataLogger = new DataLogger();
-	}
+//	public void startLogging() {
+//		System.out.println(Calendar.getInstance().getTime()+" @ Logging Started");
+//	}
+//	
+//	public void terminateLogging() {
+//		System.out.println(Calendar.getInstance().getTime()+" @ Logging Stopped");
+//	}
 
 }

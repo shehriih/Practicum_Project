@@ -4,11 +4,11 @@ import java.util.*;
 
 public class SensorLogger 
 {
-  HashMap<String, Object> listOfSensors;
+  HashMap<String, BasicLogger> listOfSensors;
 
 	public SensorLogger() 
 	{
-		listOfSensors = new HashMap<String, Object>();
+		listOfSensors = new HashMap<String, BasicLogger>();
 		listOfSensors.put("Test", new AccelerometerLogger());
 	}
 	
@@ -16,11 +16,11 @@ public class SensorLogger
 	{
 		Iterator<?> it = listOfSensors.entrySet().iterator();
 	    while (it.hasNext()) {
-	        Map.Entry<String, Object> pairs = (Map.Entry)it.next();
+	        Map.Entry<String, BasicLogger> pairs = (Map.Entry)it.next();
 	        System.out.println("Starting logging from "+pairs.getKey());
 	        
 	        LoggerInterface logger = (LoggerInterface) pairs.getValue();
-	        logger.startLogging();
+	        logger.initiateRepeatedLogging();
 	    }
 	}
 	  
