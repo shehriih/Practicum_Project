@@ -9,7 +9,7 @@ public class SensorLogger
 	public SensorLogger() 
 	{
 		listOfSensors = new HashMap<String, Object>();
-		listOfSensors.put("Test", null);
+		listOfSensors.put("Test", new AccelerometerLogger());
 	}
 	
 	public void startAllLogging()
@@ -19,7 +19,8 @@ public class SensorLogger
 	        Map.Entry<String, Object> pairs = (Map.Entry)it.next();
 	        System.out.println("Starting logging from "+pairs.getKey());
 	        
-	        
+	        LoggerInterface logger = (LoggerInterface) pairs.getValue();
+	        logger.startLogging();
 	    }
 	}
 	  
