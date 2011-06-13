@@ -3,9 +3,6 @@ package com.rimproject.andsensor;
 import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
 
 /* Example of how this class and its timer's will work:
  * 

@@ -8,7 +8,7 @@ _Customer:_ Roger Meike
 Project team uses Eclipse, so the instructions are for Eclipse.  
 1. Clone the repository  
 2. Open a version of Eclipse (which is ready to create and work on Android projects)  
-3. Create a new Android project, and select to based it upon current source (ie the source from the repository)  
+3. Create a new Android project, and select to base it upon current source (ie the source from the repository)  
 4. At this point the project should be ready  
 
 ## LICENSE
