@@ -17,7 +17,7 @@ public class MainView extends Activity implements OnClickListener {
     	super.onCreate(savedInstanceState);
     	isLogging = false;
     	myButton = new Button(this);
-    	myButton.setText("Start logging");
+    	myButton.setText("Initiate logging");
     	myButton.setOnClickListener(this);
     	setContentView(myButton);
     	
@@ -27,10 +27,11 @@ public class MainView extends Activity implements OnClickListener {
     public void onClick(View v) {
     	isLogging = !isLogging;
     	if(isLogging) {
-    		myButton.setText("Stop logging");
-    		this.logger.startAllLogging();
+    		myButton.setText("Terminate logging");
+    		this.logger.initiateAllLogging();
     	} else {
-    		myButton.setText("Start logging");
+    		myButton.setText("Initiate logging");
+    		this.logger.terminateAllLogging();
     	}
     }
 }

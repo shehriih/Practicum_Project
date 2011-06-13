@@ -9,18 +9,30 @@ public class SensorLogger
 	public SensorLogger() 
 	{
 		listOfSensors = new HashMap<String, BasicLogger>();
-		listOfSensors.put("Test", new AccelerometerLogger());
+		listOfSensors.put("Accelerometer", new AccelerometerLogger());
 	}
 	
-	public void startAllLogging()
+	public void initiateAllLogging()
 	{
 		Iterator<?> it = listOfSensors.entrySet().iterator();
 	    while (it.hasNext()) {
 	        Map.Entry<String, BasicLogger> pairs = (Map.Entry)it.next();
-	        System.out.println("Starting logging from "+pairs.getKey());
+	        System.out.println("Initiating logging from "+pairs.getKey());
 	        
 	        LoggerInterface logger = (LoggerInterface) pairs.getValue();
 	        logger.initiateRepeatedLogging();
+	    }
+	}
+	
+	public void terminateAllLogging()
+	{
+		Iterator<?> it = listOfSensors.entrySet().iterator();
+	    while (it.hasNext()) {
+	        Map.Entry<String, BasicLogger> pairs = (Map.Entry)it.next();
+	        System.out.println("Terminating logging from "+pairs.getKey());
+	        
+	        LoggerInterface logger = (LoggerInterface) pairs.getValue();
+	        logger.terminateRepeatedLogging();
 	    }
 	}
 	  
