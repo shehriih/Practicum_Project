@@ -7,6 +7,7 @@ import java.util.TimerTask;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 
 /* Example of how this class and its timer's will work:
  * 
@@ -40,12 +41,12 @@ import android.hardware.SensorEventListener;
 
 public abstract class BasicLogger extends TimerTask  implements LoggerInterface, SensorEventListener
 {
-	final String tag = "BasicLogger :";
 	private Timer delayBetweenLoggingTimer; // Timer 1
 	private long delayBetweenLogging;
 	private long loggingDuration;
 	private DataLogger dataLogger;
-	
+	protected SensorManager sensorManager;
+	protected Sensor sensor;
 
 	public BasicLogger() 
 	{
@@ -57,7 +58,7 @@ public abstract class BasicLogger extends TimerTask  implements LoggerInterface,
 	
 	public void initiateRepeatedLogging() 
 	{
-		System.out.println(tag+Calendar.getInstance().getTime()+" @ Logging Initiated");
+		System.out.println(this+" : "+Calendar.getInstance().getTime()+" @ Logging Initiated");
 		this.delayBetweenLoggingTimer = new Timer();
 		this.delayBetweenLoggingTimer.scheduleAtFixedRate(this, 0, this.delayBetweenLogging); //0 == triggers immediately
 	}
@@ -68,27 +69,28 @@ public abstract class BasicLogger extends TimerTask  implements LoggerInterface,
 		if (immidiate) {
 			this.dataLogger.run();
 		}
-		System.out.println(tag+Calendar.getInstance().getTime()+" @ Logging Terminated");
+		System.out.println(this+" : "+Calendar.getInstance().getTime()+" @ Logging Terminated");
 	}
 	
 	protected void startLogging() 
 	{
-		System.out.println(tag+Calendar.getInstance().getTime()+" @ Logging Started");
+		System.out.println(this+" : "+Calendar.getInstance().getTime()+" @ Logging Started");
 	}
 	
 	protected void stopLogging() 
 	{
-		System.out.println(tag+Calendar.getInstance().getTime()+" @ Logging Stopped");
+		System.out.println(this+" : "+Calendar.getInstance().getTime()+" @ Logging Stopped");
 	}
 	
 	@Override
 	public void onAccuracyChanged(Sensor sensor, int accuracy) {
-		System.out.println(tag+"onAccuracyChanged: " + sensor + ", accuracy: " + accuracy);
+		System.out.println(this+" : "+"onAccuracyChanged: " + sensor + ", accuracy: " + accuracy);
 		
 	}
+	
 	@Override
 	public void onSensorChanged(SensorEvent event) {
-		System.out.println(tag+"onSensorChanged: " + event);
+		System.out.println(this+" : "+"onSensorChanged: " + event);
 	}
 	
 	class DataLogger extends TimerTask
@@ -133,8 +135,11 @@ public abstract class BasicLogger extends TimerTask  implements LoggerInterface,
 	@Override
 	public void run() {
 		//timer 1
-		System.out.println(tag+Calendar.getInstance().getTime()+" @ Trigger Logging");
+		System.out.println(this+" : "+Calendar.getInstance().getTime()+" @ Trigger Logging");
 		this.dataLogger = new DataLogger(this);
 	}
-
+	
+	public String toString() {
+		return this.getClass().getSimpleName();
+	}
 }
