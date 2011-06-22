@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.TimerTask;
 
+import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -14,7 +15,8 @@ import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
 
 public class NearbyBluetoothLogger extends BasicTimedDurationLogger
-{
+{	
+	BluetoothAdapter bluetoothAdapter;
 	BroadcastReceiver bluetoothReceiver;
 	List<String> bluetoothDevices;
 	
@@ -22,6 +24,8 @@ public class NearbyBluetoothLogger extends BasicTimedDurationLogger
 	{
 		super();
 		setLoggingDuration(20 * 1000);
+		
+		this.bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 		
 		this.bluetoothReceiver = new BluetoothReceiver(this);
 	}
@@ -41,7 +45,7 @@ public class NearbyBluetoothLogger extends BasicTimedDurationLogger
 	            // Get the BluetoothDevice object from the Intent
 	            BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
 	            // Add the name and address to an array adapter to show in a ListView
-	            this.logger.bluetoothDevices.add(device.getName() + "\n" + device.getAddress());
+	            this.logger.bluetoothDevices.add(device.getName() + " (" + device.getAddress() + ")");
 	        }
 	    }
 	}
@@ -50,17 +54,26 @@ public class NearbyBluetoothLogger extends BasicTimedDurationLogger
 		super.startLogging();
 		
 		this.bluetoothDevices = new ArrayList<String>();
-		IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
-		AndSensor.getContext().registerReceiver(this.bluetoothReceiver, filter); // Don't forget to unregister during onDestroy
+		if(this.bluetoothAdapter.isEnabled()) { 
+			IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+			AndSensor.getContext().registerReceiver(this.bluetoothReceiver, filter);
+			this.bluetoothAdapter.startDiscovery();
+		}
 	}
 	
 	protected void stopLogging() 
 	{
 		super.stopLogging();
 		
-		AndSensor.getContext().unregisterReceiver(this.bluetoothReceiver);
-		if (this.bluetoothDevices != null) {
-			super.writeToLogFile(this.bluetoothDevices.toString());
+		try {
+			AndSensor.getContext().unregisterReceiver(this.bluetoothReceiver);
+		} catch (IllegalArgumentException e) {
+			//receiver was not registered, no action required
+		} finally {
+			this.bluetoothAdapter.cancelDiscovery();
+			if (this.bluetoothDevices != null) {
+				super.writeToLogFile(this.bluetoothDevices.toString());
+			}
 		}
 	}
 }
