@@ -39,7 +39,7 @@ public class AccelerometerLogger extends BasicTimedDurationLogger
 		
 		synchronized (this) {
             if (sensor == Sensor.TYPE_ACCELEROMETER) {
-            	System.out.println(this+" onSensorChanged: " + sensor + ", x: " + 
+            	super.writeToLogFile("onSensorChanged: " + sensor + ", x: " + 
     					values[0] + ", y: " + values[1] + ", z: " + values[2]);
             } else {
             	System.out.println(this+" ERROR: Unexpected sensor reading from sensor "+sensor);
