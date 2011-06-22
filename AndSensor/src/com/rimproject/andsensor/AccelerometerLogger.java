@@ -1,7 +1,5 @@
 package com.rimproject.andsensor;
 
-import java.util.Calendar;
-
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
