@@ -1,7 +1,5 @@
 package com.rimproject.andsensor;
 
-import java.util.Calendar;
-
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
@@ -12,9 +10,7 @@ public class LightSensorLogger extends BasicLogger
 	{
 		super();
 		this.sensorManager = (SensorManager) AndSensor.getContext().getSystemService(android.content.Context.SENSOR_SERVICE);
-		//this.sensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
-		this.sensor = sensorManager.getSensorList(Sensor.TYPE_LIGHT).get(0);
-		setDelayBetweenLogging(1000);
+		this.sensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
 	}
 	
 	public void startLogging() {
