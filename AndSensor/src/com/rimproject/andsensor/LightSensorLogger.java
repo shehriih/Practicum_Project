@@ -4,7 +4,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
 
-public class LightSensorLogger extends BasicLogger
+public class LightSensorLogger extends BasicTimedDurationLogger
 {
 	SensorManager sensorManager;
 	Sensor sensor;
@@ -24,6 +24,7 @@ public class LightSensorLogger extends BasicLogger
 	protected void stopLogging() 
 	{
 		super.stopLogging();
+		
 		this.sensorManager.unregisterListener(this);
 	}
 	
@@ -43,8 +44,8 @@ public class LightSensorLogger extends BasicLogger
             	//sensorManager.LIGHT_SUNRISE;//
             	//sensorManager.L
             	//if(values[0] )
-            		
-            	System.out.println(this+" onSensorChanged: " + values[0] );
+            	
+            	super.writeToLogFile("onSensorChanged: " + values[0]);
             } else {
             	System.out.println(this+" ERROR: Unexpected sensor reading from sensor "+sensor);
             }
