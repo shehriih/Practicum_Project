@@ -9,8 +9,9 @@ public class LoggerManager
 	public LoggerManager() 
 	{
 		listOfSensors = new HashMap<String, BasicLogger>();
-//		listOfSensors.put("Accelerometer", new AccelerometerLogger());
+		listOfSensors.put("Accelerometer", new AccelerometerLogger());
 		listOfSensors.put("Location", new LocationLogger());
+		listOfSensors.put("LightSensor", new LightSensorLogger());
 	}
 	
 	public void initiateAllLogging()
