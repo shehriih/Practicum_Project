@@ -4,7 +4,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
 
-public class AccelerometerLogger extends BasicLogger
+public class AccelerometerLogger extends BasicTimedDurationLogger
 {
 	public AccelerometerLogger() 
 	{
