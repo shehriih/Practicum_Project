@@ -3,7 +3,6 @@ package com.rimproject.andsensor;
 import java.util.List;
 
 import android.net.wifi.ScanResult;
-import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 
 public class NearbyWifiLogger extends BasicLogger

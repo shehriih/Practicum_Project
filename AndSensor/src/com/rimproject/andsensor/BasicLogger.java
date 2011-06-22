@@ -27,8 +27,6 @@ public abstract class BasicLogger extends TimerTask  implements LoggerInterface,
 {
 	private Timer delayBetweenLoggingTimer; // Timer 1
 	private long delayBetweenLogging;
-	protected SensorManager sensorManager;
-	protected Sensor sensor;
 
 	public BasicLogger() 
 	{

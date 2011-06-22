@@ -6,6 +6,9 @@ import android.hardware.SensorManager;
 
 public class AccelerometerLogger extends BasicTimedDurationLogger
 {
+	SensorManager sensorManager;
+	Sensor sensor;
+	
 	public AccelerometerLogger() 
 	{
 		super();

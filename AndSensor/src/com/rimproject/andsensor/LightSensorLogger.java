@@ -6,6 +6,9 @@ import android.hardware.SensorManager;
 
 public class LightSensorLogger extends BasicLogger
 {
+	SensorManager sensorManager;
+	Sensor sensor;
+	
 	public LightSensorLogger() 
 	{
 		super();
