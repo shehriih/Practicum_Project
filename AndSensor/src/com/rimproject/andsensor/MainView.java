@@ -9,7 +9,7 @@ import android.widget.Button;
 public class MainView extends Activity implements OnClickListener {
 	Button myButton;
 	boolean isLogging;
-	SensorLogger logger;
+	LoggerManager logger;
 	
     /** Called when the activity is first created. */
     @Override
@@ -21,7 +21,7 @@ public class MainView extends Activity implements OnClickListener {
     	myButton.setOnClickListener(this);
     	setContentView(myButton);
     	
-    	this.logger = new SensorLogger();
+    	this.logger = new LoggerManager();
     }
     
     public void onClick(View v) {

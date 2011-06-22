@@ -2,14 +2,15 @@ package com.rimproject.andsensor;
 
 import java.util.*;
 
-public class SensorLogger 
+public class LoggerManager 
 {
   HashMap<String, BasicLogger> listOfSensors;
 
-	public SensorLogger() 
+	public LoggerManager() 
 	{
 		listOfSensors = new HashMap<String, BasicLogger>();
-		listOfSensors.put("Accelerometer", new AccelerometerLogger());
+//		listOfSensors.put("Accelerometer", new AccelerometerLogger());
+		listOfSensors.put("Location", new LocationLogger());
 	}
 	
 	public void initiateAllLogging()
@@ -19,7 +20,7 @@ public class SensorLogger
 	        Map.Entry<String, BasicLogger> pairs = (Map.Entry)it.next();
 	        System.out.println("Initiating logging from "+pairs.getKey());
 	        
-	        LoggerInterface logger = (LoggerInterface) pairs.getValue();
+	        LoggerInterface logger = (LoggerInterface)pairs.getValue();
 	        logger.initiateRepeatedLogging();
 	    }
 	}
