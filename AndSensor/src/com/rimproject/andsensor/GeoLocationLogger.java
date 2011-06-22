@@ -3,13 +3,13 @@ package com.rimproject.andsensor;
 import android.location.Location;
 import android.location.LocationManager;
 
-public class LocationLogger extends BasicLogger
+public class GeoLocationLogger extends BasicLogger
 {
 	
 	private LocationManager locationManager;
 	private String locationSensor;
 	
-	public LocationLogger() 
+	public GeoLocationLogger() 
 	{
 		//this sensor is slightly different from the others. We only want a single recording
 		//as the OS keeps a rough track of the location for us.
