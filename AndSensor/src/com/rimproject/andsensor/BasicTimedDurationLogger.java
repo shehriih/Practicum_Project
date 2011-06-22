@@ -1,5 +1,6 @@
 package com.rimproject.andsensor;
 
+import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -74,9 +75,7 @@ public class BasicTimedDurationLogger extends BasicLogger {
 	}
 	
 	public void run() {
-		//timer 1
-		super.run();
-		
+		System.out.println(this+" : "+Calendar.getInstance().getTime()+" @ Trigger Timed Duration Logging");
 		this.dataLogger = new DataLogger(this);
 	}
 	
