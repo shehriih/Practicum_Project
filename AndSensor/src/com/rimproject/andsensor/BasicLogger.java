@@ -86,9 +86,18 @@ public abstract class BasicLogger extends TimerTask  implements LoggerInterface,
 	public void run() {
 		//timer 1
 		System.out.println(this+" : "+Calendar.getInstance().getTime()+" @ Trigger Logging");
+		performLogging();
 	}
 	
 	public String toString() {
 		return this.getClass().getSimpleName();
+	}
+	
+	protected void performLogging() {
+		System.out.println(this+" : "+Calendar.getInstance().getTime()+" @ Perform logging");
+	}
+	
+	protected void writeToLogFile(String logStatement) {
+		System.out.println(this+" writeToLogFile: " + logStatement);
 	}
 }
