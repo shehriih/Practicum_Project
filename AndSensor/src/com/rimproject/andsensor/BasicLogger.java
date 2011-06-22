@@ -67,7 +67,9 @@ public abstract class BasicLogger extends TimerTask  implements LoggerInterface,
 	{
 		this.delayBetweenLoggingTimer.cancel();
 		if (immidiate) {
-			this.dataLogger.run();
+			if(this.dataLogger != null) {
+				this.dataLogger.run();
+			}
 		}
 		System.out.println(this+" : "+Calendar.getInstance().getTime()+" @ Logging Terminated");
 	}
