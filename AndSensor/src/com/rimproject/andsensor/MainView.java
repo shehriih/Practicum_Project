@@ -15,11 +15,14 @@ public class MainView extends Activity implements OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
+    	setContentView(R.layout.main);
+    	
     	isLogging = false;
-    	myButton = new Button(this);
-    	myButton.setText("Initiate logging");
+    	
+    	myButton = (Button) findViewById(R.id.button1);
+    	myButton.setText(R.string.start);
     	myButton.setOnClickListener(this);
-    	setContentView(myButton);
+    	
     	
     	this.logger = new LoggerManager();
     }
@@ -27,10 +30,10 @@ public class MainView extends Activity implements OnClickListener {
     public void onClick(View v) {
     	isLogging = !isLogging;
     	if(isLogging) {
-    		myButton.setText("Terminate logging");
+    		myButton.setText(R.string.stop);
     		this.logger.initiateAllLogging();
     	} else {
-    		myButton.setText("Initiate logging");
+    		myButton.setText(R.string.start);
     		this.logger.terminateAllLogging();
     	}
     }
