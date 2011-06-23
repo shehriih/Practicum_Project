@@ -8,6 +8,7 @@ public class LightSensorLogger extends BasicTimedDurationLogger
 {
 	SensorManager sensorManager;
 	Sensor sensor;
+	public static final String SENSOR_NAME="Light";
 	
 	public LightSensorLogger() 
 	{
@@ -45,10 +46,11 @@ public class LightSensorLogger extends BasicTimedDurationLogger
             	//sensorManager.L
             	//if(values[0] )
             	
-            	super.writeToLogFile("onSensorChanged: " + values[0]);
+            	super.writeToLogFile(""+values[0],SENSOR_NAME);
             } else {
             	System.out.println(this+" ERROR: Unexpected sensor reading from sensor "+sensor);
             }
         }
 	}
+
 }

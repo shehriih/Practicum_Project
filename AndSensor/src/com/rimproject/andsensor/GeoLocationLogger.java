@@ -9,6 +9,7 @@ public class GeoLocationLogger extends BasicLogger
 {
 	private LocationManager locationManager;
 	private String locationSensor;
+	public static final String SENSOR_NAME="GeoLocation";
 	
 	public GeoLocationLogger() 
 	{
@@ -24,7 +25,7 @@ public class GeoLocationLogger extends BasicLogger
 		
 		Location lastKnownLocation = this.locationManager.getLastKnownLocation(this.locationSensor);
 		if (lastKnownLocation != null) {
-			super.writeToLogFile(lastKnownLocation.toString());
+			super.writeToLogFile(lastKnownLocation.toString(),SENSOR_NAME);
 		} else {
 			System.out.println(this+" performLogging failed");
 		}

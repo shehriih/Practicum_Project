@@ -18,7 +18,9 @@ public class NearbyBluetoothLogger extends BasicTimedDurationLogger
 {	
 	BluetoothAdapter bluetoothAdapter;
 	BroadcastReceiver bluetoothReceiver;
-	List<String> bluetoothDevices;
+	List<BluetoothDevice> bluetoothDevices;
+	public static final String SENSOR_NAME="Bluetooth";
+
 	
 	public NearbyBluetoothLogger() 
 	{
@@ -45,7 +47,7 @@ public class NearbyBluetoothLogger extends BasicTimedDurationLogger
 	            // Get the BluetoothDevice object from the Intent
 	            BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
 	            // Add the name and address to an array adapter to show in a ListView
-	            this.logger.bluetoothDevices.add(device.getName() + " (" + device.getAddress() + ")");
+	            this.logger.bluetoothDevices.add(device);
 	        }
 	    }
 	}
@@ -53,7 +55,7 @@ public class NearbyBluetoothLogger extends BasicTimedDurationLogger
 	public void startLogging() {
 		super.startLogging();
 		
-		this.bluetoothDevices = new ArrayList<String>();
+		this.bluetoothDevices = new ArrayList<BluetoothDevice>();
 		if(this.bluetoothAdapter.isEnabled()) { 
 			IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
 			AndSensor.getContext().registerReceiver(this.bluetoothReceiver, filter);
@@ -72,8 +74,19 @@ public class NearbyBluetoothLogger extends BasicTimedDurationLogger
 		} finally {
 			this.bluetoothAdapter.cancelDiscovery();
 			if (this.bluetoothDevices != null) {
-				super.writeToLogFile(this.bluetoothDevices.toString());
+				super.writeToLogFile(getDevicesListAsString(bluetoothDevices),SENSOR_NAME);
 			}
 		}
 	}
+	
+	public String getDevicesListAsString(List<BluetoothDevice> list)
+	{
+		String output="";
+		for (BluetoothDevice item:list)
+		{
+			output+=item.getName()+"_"+item.getAddress()+":";
+		}
+		return output;
+	}
+		
 }
