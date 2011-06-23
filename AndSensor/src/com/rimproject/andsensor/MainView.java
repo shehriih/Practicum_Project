@@ -28,13 +28,15 @@ public class MainView extends Activity implements OnClickListener {
     }
     
     public void onClick(View v) {
-    	isLogging = !isLogging;
-    	if(isLogging) {
-    		myButton.setText(R.string.stop);
-    		this.logger.initiateAllLogging();
-    	} else {
-    		myButton.setText(R.string.start);
-    		this.logger.terminateAllLogging();
-    	}
+    
+    		isLogging = !isLogging;
+        	if(isLogging) {
+        		myButton.setText(R.string.stop);
+        		this.logger.initiateAllLogging();
+        	} else {
+        		myButton.setText(R.string.start);
+        		this.logger.terminateAllLogging();
+        	}
     }
+    
 }
