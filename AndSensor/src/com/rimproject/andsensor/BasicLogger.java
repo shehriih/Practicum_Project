@@ -47,7 +47,6 @@ public abstract class BasicLogger extends TimerTask  implements LoggerInterface,
 	
 	public void initiateRepeatedLogging() 
 	{
-		this.delayBetweenLoggingTimer = null;
 		System.out.println(this+" : "+Calendar.getInstance().getTime()+" @ Logging Initiated");
 		this.delayBetweenLoggingTimer = new Timer();
 		this.delayBetweenLoggingTimer.scheduleAtFixedRate(this, 0, this.delayBetweenLogging); //0 == triggers immediately
