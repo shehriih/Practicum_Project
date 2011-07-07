@@ -1,18 +1,17 @@
 package com.rimproject.andsensor;
 
-import java.util.List;
-
 import android.app.Activity;
-import android.content.Context;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class MainView extends Activity implements OnClickListener {
-	Button myButton;
+	Button toggleLogging;
 	boolean isLogging;
+	TextView sleepLabel;
+	TextView sleepProbability;
 	LoggerManager logger;
 	
     /** Called when the activity is first created. */
@@ -23,10 +22,15 @@ public class MainView extends Activity implements OnClickListener {
     	
     	isLogging = false;
     	
-    	myButton = (Button) findViewById(R.id.button1);
-    	myButton.setText(R.string.start);
-    	myButton.setOnClickListener(this);
+    	toggleLogging = (Button) findViewById(R.id.toggleLogging);
+    	toggleLogging.setText(R.string.start);
+    	toggleLogging.setOnClickListener(this);
     	
+    	sleepLabel = (TextView) findViewById(R.id.sleepLabel);
+    	sleepLabel.setText(R.string.sleepLabel);
+    	
+    	sleepProbability = (TextView) findViewById(R.id.sleepProbability);
+    	sleepProbability.setText("needs to be dynamically updated");
     	
     	this.logger = new LoggerManager();
     }
@@ -35,10 +39,10 @@ public class MainView extends Activity implements OnClickListener {
     
     		isLogging = !isLogging;
         	if(isLogging) {
-        		myButton.setText(R.string.stop);
+        		toggleLogging.setText(R.string.stop);
         		this.logger.initiateAllLogging();
         	} else {
-        		myButton.setText(R.string.start);
+        		toggleLogging.setText(R.string.start);
         		this.logger.terminateAllLogging();
         	}
     }
