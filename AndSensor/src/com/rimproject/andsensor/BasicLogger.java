@@ -73,13 +73,13 @@ public abstract class BasicLogger extends TimerTask  implements LoggerInterface,
 		System.out.println(this+" : "+Calendar.getInstance().getTime()+" @ Logging Stopped");
 	}
 	
-	@Override
+	
 	public void onAccuracyChanged(Sensor sensor, int accuracy) {
 		System.out.println(this+" : "+"onAccuracyChanged: " + sensor + ", accuracy: " + accuracy);
 		
 	}
 	
-	@Override
+	
 	public void onSensorChanged(SensorEvent event) {
 		System.out.println(this+" : "+"onSensorChanged: " + event);
 	}
@@ -102,6 +102,7 @@ public abstract class BasicLogger extends TimerTask  implements LoggerInterface,
 		performLogging();
 	}
 	
+	@Override
 	public String toString() {
 		return this.getClass().getSimpleName();
 	}
@@ -128,7 +129,7 @@ public abstract class BasicLogger extends TimerTask  implements LoggerInterface,
 	    /*
 	     * @data : is the raw data to be logged
 	     * @sensorName : the name of the sensor
-	     * @closeConnection: option for the user to colse the connection or keep it
+	     * @closeConnection: option for the user to close the connection or keep it
 	     * in case of frequent logging operations , it should be set as false and later
 	     * in last call it should be set to true
 	     * 

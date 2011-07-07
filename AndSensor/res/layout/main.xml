@@ -1,10 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    >
-    <Button android:text="Button" android:id="@+id/button1" android:layout_width="fill_parent" android:layout_height="wrap_content"></Button>
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:orientation="vertical">
+	<Button android:text="Button" android:id="@+id/toggleLogging"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"></Button>
+	<LinearLayout android:layout_width="wrap_content"
+		android:id="@+id/linearLayout1" android:layout_alignParentTop="true"
+		android:layout_height="wrap_content" android:orientation="horizontal">
+		<TextView android:text="TextView" android:id="@+id/sleepLabel"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
+		<TextView android:text="TextView" android:id="@+id/sleepProbability"
+			android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
+	</LinearLayout>
+	<LinearLayout android:layout_width="wrap_content"
+		android:id="@+id/linearLayout2" android:layout_alignParentTop="true"
+		android:layout_height="wrap_content" android:orientation="horizontal">
+		<TextView android:text="TextView" android:id="@+id/textView1"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
+		<TextView android:text="TextView" android:id="@+id/textView2"
+			android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
+	</LinearLayout>
 
 
 </LinearLayout>
