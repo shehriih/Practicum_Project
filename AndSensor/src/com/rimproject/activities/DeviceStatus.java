@@ -51,7 +51,7 @@ public class DeviceStatus {
 	public boolean isLocationChanged(int duration){
 		boolean result = false;
 		if(isGPSAvailable()){
-			if(checkGPSChanging(duration) >= SensorConstants.STATIONARY){
+			if(checkIfGPSChanging(duration) >= SensorConstants.STATIONARY){
 				result = true;
 			}
 		}
@@ -77,14 +77,14 @@ public class DeviceStatus {
 		return result;
 	}
 	
-	public int checkLightLevel(int duration){
-		int result = 0;
+	public double checkLightLevel(int duration){
+		double result = 0;
 		
 		return result;
 	}
 	
-	public int checkAccelerometerActivityLevel(int duration){
-		int result = 0;
+	public double checkAccelerometerActivityLevel(int duration){
+		double result = 0;
 		
 		return result;
 	}
@@ -133,9 +133,23 @@ public class DeviceStatus {
 		return result;
 	}
 	
-	public double checkGPSChanging(int duration){
+	public double checkIfGPSChanging(int duration){
 		double result = 0.0;
 		
 		return result;
 	}
+	
+	public double checkIfWIFIChanging(int duration){
+		double result = 0.0;
+		
+		return result;
+	}
+	
+	public double checkIfNetworkChanging(int duration){
+		double result = 0.0;
+		
+		return result;
+	}
+	
+	
 }
