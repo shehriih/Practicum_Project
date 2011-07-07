@@ -24,10 +24,56 @@ public class GeoLocationLogger extends BasicLogger
 		super.performLogging();
 		
 		Location lastKnownLocation = this.locationManager.getLastKnownLocation(this.locationSensor);
+		
 		if (lastKnownLocation != null) {
-			super.writeToLogFile(lastKnownLocation.toString(),SENSOR_NAME);
+			super.writeToLogFile(new GeoLocationReading(lastKnownLocation.getLatitude(),lastKnownLocation.getLongitude())+"\n",SENSOR_NAME);
 		} else {
 			System.out.println(this+" performLogging failed");
 		}
 	}	
+	
+	/*
+	 * Class to hold any GeoLocation reading, it should be used when writing to the file
+	 * and when parsing the file
+	 */
+	class GeoLocationReading
+	{
+		private double latitude,longitude;
+
+		public GeoLocationReading(double latitude, double longitude)
+		{
+			this.latitude=latitude;
+			this.longitude=longitude;
+		}
+		
+
+		public double getLatitude() {
+			return latitude;
+		}
+
+
+		public void setLatitude(double latitude) {
+			this.latitude = latitude;
+		}
+
+
+		public double getLongitude() {
+			return longitude;
+		}
+
+
+		public void setLongitude(double longitude) {
+			this.longitude = longitude;
+		}
+
+
+		@Override
+		public String toString() {
+			
+			return getLatitude()+genericDel+getLongitude();
+		}
+		
+		
+	}
+	
 }

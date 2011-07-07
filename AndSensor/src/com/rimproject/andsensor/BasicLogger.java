@@ -36,6 +36,8 @@ public abstract class BasicLogger extends TimerTask  implements LoggerInterface,
 	private long delayBetweenLogging;
 	public static final String  DIR="LifeLogger"; // constant for the application main folder that will be created
 												 // it would be in the sdcard folder
+	
+	public static final String genericDel="#"; //delimiter to be used bwtween dfferent values like x,y,z in Acc reading
 
 
 	public BasicLogger() 
@@ -145,7 +147,7 @@ public abstract class BasicLogger extends TimerTask  implements LoggerInterface,
 	            
 	         	bw = new BufferedWriter(new FileWriter(file,true));
 	            bw.append(data);
-	            bw.newLine();
+	            //bw.newLine();
 	            
 	            //bw.flush(); // should not be used when we are closing the file as it will write 
 	            			 // the same log line twice. shoule only be used if we are not closing the file   

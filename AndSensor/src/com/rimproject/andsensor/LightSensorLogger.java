@@ -46,7 +46,7 @@ public class LightSensorLogger extends BasicTimedDurationLogger
             	//sensorManager.L
             	//if(values[0] )
             	
-            	super.writeToLogFile(""+values[0],SENSOR_NAME);
+            	super.writeToLogFile(""+values[0]+"\n",SENSOR_NAME);
             } else {
             	System.out.println(this+" ERROR: Unexpected sensor reading from sensor "+sensor);
             }
