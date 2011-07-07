@@ -127,7 +127,7 @@ public abstract class BasicLogger extends TimerTask  implements LoggerInterface,
 	    /*
 	     * @data : is the raw data to be logged
 	     * @sensorName : the name of the sensor
-	     * @closeConnection: option for the user to colse the connection or keep it
+	     * @closeConnection: option for the user to close the connection or keep it
 	     * in case of frequent logging operations , it should be set as false and later
 	     * in last call it should be set to true
 	     * 

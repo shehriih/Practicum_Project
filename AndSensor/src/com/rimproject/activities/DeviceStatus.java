@@ -7,11 +7,12 @@ import android.content.Context;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.wifi.WifiInfo;
-
 import com.rimproject.andsensor.*;
 
 public class DeviceStatus {
+	
+	private String location;
+	
 	public boolean isIdle(int duration){
 		boolean result = false;
 		if(isDeviceInUse(duration) && isStationary(duration)){
@@ -151,5 +152,11 @@ public class DeviceStatus {
 		return result;
 	}
 	
+	public void setLocation(String location){
+		this.location = location;
+	}
 	
+	public String getLocation(){
+		return location;
+	}
 }
