@@ -20,7 +20,7 @@ public class UserActivities {
 				activityDetails = deviceStatus.getLocation() + ":" + calendar.getTime(); 
 			}
 			else if(SensorConstants.LOCATION_WORK.equalsIgnoreCase(deviceStatus.getLocation())){
-				activityDetails = deviceStatus.getLocation() + ":"+ calendar.getTime();
+				activityDetails = deviceStatus.getLocation() + ":"+ calendar.getTime() +"/n";
 			}
 			
 		}
