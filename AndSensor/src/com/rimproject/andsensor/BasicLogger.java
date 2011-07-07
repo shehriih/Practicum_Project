@@ -71,13 +71,13 @@ public abstract class BasicLogger extends TimerTask  implements LoggerInterface,
 		System.out.println(this+" : "+Calendar.getInstance().getTime()+" @ Logging Stopped");
 	}
 	
-	@Override
+	
 	public void onAccuracyChanged(Sensor sensor, int accuracy) {
 		System.out.println(this+" : "+"onAccuracyChanged: " + sensor + ", accuracy: " + accuracy);
 		
 	}
 	
-	@Override
+	
 	public void onSensorChanged(SensorEvent event) {
 		System.out.println(this+" : "+"onSensorChanged: " + event);
 	}
@@ -100,6 +100,7 @@ public abstract class BasicLogger extends TimerTask  implements LoggerInterface,
 		performLogging();
 	}
 	
+	@Override
 	public String toString() {
 		return this.getClass().getSimpleName();
 	}
