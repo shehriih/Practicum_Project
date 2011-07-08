@@ -4,10 +4,8 @@ import com.rimproject.activities.DeviceStatus;
 import com.rimproject.activities.SensorConstants;;
 
 public class ContextDetector {
-	public static double probabilityOfSleeping() {
-		DeviceStatus ds = new DeviceStatus();
-		int durationToConsider = 60;
-		
+	public static double probabilityOfSleeping(int durationToConsider) {
+		DeviceStatus deviceStatus = new DeviceStatus();
 		
 		final double timeWeighting = 0.4;
 		double timeScore = 1.0; //TODO: get score from sensor analyzer
@@ -16,7 +14,7 @@ public class ContextDetector {
 		
 		final double lightWeighting = 0.2;
 		double lightScore = 0.0;
-		double lightValue = ds.checkLightLevel(durationToConsider);
+		double lightValue = deviceStatus.checkLightLevel(durationToConsider);
 		//TODO: should probably add in more granularity
 		if (lightValue > SensorConstants.LIGHT_DIM) {
 			lightScore = 1.0;
@@ -27,20 +25,20 @@ public class ContextDetector {
 		
 		
 		final double deviceIsChargingWeighting = 0.1;
-		double deviceIsChargingScore = ds.isDeviceCharging() ? 1.0 : 0.0;
+		double deviceIsChargingScore = deviceStatus.isDeviceCharging() ? 1.0 : 0.0;
 		double deviceIsChargingFactor = deviceIsChargingWeighting * deviceIsChargingScore;
 		
 		
 		final double stationaryWeighting = 0.25;
-		double stationaryScore = ds.isStationary(durationToConsider) ? 1.0 : 0.0;
+		double stationaryScore = deviceStatus.isStationary(durationToConsider) ? 1.0 : 0.0;
 		double stationaryFactor = stationaryWeighting * stationaryScore;
 		
 		
 		final double deviceUseWeighting = 0.05;
 		double deviceUseScore = -1.0;
-		if (ds.isPassive(durationToConsider)) {
+		if (deviceStatus.isPassive(durationToConsider)) {
 			deviceUseScore = 0.7;
-		} else if (ds.isActive(durationToConsider)) {
+		} else if (deviceStatus.isActive(durationToConsider)) {
 			deviceUseScore = 0.0;
 		} else {
 			deviceUseScore = 1.0;
