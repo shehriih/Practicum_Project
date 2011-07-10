@@ -1,8 +1,13 @@
 package com.rimproject.andsensor;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
+
+import com.rimproject.logreadings.LightReading;
 
 public class LightSensorLogger extends BasicTimedDurationLogger
 {
@@ -46,7 +51,8 @@ public class LightSensorLogger extends BasicTimedDurationLogger
             	//sensorManager.L
             	//if(values[0] )
             	
-            	super.writeToLogFile(""+values[0]+"\n",SENSOR_NAME);
+            	
+            	flio.writeToTXTLogFile(SENSOR_NAME,new LightReading(Calendar.getInstance().getTime(),values[0]));
             } else {
             	System.out.println(this+" ERROR: Unexpected sensor reading from sensor "+sensor);
             }

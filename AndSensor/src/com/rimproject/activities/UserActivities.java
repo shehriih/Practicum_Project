@@ -24,6 +24,6 @@ public class UserActivities {
 			}
 			
 		}
-		basicLogger.writeToLogFile(activity, activityDetails);
+		//basicLogger.writeToLogFile(activity, activityDetails);
 	}
 }

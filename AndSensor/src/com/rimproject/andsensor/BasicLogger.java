@@ -12,9 +12,11 @@ import java.util.TimerTask;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
 import android.os.Environment;
 import android.util.Log;
+
+import com.rimproject.fileio.FileLoggingIO;
+import com.rimproject.logreadings.BasicLogReading;
 
 /* Example of how this class and its timer's will work:
  * 
@@ -34,11 +36,10 @@ public abstract class BasicLogger extends TimerTask  implements LoggerInterface,
 {
 	private Timer delayBetweenLoggingTimer; // Timer 1
 	private long delayBetweenLogging;
-	public static final String  DIR="LifeLogger"; // constant for the application main folder that will be created
-												 // it would be in the sdcard folder
 	
-	public static final String genericDel="#"; //delimiter to be used bwtween dfferent values like x,y,z in Acc reading
-
+	public static final String genericDel=" %&# "; //delimiter to be used between dfferent values like x,y,z in Acc reading
+    public static final String timeStampDel= " @ "; // delimiter to be used between the timestamp and values
+	FileLoggingIO flio = new FileLoggingIO();
 
 	public BasicLogger() 
 	{
@@ -112,63 +113,4 @@ public abstract class BasicLogger extends TimerTask  implements LoggerInterface,
 	}
 	
 	
-	/*
-	 * it will form the file name based on sensorName_date
-	 * example light_23-06-2011.txt
-	 */
-    public String getFileName(String sensorName)
-	 {
-	    	SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-			
-			String date = sdf.format(Calendar.getInstance().getTime());
-			
-			String fileName = sensorName+"_"+date+".txt";
-			return fileName;
-	 }
-	    
-	    /*
-	     * @data : is the raw data to be logged
-	     * @sensorName : the name of the sensor
-	     * @closeConnection: option for the user to close the connection or keep it
-	     * in case of frequent logging operations , it should be set as false and later
-	     * in last call it should be set to true
-	     * 
-	     */
-	 public void writeToLogFile(String data, String sensorName)
-	 {
-	     BufferedWriter bw = null;
-	         
-	         try
-	         {
-	        	Log.v("Logger",Environment.getExternalStorageState()); 
-	         	File sdCardDir = Environment.getExternalStorageDirectory();
-	         	File dir = new File (sdCardDir.getAbsolutePath() + "/"+DIR);
-	         	dir.mkdirs();
-	            File file = new File(dir,getFileName(sensorName));
-	            
-	         	bw = new BufferedWriter(new FileWriter(file,true));
-	            bw.append(data);
-	            //bw.newLine();
-	            
-	            //bw.flush(); // should not be used when we are closing the file as it will write 
-	            			 // the same log line twice. shoule only be used if we are not closing the file   
-	             
-	         }
-	         catch(IOException e)
-	         {
-	         	e.printStackTrace();
-	         }
-	        finally
-	         {
-	         	try
-	         	{
-	         		if (bw !=null)
-	         			bw.close();
-	         	}
-	         	  catch(IOException e)
-	               {
-	               	e.printStackTrace();
-	               }
-	         }
-	    }
 }

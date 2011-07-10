@@ -16,7 +16,7 @@ public class ContextLogger {
 		
 		while(counter <= 60){
 			activityDetails = Calendar.getInstance().getTime() + ":" + ContextDetector.probabilityOfSleeping(60) + "/n";
-			basicLogger.writeToLogFile(activity,activityDetails);	
+			//basicLogger.writeToLogFile(activity,activityDetails);	
 		}
 		
 	}

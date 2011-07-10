@@ -4,6 +4,8 @@ import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import com.rimproject.fileio.FileLoggingIO;
+
 /* Example of how this class and its timer's will work:
  * 
  * Timer 1 -> 10 seconds has passed 

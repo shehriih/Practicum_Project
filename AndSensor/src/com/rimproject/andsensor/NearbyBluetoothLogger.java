@@ -1,18 +1,18 @@
 package com.rimproject.andsensor;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothClass;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.util.Log;
+
+import com.rimproject.logreadings.BluetoothReading;
 
 public class NearbyBluetoothLogger extends BasicTimedDurationLogger
 {	
@@ -76,110 +76,12 @@ public class NearbyBluetoothLogger extends BasicTimedDurationLogger
 			//receiver was not registered, no action required
 		} finally {
 			this.bluetoothAdapter.cancelDiscovery();
-			if (this.bluetoothDevices != null) {
-				super.writeToLogFile(getDevicesListAsString(bluetoothDevices),SENSOR_NAME);
+			if (this.bluetoothDevices != null) 
+			{
+				for( BluetoothDevice item:bluetoothDevices)
+					flio.writeToTXTLogFile(SENSOR_NAME,new BluetoothReading(Calendar.getInstance().getTime(),item.getName(),item.getAddress(),item.getBluetoothClass().getDeviceClass()));
 			}
 		}
 	}
 	
-	public String getDevicesListAsString(List<BluetoothDevice> list)
-	{
-		String output="";
-		for (BluetoothDevice item:list)
-		{
-			output+=new BluetoohReading(item.getName(),item.getAddress(),getDeviceType(item.getBluetoothClass().getDeviceClass()))+"\n";
-		}
-		return output;
-	}
-	
-	
-	
-	public static String getDeviceType(int deviceIntType)
-	
-	{
-		/* obtained from 
-		 * http://developer.android.com/reference/android/bluetooth/BluetoothClass.Device.html
-		 * 
-		 * public static final int COMPUTER_LAPTOP = 268 
-		 * public static final int PHONE_SMART = 524
-		 */
-		
-		switch(deviceIntType)
-		{
-			case 268: return "COMPUTER_LAPTOP";
-			case 524: return "PHONE_SMART";
-		}
-		
-		return "OTHER";
-	}
-	
-	/*
-	 * Class to hold any Bluetooth reading, it should be used when writing to the file
-	 * and when parsing the file
-	 */
-	class BluetoohReading
-	{
-		private String deviceName,deviceAddress,deviceType; 
-
-		public BluetoohReading(String deviceName, String deviceAddress, String deviceType)
-		{
-			this.deviceName=deviceName;
-			this.deviceAddress=deviceAddress;
-			this.deviceType=deviceType;
-		}
-		
-		
-		
-		
-		public String getDeviceName() {
-			return deviceName;
-		}
-
-
-
-
-		public void setDeviceName(String deviceName) {
-			this.deviceName = deviceName;
-		}
-
-
-
-
-		public String getDeviceAddress() {
-			return deviceAddress;
-		}
-
-
-
-
-		public void setDeviceAddress(String deviceAddress) {
-			this.deviceAddress = deviceAddress;
-		}
-
-
-
-
-		public String getDeviceType() {
-			return deviceType;
-		}
-
-
-
-
-		public void setDeviceType(String deviceType) {
-			this.deviceType = deviceType;
-		}
-
-
-
-
-		@Override
-		public String toString() {
-			
-			return getDeviceName()+genericDel+getDeviceAddress()+genericDel+getDeviceType();
-		}
-
-		
-	}
-
 }

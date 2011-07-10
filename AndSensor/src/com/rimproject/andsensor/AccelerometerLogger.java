@@ -1,14 +1,21 @@
 package com.rimproject.andsensor;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
+
+import com.rimproject.fileio.FileLoggingIO;
+import com.rimproject.logreadings.AccelerometerReading;
 
 public class AccelerometerLogger extends BasicTimedDurationLogger
 {
 	SensorManager sensorManager;
 	Sensor sensor;
 	public static final String SENSOR_NAME="Accelerometer";
+
 	
 	public AccelerometerLogger() 
 	{
@@ -40,59 +47,15 @@ public class AccelerometerLogger extends BasicTimedDurationLogger
 		
 		synchronized (this) {
             if (sensor == Sensor.TYPE_ACCELEROMETER) {
-            	super.writeToLogFile(new AccelerometerReading(values[0], values[1], values[2]).toString()+"\n",SENSOR_NAME);
+            	//flio.writeToSERLogFile(SENSOR_NAME,new AccelerometerReading(new Date(event.timestamp),values[0], values[1], values[2]));
+            	// for debugging writing the same data to txt file
+            	flio.writeToTXTLogFile(SENSOR_NAME,new AccelerometerReading(Calendar.getInstance().getTime(),values[0], values[1], values[2]));
+
             } else {
             	System.out.println(this+" ERROR: Unexpected sensor reading from sensor "+sensor);
             }
         }
 	}
 	
-	/*
-	 * Class to hold any accelerometer reading, it should be used when writing to the file
-	 * and when parsing the file
-	 */
-	class AccelerometerReading
-	{
-		private float x,y,z;
 
-		public AccelerometerReading(float x,float y, float z)
-		{
-			this.x=x;
-			this.y=y;
-			this.z=z;
-		}
-		public float getX() {
-			return x;
-		}
-
-		public void setX(float x) {
-			this.x = x;
-		}
-
-		public float getY() {
-			return y;
-		}
-
-		public void setY(float y) {
-			this.y = y;
-		}
-
-		public float getZ() {
-			return z;
-		}
-
-		public void setZ(float z) {
-			this.z = z;
-		}
-
-		
-
-		@Override
-		public String toString() {
-			
-			return getX()+genericDel+getY()+genericDel+getZ();
-		}
-		
-		
-	}
 }
