@@ -270,7 +270,7 @@ public class FileLoggingIO<T extends BasicLogReading>
 					 
 					  if(timeStamp.equals(dateTimeFrom) || timeStamp.after(dateTimeFrom))
 					  {
-						  if(timeStamp.after(dateTimeTo))
+						  if( !dateTimeFrom.equals(dateTimeTo) && timeStamp.after(dateTimeTo))
 							  break;
 						  
 						  if(map.get(timeStamp)==null)

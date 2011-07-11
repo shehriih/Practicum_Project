@@ -25,6 +25,10 @@ public class GeoLocationReading extends BasicLogReading implements Serializable
 		
 	}
 	
+	public GeoLocationReading() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public GeoLocationReading parseObjFromString (String inputFromLogFile)
 	{
 		String[] lineArr   = inputFromLogFile.split(BasicLogger.timeStampDel,2);

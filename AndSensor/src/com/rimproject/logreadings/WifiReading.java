@@ -28,6 +28,10 @@ public class WifiReading extends BasicLogReading implements Serializable
 		
 	}
 	
+	public WifiReading() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public WifiReading parseObjFromString (String inputFromLogFile)
 	{
 		String[] lineArr   = inputFromLogFile.split(BasicLogger.timeStampDel,2);
