@@ -96,22 +96,7 @@ public class MainView extends Activity implements OnClickListener {
     		hm = mapG.toString();
     		fioG.write2test("testGeo", hm);*/
     	//-------------------------
-    		
-          isLogging = !isLogging;
-        	if(isLogging) {
-        		toggleLogging.setText(R.string.stop);
-        		this.logger.initiateAllLogging();
-        	} else {
-        		toggleLogging.setText(R.string.start);
-        		this.logger.terminateAllLogging();
-        		
-        	}
-    }
-    
-    
-    
-    		fio.write2test("test", hm);*/
-		//-------------------------
+
 		if (v.getId() == refresh.getId()) {
 			Calendar cal = Calendar.getInstance();
 			cal.add(Calendar.MINUTE, -5);
