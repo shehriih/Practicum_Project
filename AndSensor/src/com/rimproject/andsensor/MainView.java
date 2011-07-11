@@ -112,14 +112,12 @@ public class MainView extends Activity implements OnClickListener {
     		String outputString = "";//map.toString();
     		
     		
-    		Set<Entry<Date, List<ContextReading>>> es = map.entrySet();
-    		TreeSet<Entry<Date, List<ContextReading>>> ts = new TreeSet<Entry<Date, List<ContextReading>>>(es);
+    		Set<Date> es = map.keySet();
+    		TreeSet<Date> ts = new TreeSet<Date>(es);
     		
-    		for (Entry<Date, List<ContextReading>> entry : ts) {
-				Date date = entry.getKey();
-				outputString += date.toString();
-				
-				for (ContextReading cr: entry.getValue()) {
+    		for (Date key : ts) {
+			
+				for (ContextReading cr: map.get(key)) {
 					 String s = String.format
 					 ("[%s is %d probable]", cr.getContextName(), cr.getProbability());
 					outputString += s;
