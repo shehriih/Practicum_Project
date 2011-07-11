@@ -116,13 +116,13 @@ public class MainView extends Activity implements OnClickListener {
     		TreeSet<Date> ts = new TreeSet<Date>(es);
     		
     		for (Date key : ts) {
-			
+    			outputString += "-------------" + key.toString() + "-------------\n";
 				for (ContextReading cr: map.get(key)) {
 					 String s = String.format
-					 ("[%s is %d probable]", cr.getContextName(), cr.getProbability());
+					 ("%.2f probability of %s\n", cr.getProbability(), cr.getContextName());
 					outputString += s;
 				}
-				outputString += "\n";
+				outputString += "--------------------------------------------------------------------\n";
 			}
     		
     		outputView.setText(outputString);
