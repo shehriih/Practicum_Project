@@ -1,5 +1,8 @@
 package com.rimproject.contexts;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import android.bluetooth.BluetoothAdapter;
@@ -12,6 +15,9 @@ import android.net.NetworkInfo;
 import android.os.BatteryManager;
 
 import com.rimproject.andsensor.*;
+import com.rimproject.fileio.FileLoggingIO;
+import com.rimproject.logreadings.AccelerometerReading;
+import com.rimproject.logreadings.BasicLogReading;
 
 public class DeviceStatus {
 	
@@ -101,6 +107,14 @@ public class DeviceStatus {
 	
 	public double checkAccelerometerActivityLevel(int duration){
 		double result = 0;
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.SECOND, -duration);
+		Date d1 = cal.getTime();
+	    Date d2 = Calendar.getInstance().getTime();
+	    
+	    FileLoggingIO<AccelerometerReading> fio = new FileLoggingIO<AccelerometerReading>();
+        HashMap<Date,List<AccelerometerReading>> map = fio.readFromTXTLogFile(AccelerometerLogger.SENSOR_NAME, new AccelerometerReading(), null,d1,d2);
+		
 		
 		return result;
 	}

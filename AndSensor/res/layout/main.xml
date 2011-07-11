@@ -4,22 +4,12 @@
 	android:orientation="vertical">
 	<Button android:text="Button" android:id="@+id/toggleLogging"
 		android:layout_width="fill_parent" android:layout_height="wrap_content"></Button>
-	<LinearLayout android:layout_width="wrap_content"
-		android:id="@+id/linearLayout1" android:layout_alignParentTop="true"
-		android:layout_height="wrap_content" android:orientation="horizontal">
-		<TextView android:text="TextView" android:id="@+id/sleepLabel"
-			android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
-		<TextView android:text="TextView" android:id="@+id/sleepProbability"
-			android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
-	</LinearLayout>
-	<LinearLayout android:layout_width="wrap_content"
-		android:id="@+id/linearLayout2" android:layout_alignParentTop="true"
-		android:layout_height="wrap_content" android:orientation="horizontal">
-		<TextView android:text="TextView" android:id="@+id/textView1"
-			android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
-		<TextView android:text="TextView" android:id="@+id/textView2"
-			android:layout_height="wrap_content" android:layout_width="wrap_content"></TextView>
-	</LinearLayout>
-
-
+	<Button android:text="Button" android:id="@+id/refresh"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"></Button>
+	<TextView  
+ 		android:id="@+id/output"
+    	android:layout_width="fill_parent" 
+    	android:layout_height="wrap_content" 
+    	android:textSize="22px"
+    	android:text="@string/hello"/>
 </LinearLayout>

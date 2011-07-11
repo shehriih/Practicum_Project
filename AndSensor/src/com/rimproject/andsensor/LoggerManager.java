@@ -2,6 +2,7 @@ package com.rimproject.andsensor;
 
 import java.util.*;
 
+
 public class LoggerManager 
 {
   HashMap<String, BasicLogger> listOfSensors;
@@ -13,11 +14,12 @@ public class LoggerManager
 	
 	public void initiateAllLogging()
 	{
-		this.listOfSensors.put("Accelerometer", new AccelerometerLogger());
+//		this.listOfSensors.put("Accelerometer", new AccelerometerLogger());
 		this.listOfSensors.put("GeoLocation", new GeoLocationLogger());
-		this.listOfSensors.put("LightSensor", new LightSensorLogger());
-		this.listOfSensors.put("NearbyWifi", new NearbyWifiLogger());
-		this.listOfSensors.put("NearbyBluetooth", new NearbyBluetoothLogger());
+//		this.listOfSensors.put("LightSensor", new LightSensorLogger());
+//		this.listOfSensors.put("NearbyWifi", new NearbyWifiLogger());
+//		this.listOfSensors.put("NearbyBluetooth", new NearbyBluetoothLogger());
+		this.listOfSensors.put("ContextLogger", new ContextLogger());
 		
 		Iterator<?> it = this.listOfSensors.entrySet().iterator();
 	    while (it.hasNext()) {

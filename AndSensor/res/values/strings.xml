@@ -5,4 +5,5 @@
     <string name="start">Initiate Logging</string>
     <string name="stop">Terminate Logging</string>
     <string name="sleepLabel">Sleeping Probability:</string>
+    <string name="refresh">refresh</string>
 </resources>

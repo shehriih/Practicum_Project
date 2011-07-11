@@ -39,7 +39,7 @@ public abstract class BasicLogger extends TimerTask  implements LoggerInterface,
 	
 	public static final String genericDel=" %&# "; //delimiter to be used between dfferent values like x,y,z in Acc reading
     public static final String timeStampDel= " @ "; // delimiter to be used between the timestamp and values
-	FileLoggingIO flio = new FileLoggingIO();
+	protected FileLoggingIO flio = new FileLoggingIO();
 
 	public BasicLogger() 
 	{
