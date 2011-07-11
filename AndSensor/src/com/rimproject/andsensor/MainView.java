@@ -3,7 +3,11 @@ package com.rimproject.andsensor;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.TreeSet;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -105,8 +109,25 @@ public class MainView extends Activity implements OnClickListener {
 
     	    FileLoggingIO<ContextReading> fio = new FileLoggingIO<ContextReading>();
             HashMap<Date,List<ContextReading>> map = fio.readFromTXTLogFile(ContextLogger.SENSOR_NAME, new ContextReading(), null,d1,d2);
-    		String hm = map.toString();
-    		outputView.setText(hm);
+    		String outputString = "";//map.toString();
+    		
+    		
+    		Set<Entry<Date, List<ContextReading>>> es = map.entrySet();
+    		TreeSet<Entry<Date, List<ContextReading>>> ts = new TreeSet<Entry<Date, List<ContextReading>>>(es);
+    		
+    		for (Entry<Date, List<ContextReading>> entry : ts) {
+				Date date = entry.getKey();
+				outputString += date.toString();
+				
+				for (ContextReading cr: entry.getValue()) {
+					 String s = String.format
+					 ("[%s is %d probable]", cr.getContextName(), cr.getProbability());
+					outputString += s;
+				}
+				outputString += "\n";
+			}
+    		
+    		outputView.setText(outputString);
 			
 		} else {
 			isLogging = !isLogging;
