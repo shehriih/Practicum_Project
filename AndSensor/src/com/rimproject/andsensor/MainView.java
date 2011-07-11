@@ -122,7 +122,7 @@ public class MainView extends Activity implements OnClickListener {
 					 ("%.2f probability of %s\n", cr.getProbability(), cr.getContextName());
 					outputString += s;
 				}
-				outputString += "--------------------------------------------------------------------\n";
+				outputString += "--------------------------------------------------------------------\n\n";
 			}
     		
     		outputView.setText(outputString);
