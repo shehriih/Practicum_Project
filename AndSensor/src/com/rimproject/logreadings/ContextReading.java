@@ -17,6 +17,18 @@ public class ContextReading extends BasicLogReading implements Serializable
 	
 	
 	
+	public String getContextName() {
+		return contextName;
+	}
+	public void setContextName(String contextName) {
+		this.contextName = contextName;
+	}
+	public double getProbability() {
+		return probability;
+	}
+	public void setProbability(double probability) {
+		this.probability = probability;
+	}
 	public ContextReading(Date dateTimeStamp, String contextName, double probability)
 	{
 		super(dateTimeStamp);
