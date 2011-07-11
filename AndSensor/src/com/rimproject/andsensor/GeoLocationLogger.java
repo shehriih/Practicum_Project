@@ -1,5 +1,6 @@
 package com.rimproject.andsensor;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import android.location.Location;
@@ -28,7 +29,7 @@ public class GeoLocationLogger extends BasicLogger
 		Location lastKnownLocation = this.locationManager.getLastKnownLocation(this.locationSensor);
 		
 		if (lastKnownLocation != null) {
-			flio.writeToTXTLogFile(SENSOR_NAME,new GeoLocationReading(new Date (lastKnownLocation.getTime()),lastKnownLocation.getLatitude(),lastKnownLocation.getLongitude()));
+			flio.writeToTXTLogFile(SENSOR_NAME,new GeoLocationReading(Calendar.getInstance().getTime(),lastKnownLocation.getLatitude(),lastKnownLocation.getLongitude()));
 			
 		} else {
 			System.out.println(this+" performLogging failed");

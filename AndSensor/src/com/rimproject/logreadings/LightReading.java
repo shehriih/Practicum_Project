@@ -21,6 +21,10 @@ public class LightReading extends BasicLogReading implements Serializable
 		this.lightValue=lightValue;
 	}
 	
+	public LightReading() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public LightReading parseObjFromString (String inputFromLogFile)
 	{
 		String[] lineArr   = inputFromLogFile.split(BasicLogger.timeStampDel,2);

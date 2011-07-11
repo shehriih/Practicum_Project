@@ -28,6 +28,10 @@ public class BluetoothReading extends BasicLogReading implements Serializable{
 		this.type=type;
 	}
 	
+	public BluetoothReading() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public BluetoothReading parseObjFromString (String inputFromLogFile)
 	{
 		String[] lineArr   = inputFromLogFile.split(BasicLogger.timeStampDel,2);
