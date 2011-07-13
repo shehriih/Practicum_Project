@@ -68,7 +68,7 @@ public class DeviceStatus {
 		}
 		else{
 			if(isWIFIAvailable()){
-					
+				
 			}
 			else if(isBluetoothAvailable()){
 				

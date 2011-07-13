@@ -14,11 +14,13 @@ import java.util.TreeSet;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.location.LocationManager;
+import android.media.AudioManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.telephony.TelephonyManager;
+
 import com.rimproject.andsensor.*;
 import com.rimproject.fileio.FileLoggingIO;
-import com.rimproject.logreadings.ContextReading;
 import com.rimproject.logreadings.LightReading;
 
 public class DeviceStatus {
@@ -27,7 +29,7 @@ public class DeviceStatus {
 	
 	public boolean isIdle(int duration){
 		boolean result = false;
-		if(isDeviceInUse(duration) && isStationary(duration)){
+		if(!isDeviceInUse(duration) && isStationary(duration)){
 			result = true;
 		}
 		return result;
@@ -35,11 +37,22 @@ public class DeviceStatus {
 	
 	public boolean isActive(int duration){
 		boolean result = false;
+		TelephonyManager telephonyManager = (TelephonyManager) AndSensor.getContext().getSystemService(Context.TELEPHONY_SERVICE);
+		if(telephonyManager.getCallState() == TelephonyManager.CALL_STATE_IDLE){
+			result = false;
+		}
+		else if(telephonyManager.getCallState() == TelephonyManager.CALL_STATE_OFFHOOK){
+			result = true;
+		}
 		return result;
 	}
 	
 	public boolean isPassive(int duration){
 		boolean result = false;
+		AudioManager audioManager = (AudioManager) AndSensor.getContext().getSystemService(Context.AUDIO_SERVICE);
+		if(audioManager.isMusicActive()){
+			result = true;
+		}
 		return result;
 	}
 	
@@ -210,4 +223,7 @@ public class DeviceStatus {
 	public String getLocation(){
 		return location;
 	}
+	
+	
+	
 }
