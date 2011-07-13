@@ -1,6 +1,11 @@
 package com.rimproject.activities;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
@@ -8,6 +13,9 @@ import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import com.rimproject.andsensor.*;
+import com.rimproject.fileio.FileLoggingIO;
+import com.rimproject.logreadings.ContextReading;
+import com.rimproject.logreadings.LightReading;
 
 public class DeviceStatus {
 	
@@ -28,8 +36,6 @@ public class DeviceStatus {
 	
 	public boolean isPassive(int duration){
 		boolean result = false;
-		
-		
 		return result;
 	}
 	
@@ -79,7 +85,28 @@ public class DeviceStatus {
 	}
 	
 	public double checkLightLevel(int duration){
-		double result = 0;
+		double result = -1.0;
+		
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.MINUTE, -duration);
+		Date d1 = cal.getTime();
+	    Date d2 = Calendar.getInstance().getTime();
+
+	    FileLoggingIO<LightReading> fio = new FileLoggingIO<LightReading>();
+        HashMap<Date,List<LightReading>> map = fio.readFromTXTLogFile(LightSensorLogger.SENSOR_NAME, new LightReading(), null,d1,d2);
+		
+		Set<Date> es = map.keySet();
+		TreeSet<Date> ts = new TreeSet<Date>(es);
+		
+		int numberOfReadings = 0;
+		double accumulator = 0.0;
+		for (Date key : ts) {
+			for (LightReading reading: map.get(key)) {
+				numberOfReadings++;
+				 accumulator += reading.getLightValue();
+			}
+		}
+		result = accumulator / numberOfReadings; //average of all readings
 		
 		return result;
 	}

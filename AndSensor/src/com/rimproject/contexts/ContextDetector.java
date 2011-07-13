@@ -16,7 +16,7 @@ public class ContextDetector {
 		double lightScore = 0.0;
 		double lightValue = deviceStatus.checkLightLevel(durationToConsider);
 		//TODO: should probably add in more granularity
-		if (lightValue > SensorConstants.LIGHT_DIM) {
+		if (lightValue <= SensorConstants.LIGHT_DIM) {
 			lightScore = 1.0;
 		} else {
 			lightScore = 0.0;

@@ -23,7 +23,7 @@ public class ContextLogger extends BasicLogger
 	public ContextLogger() {
 		super();
 		
-		setDelayBetweenLogging(60*1000);
+		setDelayBetweenLogging(10*1000);
 	}
 	
 	public void startLogging() {
