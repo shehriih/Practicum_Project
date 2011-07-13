@@ -5,7 +5,7 @@ import java.util.Date;
 
 import com.rimproject.andsensor.BasicLogger;
 
-public class LightReading extends BasicLogReading implements Serializable 
+public class LightReading extends BasicLogReading implements Serializable, Comparable<LightReading>
 {
 
 	/**
@@ -54,6 +54,14 @@ public class LightReading extends BasicLogReading implements Serializable
 	public String toString()
 	{
 		return BasicLogReading.getStringFormattedDateTime(getDateTimeStamp())+BasicLogger.timeStampDel+lightValue+"\n";
+	}
+
+	public int compareTo(LightReading another) {
+		if (this.lightValue < another.lightValue) {
+			return -1;
+		} else {
+			return 1;
+		}
 	}
 	
 

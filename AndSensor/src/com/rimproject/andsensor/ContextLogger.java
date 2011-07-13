@@ -23,7 +23,7 @@ public class ContextLogger extends BasicLogger
 	public ContextLogger() {
 		super();
 		
-		setDelayBetweenLogging(10*1000);
+		setDelayBetweenLogging(60*1000);
 	}
 	
 	public void startLogging() {
@@ -38,7 +38,7 @@ public class ContextLogger extends BasicLogger
 	protected void performLogging() {
 		super.performLogging();
 		String contextName = "Sleeping";
-		double probability = ContextDetector.probabilityOfSleeping(60);
+		double probability = ContextDetector.probabilityOfSleeping(300);
 		flio.writeToTXTLogFile(SENSOR_NAME,new ContextReading(Calendar.getInstance().getTime(), contextName, probability));
 	}
 

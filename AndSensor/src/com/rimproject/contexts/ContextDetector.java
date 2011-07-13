@@ -11,7 +11,6 @@ public class ContextDetector {
 		double timeScore = 1.0; //TODO: get score from sensor analyzer
 		double timeFactor = timeWeighting * timeScore;
 		
-		
 		final double lightWeighting = 0.2;
 		double lightScore = 0.0;
 		double lightValue = deviceStatus.checkLightLevel(durationToConsider);
