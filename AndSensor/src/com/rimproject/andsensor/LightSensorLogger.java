@@ -20,6 +20,9 @@ public class LightSensorLogger extends BasicTimedDurationLogger
 		super();
 		this.sensorManager = (SensorManager) AndSensor.getContext().getSystemService(android.content.Context.SENSOR_SERVICE);
 		this.sensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
+		
+		this.setDelayBetweenLogging(60*1000);
+		this.setLoggingDuration(5*1000);
 	}
 	
 	public void startLogging() {
@@ -46,12 +49,6 @@ public class LightSensorLogger extends BasicTimedDurationLogger
 		
 		synchronized (this) {
             if (sensor == Sensor.TYPE_LIGHT) {
-            	//sensorManager.LIGHT_CLOUDY; //100
-            	//sensorManager.LIGHT_SUNRISE;//
-            	//sensorManager.L
-            	//if(values[0] )
-            	
-            	
             	flio.writeToTXTLogFile(SENSOR_NAME,new LightReading(Calendar.getInstance().getTime(),values[0]));
             } else {
             	System.out.println(this+" ERROR: Unexpected sensor reading from sensor "+sensor);

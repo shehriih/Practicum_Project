@@ -12,14 +12,14 @@ public class ContextDetector {
 		double timeFactor = timeWeighting * timeScore;
 		
 		final double lightWeighting = 0.2;
-		double lightScore = 0.0;
+		double lightScore = 1.0;
 		double lightValue = deviceStatus.checkLightLevel(durationToConsider);
-		//TODO: should probably add in more granularity
-		if (lightValue <= SensorConstants.LIGHT_DIM) {
-			lightScore = 1.0;
-		} else {
-			lightScore = 0.0;
-		}		
+		
+		int modifier = 10;
+		while(lightScore > 0.0 && lightValue - modifier > 0) {
+			lightScore -= 0.1;
+			modifier += 30;
+		}	
 		double lightFactor = lightWeighting * lightScore;
 		
 		

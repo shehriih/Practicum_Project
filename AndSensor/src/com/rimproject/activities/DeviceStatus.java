@@ -111,39 +111,45 @@ public class DeviceStatus {
 
 	    FileLoggingIO<LightReading> fio = new FileLoggingIO<LightReading>();
         HashMap<Date,List<LightReading>> map = fio.readFromTXTLogFile(LightSensorLogger.SENSOR_NAME, new LightReading(), null,d1,d2);
-		
-        Collection<List<LightReading>> c = map.values();
-        if (c.size() == 0) {
-        	//no readings
-        	return 999999.9;
-        }
         
-        //obtain an Iterator for Collection
-        Iterator<List<LightReading>> itr = c.iterator();
-        
-        ArrayList<LightReading> lightReadings = new ArrayList<LightReading>();
-        //iterate through HashMap values iterator
-        while(itr.hasNext()) {
-        	List<LightReading> readings = (List<LightReading>)itr.next();
-        	for (LightReading lightReading : readings) {
-				lightReadings.add(lightReading);
-			}
-      	}
-        
-        Collections.sort(lightReadings);
-        LightReading middleReading = lightReadings.get(lightReadings.size()/2);
-        result = middleReading.getLightValue();
-        
-		//average not working well, will use median instead
-//		int numberOfReadings = 0;
-//		double accumulator = 0.0;
-//		for (Date key : ts) {
-//			for (LightReading reading: map.get(key)) {
-//				numberOfReadings++;
-//				 accumulator += reading.getLightValue();
+        //=========== MEDIAN ===========
+//        Collection<List<LightReading>> c = map.values();
+//        if (c.size() == 0) {
+//        	//no readings
+//        	return 999999.9;
+//        }
+//        
+//        //obtain an Iterator for Collection
+//        Iterator<List<LightReading>> itr = c.iterator();
+//        
+//        ArrayList<LightReading> lightReadings = new ArrayList<LightReading>();
+//        //iterate through HashMap values iterator
+//        while(itr.hasNext()) {
+//        	List<LightReading> readings = (List<LightReading>)itr.next();
+//        	for (LightReading lightReading : readings) {
+//				lightReadings.add(lightReading);
 //			}
-//		}
-//		result = accumulator / numberOfReadings; //average of all readings
+//      	}
+//        
+//        Collections.sort(lightReadings);
+//        LightReading middleReading = lightReadings.get(lightReadings.size()/2);
+//        result = middleReading.getLightValue();
+      //=========== END MEDIAN ===========
+        
+      //=========== AVERAGE ===========
+        Set<Date> es = map.keySet();
+        TreeSet<Date> ts = new TreeSet<Date>(es);
+        
+		int numberOfReadings = 0;
+		double accumulator = 0.0;
+		for (Date key : ts) {
+			for (LightReading reading: map.get(key)) {
+				numberOfReadings++;
+				 accumulator += reading.getLightValue();
+			}
+		}
+		result = accumulator / numberOfReadings; //average of all readings
+        //=========== END AVERAGE ===========
 		
 		return result;
 	}
