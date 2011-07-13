@@ -6,10 +6,14 @@
 		android:layout_width="fill_parent" android:layout_height="wrap_content"></Button>
 	<Button android:text="Button" android:id="@+id/refresh"
 		android:layout_width="fill_parent" android:layout_height="wrap_content"></Button>
+	<ScrollView android:id="@+id/ScrollView01"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent">
 	<TextView  
  		android:id="@+id/output"
     	android:layout_width="fill_parent" 
     	android:layout_height="wrap_content" 
     	android:textSize="22px"
     	android:text="@string/hello"/>
+    </ScrollView>
 </LinearLayout>
