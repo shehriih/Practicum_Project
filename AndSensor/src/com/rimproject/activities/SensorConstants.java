@@ -5,6 +5,11 @@ public class SensorConstants {
 	public static final String LOCATION_WORK = "work";
 	public static final double LIGHT_DIM = 10.0;
 	public static final int STATIONARY = 0;
+	
+	// accelerometer vector reading range, see  getACCVector() @ AccelerometerReading Class 
+	public static final double MIN_ACCELEROMETER_STATIONARY_LEVEL=8.7;
+	public static final double MAX_ACCELEROMETER_STATIONARY_LEVEL=9.4;
+
 }
 
 
