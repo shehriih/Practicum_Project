@@ -69,7 +69,9 @@ public class DeviceStatus {
 		boolean result = false;
 		if(( checkAccelerometerActivityLevel(duration) > SensorConstants.MIN_ACCELEROMETER_STATIONARY_LEVEL 
 		  && checkAccelerometerActivityLevel(duration) < SensorConstants.MAX_ACCELEROMETER_STATIONARY_LEVEL) 
-		  && isLocationChanged(duration)){
+		 // commented the logic for isLocationChanged as it is not complete yet 
+		  // && isLocationChanged(duration)
+		  ){
 			result = true;
 		}
 		return result;
