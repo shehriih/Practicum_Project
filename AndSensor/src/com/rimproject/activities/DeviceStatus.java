@@ -21,6 +21,7 @@ import android.telephony.TelephonyManager;
 
 import com.rimproject.andsensor.*;
 import com.rimproject.fileio.FileLoggingIO;
+import com.rimproject.logreadings.AccelerometerReading;
 import com.rimproject.logreadings.LightReading;
 
 public class DeviceStatus {
@@ -66,15 +67,20 @@ public class DeviceStatus {
 	
 	public boolean isStationary(int duration){
 		boolean result = false;
-		if(checkAccelerometerActivityLevel(duration) <= SensorConstants.STATIONARY && isLocationChanged(duration)){
+		if(( checkAccelerometerActivityLevel(duration) > SensorConstants.MIN_ACCELEROMETER_STATIONARY_LEVEL 
+		  && checkAccelerometerActivityLevel(duration) < SensorConstants.MAX_ACCELEROMETER_STATIONARY_LEVEL) 
+		  && isLocationChanged(duration)){
 			result = true;
 		}
 		return result;
 	}
 	
+	
+	
 	public boolean isLocationChanged(int duration){
 		boolean result = false;
 		if(isGPSAvailable()){
+			
 			if(checkIfGPSChanging(duration) >= SensorConstants.STATIONARY){
 				result = true;
 			}
@@ -157,6 +163,27 @@ public class DeviceStatus {
 	public double checkAccelerometerActivityLevel(int duration){
 		double result = 0;
 		
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.SECOND, -duration);
+		Date d1 = cal.getTime();
+	    Date d2 = Calendar.getInstance().getTime();
+
+	    FileLoggingIO<AccelerometerReading> fio = new FileLoggingIO<AccelerometerReading>();
+        HashMap<Date,List<AccelerometerReading>> map = fio.readFromTXTLogFile(AccelerometerLogger.SENSOR_NAME, new AccelerometerReading(), null,d1,d2);
+        
+        Set<Date> es = map.keySet();
+        TreeSet<Date> ts = new TreeSet<Date>(es);
+        
+		int numberOfReadings = 0;
+		double accumulator = 0.0;
+		for (Date key : ts) {
+			for (AccelerometerReading reading: map.get(key)) {
+				numberOfReadings++;
+				 accumulator += reading.getACCVector();
+			}
+		}
+		result = accumulator / numberOfReadings; //average of all readings
+
 		return result;
 	}
 	

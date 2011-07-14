@@ -52,7 +52,13 @@ public class AccelerometerReading extends BasicLogReading implements Serializabl
 		public void setZ(float z) {
 			this.z = z;
 		}
-
+		
+		// method to find the Acceleration vector reading
+		public double getACCVector()
+		{
+			return Math.sqrt(getX()*getX() + getY()*getY() + getZ()*getZ() );
+		}
+		
 		
 		public AccelerometerReading parseObjFromString (String inputFromLogFile)
 		{
