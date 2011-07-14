@@ -14,10 +14,12 @@ public class GeoLocationReading extends BasicLogReading implements Serializable
 	 * 
 	 */
 	private static final long serialVersionUID = -717519922945736631L;
+	private Date locationRecordingTime;
+	private String locationSensorType;
 	private double latitude,longitude;
 
 
-	public GeoLocationReading(Date timeStamp, double latitude, double longitude)
+	public GeoLocationReading(Date timeStamp, Date locationRecordingTime, String locationSensorType, double latitude, double longitude)
 	{
 		super(timeStamp);
 		this.latitude=latitude;
@@ -39,13 +41,27 @@ public class GeoLocationReading extends BasicLogReading implements Serializable
 		
 		String[] params =  lineArr[1].split(BasicLogger.genericDel);
 	
-		GeoLocationReading glr = new GeoLocationReading(dateTime, Double.parseDouble(params[0]), Double.parseDouble(params[1]));
+		GeoLocationReading glr = new GeoLocationReading(dateTime, getDateFromString(params[0]), params[1], Double.parseDouble(params[2]), Double.parseDouble(params[3]));
 		
 		return glr;
 	}
 		
 		
+	public Date getLocationRecordingTime() {
+		return locationRecordingTime;
+	}
 
+	public void setLocationRecordingTime(Date locationRecordingTime) {
+		this.locationRecordingTime = locationRecordingTime;
+	}
+
+	public String getLocationSensorType() {
+		return locationSensorType;
+	}
+
+	public void setLocationSensorType(String locationSensorType) {
+		this.locationSensorType = locationSensorType;
+	}
 	
 
 
@@ -84,7 +100,11 @@ public class GeoLocationReading extends BasicLogReading implements Serializable
 	@Override
 	public String toString() {
 		
-		return BasicLogReading.getStringFormattedDateTime(getDateTimeStamp())+BasicLogger.timeStampDel+getLatitude()+BasicLogger.genericDel+getLongitude()+"\n";
+		return BasicLogReading.getStringFormattedDateTime(getDateTimeStamp())+BasicLogger.timeStampDel
+		+getLocationRecordingTime()+BasicLogger.genericDel
+		+getLocationSensorType()+BasicLogger.genericDel+
+		+getLatitude()+BasicLogger.genericDel
+		+getLongitude()+"\n";
 	}
 	
 }

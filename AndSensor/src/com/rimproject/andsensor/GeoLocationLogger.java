@@ -11,14 +11,16 @@ import com.rimproject.logreadings.GeoLocationReading;
 public class GeoLocationLogger extends BasicLogger
 {
 	private LocationManager locationManager;
-	private String locationSensor;
+	private String locationSensorGPS;
+	private String locationSensorNetwork;
 	public static final String SENSOR_NAME="GeoLocation";
 	
 	public GeoLocationLogger() 
 	{
 		super();
 		this.locationManager = (LocationManager) AndSensor.getContext().getSystemService(android.content.Context.LOCATION_SERVICE);
-		this.locationSensor = /*LocationManager.GPS_PROVIDER;*/LocationManager.NETWORK_PROVIDER;
+		this.locationSensorNetwork = LocationManager.NETWORK_PROVIDER;
+		this.locationSensorGPS = LocationManager.GPS_PROVIDER;
 		
 		setDelayBetweenLogging(5000);
 	}
@@ -26,13 +28,27 @@ public class GeoLocationLogger extends BasicLogger
 	protected void performLogging() {
 		super.performLogging();
 		
-		Location lastKnownLocation = this.locationManager.getLastKnownLocation(this.locationSensor);
+		Location lastKnownLocationGPS = this.locationManager.getLastKnownLocation(this.locationSensorGPS);
+		Location lastKnownLocationNetwork = this.locationManager.getLastKnownLocation(this.locationSensorNetwork);
 		
-		if (lastKnownLocation != null) {
-			flio.writeToTXTLogFile(SENSOR_NAME,new GeoLocationReading(Calendar.getInstance().getTime(),lastKnownLocation.getLatitude(),lastKnownLocation.getLongitude()));
-			
-		} else {
-			System.out.println(this+" performLogging failed");
+		if (lastKnownLocationNetwork != null) {
+			flio.writeToTXTLogFile(SENSOR_NAME,
+					new GeoLocationReading(Calendar.getInstance().getTime(),
+					new Date(lastKnownLocationNetwork.getTime()),
+					"Network", 
+					lastKnownLocationNetwork.getLatitude(),
+					lastKnownLocationNetwork.getLongitude()
+					));
+		}
+		
+		if (lastKnownLocationGPS != null) {
+			flio.writeToTXTLogFile(SENSOR_NAME,
+					new GeoLocationReading(Calendar.getInstance().getTime(),
+					new Date(lastKnownLocationGPS.getTime()),
+					"GPS", 
+					lastKnownLocationGPS.getLatitude(),
+					lastKnownLocationGPS.getLongitude()
+					));
 		}
 	}	
 	
