@@ -22,6 +22,8 @@ public class GeoLocationReading extends BasicLogReading implements Serializable
 	public GeoLocationReading(Date timeStamp, Date locationRecordingTime, String locationSensorType, double latitude, double longitude)
 	{
 		super(timeStamp);
+		this.locationRecordingTime = locationRecordingTime;
+		this.locationSensorType = locationSensorType;
 		this.latitude=latitude;
 		this.longitude=longitude;
 		
