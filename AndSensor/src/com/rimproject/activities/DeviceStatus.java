@@ -67,10 +67,11 @@ public class DeviceStatus {
 	
 	public boolean isStationary(int duration){
 		boolean result = false;
-		if(( checkAccelerometerActivityLevel(duration) > SensorConstants.MIN_ACCELEROMETER_STATIONARY_LEVEL 
-		  && checkAccelerometerActivityLevel(duration) < SensorConstants.MAX_ACCELEROMETER_STATIONARY_LEVEL) 
+		double accelerometerActivityLevel = checkAccelerometerActivityLevel(duration);
+		if((accelerometerActivityLevel > SensorConstants.MIN_ACCELEROMETER_STATIONARY_LEVEL 
+		  && accelerometerActivityLevel < SensorConstants.MAX_ACCELEROMETER_STATIONARY_LEVEL) 
 		 // commented the logic for isLocationChanged as it is not complete yet 
-		  // && isLocationChanged(duration)
+		  //&& isLocationChanged(duration)
 		  ){
 			result = true;
 		}

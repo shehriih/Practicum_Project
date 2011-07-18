@@ -3,9 +3,7 @@ package com.rimproject.andsensor;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -17,12 +15,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.rimproject.fileio.FileLoggingIO;
-import com.rimproject.logreadings.AccelerometerReading;
-import com.rimproject.logreadings.BasicLogReading;
-import com.rimproject.logreadings.BluetoothReading;
-import com.rimproject.logreadings.GeoLocationReading;
-import com.rimproject.logreadings.LightReading;
-import com.rimproject.logreadings.WifiReading;
 import com.rimproject.logreadings.ContextReading;
 
 public class MainView extends Activity implements OnClickListener {

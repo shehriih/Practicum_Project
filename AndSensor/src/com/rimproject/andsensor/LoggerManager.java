@@ -15,7 +15,8 @@ public class LoggerManager
 	public void initiateAllLogging()
 	{
 		this.listOfSensors.put("Accelerometer", new AccelerometerLogger());
-		this.listOfSensors.put("GeoLocation", new GeoLocationLogger());
+		this.listOfSensors.put("LocationGPS", new LocationGPSLogger());
+		this.listOfSensors.put("LocationNetwork", new LocationNetworkLogger());
 		this.listOfSensors.put("LightSensor", new LightSensorLogger());
 		this.listOfSensors.put("NearbyWifi", new NearbyWifiLogger());
 		this.listOfSensors.put("NearbyBluetooth", new NearbyBluetoothLogger());
