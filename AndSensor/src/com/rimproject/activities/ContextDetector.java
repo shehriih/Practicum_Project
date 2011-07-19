@@ -1,10 +1,8 @@
-package com.rimproject.contexts;
+package com.rimproject.activities;
 
 import java.util.Calendar;
 import java.util.Date;
 
-import com.rimproject.activities.DeviceStatus;
-import com.rimproject.activities.SensorConstants;;
 
 public class ContextDetector {
 	public static double probabilityOfSleeping(int durationToConsider) {

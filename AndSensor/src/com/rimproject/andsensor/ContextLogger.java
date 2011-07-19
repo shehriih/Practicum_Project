@@ -2,7 +2,7 @@ package com.rimproject.andsensor;
 
 import java.util.Calendar;
 
-import com.rimproject.contexts.ContextDetector;
+import com.rimproject.activities.ContextDetector;
 import com.rimproject.logreadings.ContextReading;
 
 public class ContextLogger extends BasicLogger
