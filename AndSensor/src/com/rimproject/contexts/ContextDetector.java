@@ -77,7 +77,8 @@ public class ContextDetector {
 
 
 		final double deviceIsChargingWeighting = 0.1;
-		double deviceIsChargingScore = deviceStatus.isDeviceCharging() ? 1.0 : 0.0;
+		//Change it to boolean later
+		double deviceIsChargingScore = deviceStatus.isDeviceCharging() != 0 ? 1.0 : 0.0;
 		double deviceIsChargingFactor = deviceIsChargingWeighting * deviceIsChargingScore;
 
 

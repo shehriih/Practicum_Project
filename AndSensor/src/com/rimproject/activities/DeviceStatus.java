@@ -1,23 +1,24 @@
 package com.rimproject.activities;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
 import android.bluetooth.BluetoothAdapter;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.location.LocationManager;
 import android.media.AudioManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.BatteryManager;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 
 import com.rimproject.andsensor.*;
 import com.rimproject.fileio.FileLoggingIO;
@@ -27,6 +28,7 @@ import com.rimproject.logreadings.LightReading;
 public class DeviceStatus {
 	
 	private String location;
+	static int batteryCharging = -1;
 	
 	public boolean isIdle(int duration){
 		boolean result = false;
@@ -105,11 +107,39 @@ public class DeviceStatus {
 		return result;
 	}
 	
-	public boolean isDeviceCharging(){
-		boolean result = false;
-		return result;
-	}
 	
+		public int isDeviceCharging(){
+			
+			
+			AndSensor.getContext().registerReceiver(broadCastReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+			
+			if(batteryCharging == -1){
+				try {
+					Thread.sleep(10);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				return batteryCharging;
+			}
+			else{
+				return batteryCharging;
+			}
+			
+		}
+	
+		BroadcastReceiver broadCastReceiver = new BroadcastReceiver(){
+			//int batteryCharging = 0;
+			@Override
+			public void onReceive(Context context, Intent intent) {
+				int batteryStatus = intent.getIntExtra("status", BatteryManager.BATTERY_STATUS_UNKNOWN);
+				if(intent.getAction().equals(Intent.ACTION_BATTERY_CHANGED)){
+					batteryCharging = batteryStatus;
+					Log.v("InIF TestBat", batteryStatus+"");
+				}
+				
+			}
+
+		};
 	public double checkLightLevel(int duration){
 		double result = -1.0;
 		
