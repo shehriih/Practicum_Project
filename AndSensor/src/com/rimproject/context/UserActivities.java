@@ -1,4 +1,4 @@
-package com.rimproject.activities;
+package com.rimproject.context;
 
 import java.util.*;
 import com.rimproject.andsensor.BasicTimedDurationLogger;

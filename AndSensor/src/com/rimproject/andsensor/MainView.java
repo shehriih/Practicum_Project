@@ -15,7 +15,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.rimproject.activities.DeviceStatus;
+import com.rimproject.context.DeviceStatus;
 import com.rimproject.fileio.FileLoggingIO;
 import com.rimproject.logreadings.ContextReading;
 
