@@ -222,9 +222,8 @@ public class DeviceStatus {
 	
 	public boolean isGPSAvailable(){
 		boolean result = false;
-		LocationManager loc_manager = (LocationManager) AndSensor.getContext().getSystemService(Context.LOCATION_SERVICE); 
-		List<String> str = loc_manager.getProviders(true); 
-		if(str.size() > 0) {
+		LocationManager locationManager = (LocationManager) AndSensor.getContext().getSystemService(Context.LOCATION_SERVICE); 
+		if(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
 			result = true;
 		}
 		return result;
