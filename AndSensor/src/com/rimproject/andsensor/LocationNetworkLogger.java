@@ -12,15 +12,13 @@ public class LocationNetworkLogger extends BasicLogger
 {
 	private LocationManager locationManager;
 	private String locationSensorNetwork;
-	public static final String SENSOR_NAME="";
+	public static final String SENSOR_NAME="LocationNetwork";
 	
 	public LocationNetworkLogger() 
 	{
 		super();
 		this.locationManager = (LocationManager) AndSensor.getContext().getSystemService(android.content.Context.LOCATION_SERVICE);
 		this.locationSensorNetwork = LocationManager.NETWORK_PROVIDER;
-		
-		setDelayBetweenLogging(5000);
 	}
 	
 	protected void performLogging() {
