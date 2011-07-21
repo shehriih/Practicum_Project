@@ -139,7 +139,7 @@ public class FileLoggingIO<T extends BasicLogReading>
 	     * @contentType : the name of the sensor or activity that will be used to form the file name
 		 * @reading : the object to be serialized
 		 */
-		 public void writeToSERLogFile(String contentType , BasicLogReading reading )
+		/* public void writeToSERLogFile(String contentType , BasicLogReading reading )
 		 {
 			   File sdCardDir = Environment.getExternalStorageDirectory();
 	           File dir = new File (sdCardDir.getAbsolutePath() + "/"+DIR);
@@ -174,7 +174,7 @@ public class FileLoggingIO<T extends BasicLogReading>
 		     ex.printStackTrace();
 		    }
 
-		 }
+		 }*/
 		 
 		 /*
 		  * Binary read , not working currently !
