@@ -108,43 +108,43 @@ public class MainView extends Activity implements OnClickListener {
     		fioG.write2test("testGeo", hm);*/
     	//-------------------------
 
-//		if (v.getId() == refresh.getId()) {
-//			Calendar cal = Calendar.getInstance();
-//			cal.add(Calendar.MINUTE, -5);
-//			Date d1 = cal.getTime();
-//		    Date d2 = Calendar.getInstance().getTime();
-//
-//    	    FileLoggingIO<ContextReading> fio = new FileLoggingIO<ContextReading>();
-//            HashMap<Date,List<ContextReading>> map = fio.readFromTXTLogFile(ContextLogger.SENSOR_NAME, new ContextReading(), null,d1,d2);
-//    		String outputString = "";//map.toString();
-//    		
-//    		
-//    		Set<Date> es = map.keySet();
-//    		TreeSet<Date> ts = new TreeSet<Date>(es);
-//    		
-//    		for (Date key : ts) {
-//    			outputString += "-------------" + key.toString() + "-------------\n";
-//				for (ContextReading cr: map.get(key)) {
-//					 String s = String.format
-//					 ("%.2f probability of %s\n", cr.getProbability(), cr.getContextName());
-//					outputString += s;
-//				}
-//				outputString += "--------------------------------------------------------------------\n\n";
-//			}
-//    		
-//    		outputView.setText(outputString);
-//			
-//		} else {
-//			isLogging = !isLogging;
-//			if(isLogging) {
-//				toggleLogging.setText(R.string.stop);
-//				this.logger.initiateAllLogging();
-//			} else {
-//				toggleLogging.setText(R.string.start);
-//				this.logger.terminateAllLogging();
-//
-//			}
-//		}
+		if (v.getId() == refresh.getId()) {
+			Calendar cal = Calendar.getInstance();
+			cal.add(Calendar.MINUTE, -5);
+			Date d1 = cal.getTime();
+		    Date d2 = Calendar.getInstance().getTime();
+
+    	    FileLoggingIO<ContextReading> fio = new FileLoggingIO<ContextReading>();
+            HashMap<Date,List<ContextReading>> map = fio.readFromTXTLogFile(ContextLogger.SENSOR_NAME, new ContextReading(), null,d1,d2);
+    		String outputString = "";//map.toString();
+    		
+    		
+    		Set<Date> es = map.keySet();
+    		TreeSet<Date> ts = new TreeSet<Date>(es);
+    		
+    		for (Date key : ts) {
+    			outputString += "-------------" + key.toString() + "-------------\n";
+				for (ContextReading cr: map.get(key)) {
+					 String s = String.format
+					 ("%.2f probability of %s\n", cr.getProbability(), cr.getContextName());
+					outputString += s;
+				}
+				outputString += "--------------------------------------------------------------------\n\n";
+			}
+    		
+    		outputView.setText(outputString);
+			
+		} else {
+			isLogging = !isLogging;
+			if(isLogging) {
+				toggleLogging.setText(R.string.stop);
+				this.logger.initiateAllLogging();
+			} else {
+				toggleLogging.setText(R.string.start);
+				this.logger.terminateAllLogging();
+
+			}
+		}
 	}
 
 
