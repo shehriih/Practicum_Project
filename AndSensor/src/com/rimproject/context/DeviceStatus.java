@@ -1,5 +1,12 @@
 package com.rimproject.context;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -12,6 +19,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.LocationManager;
 import android.media.AudioManager;
 import android.net.ConnectivityManager;
@@ -24,10 +33,10 @@ import com.rimproject.andsensor.*;
 import com.rimproject.fileio.FileLoggingIO;
 import com.rimproject.logreadings.AccelerometerReading;
 import com.rimproject.logreadings.LightReading;
+import com.rimproject.logreadings.LocationGPSReading;
 
 public class DeviceStatus {
 	
-	private String location;
 	static int batteryCharging = -1;
 	
 	public boolean isIdle(int duration){
@@ -281,14 +290,72 @@ public class DeviceStatus {
 		return result;
 	}
 	
-	public void setLocation(String location){
-		this.location = location;
-	}
 	
 	public String getLocation(){
+		String[] location = new String[3];
+		String street, city, state;
+		String businessName = "";
+		LocationGPSReading locationGPSReading = new LocationGPSReading();
+		double latitude = locationGPSReading.getLatitude();
+		double longitude = locationGPSReading.getLongitude();
+		location = translateCoordinatesToAddress(latitude,longitude);
+		street = location[0];
+		city = location[1];
+		state = location[2];
+		businessName = fetchBusinessName(street,city,state);
+		
+		return businessName;
+		
+	}
+	
+	public String[] translateCoordinatesToAddress(double latitude, double longitude){
+		String[] location = new String[3];
+		try{
+			Geocoder geocoder = new Geocoder(AndSensor.getContext());
+			Address address = (Address) geocoder.getFromLocation(latitude, longitude, 1);
+			location[0] = address.getAddressLine(0);
+			location[1] = address.getLocality();
+			location[2] = address.getAdminArea();
+			
+		}catch(IOException e){
+			e.printStackTrace();
+		}
 		return location;
 	}
 	
-	
+	public String fetchBusinessName(String street, String city, String state){
+		String businessName = null;
+		String constructUrl = "http://api.whitepages.com/reverse_address/1.0/?street="+street+";city="+city+";state="+state+";api_key=4d2234c06b2c4c279a67accd0324d977";
+		try {
+			URL url = new URL(constructUrl);
+			StringBuffer fileContent = new StringBuffer();
+			HttpURLConnection httpUrlConnection = (HttpURLConnection)url.openConnection();
+			httpUrlConnection.connect();
+			InputStreamReader inputStreamReader = new InputStreamReader((InputStream) httpUrlConnection.getContent());
+			BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+			String content;
+			do{
+				//<wp:businessname>Starlight High School</wp:businessname>
+				content = bufferedReader.readLine();
+				if(content.toString().contains("<wp:businessname>")){
+					businessName = content.toString();
+					break;
+				}
+				//System.out.println(content);
+			}while(null != content);
+			businessName = businessName.replace("<wp:businessname>", "");
+			businessName = businessName.replace("</wp:businessname>", "");
+			businessName = businessName.trim();
+		
+		} catch (MalformedURLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+		}
+		catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+		}
+		return businessName;
+	}
 	
 }

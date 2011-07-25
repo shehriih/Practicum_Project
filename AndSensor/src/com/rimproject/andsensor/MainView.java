@@ -17,7 +17,10 @@ import android.widget.TextView;
 
 import com.rimproject.context.DeviceStatus;
 import com.rimproject.fileio.FileLoggingIO;
+import com.rimproject.logreadings.AccelerometerReading;
+import com.rimproject.logreadings.BasicLogReading;
 import com.rimproject.logreadings.ContextReading;
+import com.rimproject.logreadings.LocationGPSReading;
 
 public class MainView extends Activity implements OnClickListener {
 	Button toggleLogging;
@@ -66,85 +69,85 @@ public class MainView extends Activity implements OnClickListener {
 		// it is also useful to demo how to use the read method
 		//-------------------------
 
-		/* Date d1 = BasicLogReading.getDateFromString("07-09-2011 20:42:23");
+		 Date d1 = BasicLogReading.getDateFromString("07-09-2011 20:42:23");
 		    Date d2 = BasicLogReading.getDateFromString("07-09-2011 20:42:28");
-
-    	    FileLoggingIO<AccelerometerReading> fio = new FileLoggingIO<AccelerometerReading>();
-            HashMap<Date,List<AccelerometerReading>> map = fio.readFromTXTLogFile(AccelerometerLogger.SENSOR_NAME, new AccelerometerReading(), null,d1,d2);
-    		String hm = map.toString();
-    		fioA.write2test("testAcc", hm);
+		    
+//    	    FileLoggingIO<AccelerometerReading> fio = new FileLoggingIO<AccelerometerReading>();
+//            HashMap<Date,List<AccelerometerReading>> map = fio.readFromTXTLogFile(AccelerometerLogger.SENSOR_NAME, new AccelerometerReading(), null,d1,d2);
+//    		String hm = map.toString();
+//    		fioA.write2test("testAcc", hm);
     		
     		//Test Bluetooth
-    	    d1 = BasicLogReading.getDateFromString("07-11-2011 17:03:18");
-		    d2 = BasicLogReading.getDateFromString("07-11-2011 17:05:03");
-		    FileLoggingIO<BluetoothReading> fioB = new FileLoggingIO<BluetoothReading>();
-		    HashMap<Date,List<BluetoothReading>> mapB = fioB.readFromTXTLogFile(NearbyBluetoothLogger.SENSOR_NAME, new BluetoothReading(), null,d1,d2);
-    		hm = mapB.toString();
-    		fioB.write2test("testBlue", hm);
+//    	    d1 = BasicLogReading.getDateFromString("07-11-2011 17:03:18");
+//		    d2 = BasicLogReading.getDateFromString("07-11-2011 17:05:03");
+//		    FileLoggingIO<BluetoothReading> fioB = new FileLoggingIO<BluetoothReading>();
+//		    HashMap<Date,List<BluetoothReading>> mapB = fioB.readFromTXTLogFile(NearbyBluetoothLogger.SENSOR_NAME, new BluetoothReading(), null,d1,d2);
+//    		hm = mapB.toString();
+//    		fioB.write2test("testBlue", hm);
     	   
     		// Test Light 
-    		d1 = BasicLogReading.getDateFromString("07-11-2011 17:02:58");
-		    d2 = BasicLogReading.getDateFromString("07-11-2011 17:05:59");
-		    FileLoggingIO<LightReading> fioL = new FileLoggingIO<LightReading>();
-		    HashMap<Date,List<LightReading>> mapL = fioL.readFromTXTLogFile(LightSensorLogger.SENSOR_NAME, new LightReading(), null,d1,d2);
-    	    hm = mapL.toString();
-    	    fioL.write2test("testLight", hm);
+//    		d1 = BasicLogReading.getDateFromString("07-11-2011 17:02:58");
+//		    d2 = BasicLogReading.getDateFromString("07-11-2011 17:05:59");
+//		    FileLoggingIO<LightReading> fioL = new FileLoggingIO<LightReading>();
+//		    HashMap<Date,List<LightReading>> mapL = fioL.readFromTXTLogFile(LightSensorLogger.SENSOR_NAME, new LightReading(), null,d1,d2);
+//    	    hm = mapL.toString();
+//    	    fioL.write2test("testLight", hm);
     	   
     	    // Test Wifi
-    	    d1 = BasicLogReading.getDateFromString("07-11-2011 17:02:32");
-		    d2 = BasicLogReading.getDateFromString("07-11-2011 17:03:58");
-		    FileLoggingIO<WifiReading> fioW = new FileLoggingIO<WifiReading>();
-		    HashMap<Date,List<WifiReading>> mapW = fioW.readFromTXTLogFile(NearbyWifiLogger.SENSOR_NAME, new WifiReading(), null,d1,d2);
-    		hm = mapW.toString();
-    		fioW.write2test("testWifi", hm);
+//    	    d1 = BasicLogReading.getDateFromString("07-11-2011 17:02:32");
+//		    d2 = BasicLogReading.getDateFromString("07-11-2011 17:03:58");
+//		    FileLoggingIO<WifiReading> fioW = new FileLoggingIO<WifiReading>();
+//		    HashMap<Date,List<WifiReading>> mapW = fioW.readFromTXTLogFile(NearbyWifiLogger.SENSOR_NAME, new WifiReading(), null,d1,d2);
+//    		hm = mapW.toString();
+//    		fioW.write2test("testWifi", hm); 
     		
     		
     	    // Test GeoLoc
-    	    d1 = BasicLogReading.getDateFromString("07-11-2011 17:32:16");
-		    d2 = BasicLogReading.getDateFromString("07-11-2011 17:32:16");
-		    FileLoggingIO<GeoLocationReading> fioG = new FileLoggingIO<GeoLocationReading>();
-		    HashMap<Date,List<GeoLocationReading>> mapG = fioG.readFromTXTLogFile(GeoLocationLogger.SENSOR_NAME, new GeoLocationReading(), null,d1,d2);
-    		hm = mapG.toString();
-    		fioG.write2test("testGeo", hm);*/
+    	    d1 = BasicLogReading.getDateFromString("07-25-2011 10:50:16");
+		    d2 = BasicLogReading.getDateFromString("07-25-2011 10:55:16");
+		    FileLoggingIO<LocationGPSReading> fioG = new FileLoggingIO<LocationGPSReading>();
+		    HashMap<Date,List<LocationGPSReading>> mapG = fioG.readFromTXTLogFile(LocationGPSLogger.SENSOR_NAME, new LocationGPSReading(), null,d1,d2);
+		    String hm = mapG.toString();
+    		fioG.write2test("testGeo", hm);
     	//-------------------------
 
-		if (v.getId() == refresh.getId()) {
-			Calendar cal = Calendar.getInstance();
-			cal.add(Calendar.MINUTE, -5);
-			Date d1 = cal.getTime();
-		    Date d2 = Calendar.getInstance().getTime();
-
-    	    FileLoggingIO<ContextReading> fio = new FileLoggingIO<ContextReading>();
-            HashMap<Date,List<ContextReading>> map = fio.readFromTXTLogFile(ContextLogger.SENSOR_NAME, new ContextReading(), null,d1,d2);
-    		String outputString = "";//map.toString();
-    		
-    		
-    		Set<Date> es = map.keySet();
-    		TreeSet<Date> ts = new TreeSet<Date>(es);
-    		
-    		for (Date key : ts) {
-    			outputString += "-------------" + key.toString() + "-------------\n";
-				for (ContextReading cr: map.get(key)) {
-					 String s = String.format
-					 ("%.2f probability of %s\n", cr.getProbability(), cr.getContextName());
-					outputString += s;
-				}
-				outputString += "--------------------------------------------------------------------\n\n";
-			}
-    		
-    		outputView.setText(outputString);
-			
-		} else {
-			isLogging = !isLogging;
-			if(isLogging) {
-				toggleLogging.setText(R.string.stop);
-				this.logger.initiateAllLogging();
-			} else {
-				toggleLogging.setText(R.string.start);
-				this.logger.terminateAllLogging();
-
-			}
-		}
+//		if (v.getId() == refresh.getId()) {
+//			Calendar cal = Calendar.getInstance();
+//			cal.add(Calendar.MINUTE, -5);
+//			Date d1 = cal.getTime();
+//		    Date d2 = Calendar.getInstance().getTime();
+//
+//    	    FileLoggingIO<ContextReading> fio = new FileLoggingIO<ContextReading>();
+//            HashMap<Date,List<ContextReading>> map = fio.readFromTXTLogFile(ContextLogger.SENSOR_NAME, new ContextReading(), null,d1,d2);
+//    		String outputString = "";//map.toString();
+//    		
+//    		
+//    		Set<Date> es = map.keySet();
+//    		TreeSet<Date> ts = new TreeSet<Date>(es);
+//    		
+//    		for (Date key : ts) {
+//    			outputString += "-------------" + key.toString() + "-------------\n";
+//				for (ContextReading cr: map.get(key)) {
+//					 String s = String.format
+//					 ("%.2f probability of %s\n", cr.getProbability(), cr.getContextName());
+//					outputString += s;
+//				}
+//				outputString += "--------------------------------------------------------------------\n\n";
+//			}
+//    		
+//    		outputView.setText(outputString);
+//			
+//		} else {
+//			isLogging = !isLogging;
+//			if(isLogging) {
+//				toggleLogging.setText(R.string.stop);
+//				this.logger.initiateAllLogging();
+//			} else {
+//				toggleLogging.setText(R.string.start);
+//				this.logger.terminateAllLogging();
+//
+//			}
+//		}
 	}
 
 
