@@ -7,7 +7,9 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +23,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.location.Address;
 import android.location.Geocoder;
+import android.location.Location;
 import android.location.LocationManager;
 import android.media.AudioManager;
 import android.net.ConnectivityManager;
@@ -78,11 +81,11 @@ public class DeviceStatus {
 	
 	public boolean isStationary(int duration){
 		boolean result = false;
-		double accelerometerActivityLevel = checkAccelerometerActivityLevel(duration);
+		double accelerometerActivityLevel = 9.1;//checkAccelerometerActivityLevel(duration);
 		if((accelerometerActivityLevel > SensorConstants.MIN_ACCELEROMETER_STATIONARY_LEVEL 
 		  && accelerometerActivityLevel < SensorConstants.MAX_ACCELEROMETER_STATIONARY_LEVEL) 
 		 // commented the logic for isLocationChanged as it is not complete yet 
-		  //&& isLocationChanged(duration)
+		  && isLocationChanged(duration)
 		  ){
 			result = true;
 		}
@@ -94,8 +97,7 @@ public class DeviceStatus {
 	public boolean isLocationChanged(int duration){
 		boolean result = false;
 		if(isGPSAvailable()){
-			
-			if(checkIfGPSChanging(duration) >= SensorConstants.STATIONARY){
+			if(checkIfGPSChanging(duration) >= SensorConstants.GPS_STATIONARY){
 				result = true;
 			}
 		}
@@ -273,9 +275,41 @@ public class DeviceStatus {
 	}
 	
 	public double checkIfGPSChanging(int duration){
-		double result = 0.0;
+		double maxDistance = 0.0;
 		
-		return result;
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.SECOND, -duration);
+		Date d1 = cal.getTime();
+	    Date d2 = Calendar.getInstance().getTime();
+
+	    FileLoggingIO<LocationGPSReading> fio = new FileLoggingIO<LocationGPSReading>();
+        HashMap<Date,List<LocationGPSReading>> map = fio.readFromTXTLogFile(LocationGPSLogger.SENSOR_NAME, new LocationGPSReading(), null,d1,d2);
+        Collection<List<LocationGPSReading>> locationLists = map.values();
+        
+        
+		ArrayList<Location> locations = new ArrayList<Location>();
+		for (List<LocationGPSReading> list : locationLists) {
+			for (LocationGPSReading locationGPSReading : list) {
+				Location location = new Location("GPS");
+				location.setTime(locationGPSReading.getLocationRecordingTime().getTime());
+				location.setLongitude(locationGPSReading.getLongitude());
+				location.setLatitude(locationGPSReading.getLatitude());
+				location.setAltitude(locationGPSReading.getAltitude());
+				location.setAccuracy(locationGPSReading.getAccuracy());
+				locations.add(location);
+			}
+		}
+		
+		for (Location location: locations) {
+			for (Location location2 : locations) {
+				double newDistance = location.distanceTo(location2);
+				if (newDistance > maxDistance) {
+					maxDistance = newDistance;
+				}
+			}
+		}
+		
+		return maxDistance;
 	}
 	
 	public double checkIfWIFIChanging(int duration){
