@@ -27,7 +27,9 @@ public class LocationGPSLogger extends BasicLogger implements LocationListener
 	protected void performLogging() {
 			super.performLogging();
 			
-			if (latestLocation != null && ! latestLocation.equals(latestLoggedLocation)) {
+			//commented out code:
+			//would be used if you only want log lines written when location _has_ changed
+			if (latestLocation != null) {// && ! latestLocation.equals(latestLoggedLocation)) {
 				double longitude = latestLocation.getLongitude();
 				double latitude = latestLocation.getLatitude();
 				double altitude = latestLocation.getAltitude();
