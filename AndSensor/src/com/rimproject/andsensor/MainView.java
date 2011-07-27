@@ -69,9 +69,9 @@ public class MainView extends Activity implements OnClickListener {
 		// it is also useful to demo how to use the read method
 		//-------------------------
 
-		 Date d1 = BasicLogReading.getDateFromString("07-09-2011 20:42:23");
-		    Date d2 = BasicLogReading.getDateFromString("07-09-2011 20:42:28");
-		    
+//		 Date d1 = BasicLogReading.getDateFromString("07-09-2011 20:42:23");
+//		    Date d2 = BasicLogReading.getDateFromString("07-09-2011 20:42:28");
+//		    
 //    	    FileLoggingIO<AccelerometerReading> fio = new FileLoggingIO<AccelerometerReading>();
 //            HashMap<Date,List<AccelerometerReading>> map = fio.readFromTXTLogFile(AccelerometerLogger.SENSOR_NAME, new AccelerometerReading(), null,d1,d2);
 //    		String hm = map.toString();
@@ -103,51 +103,51 @@ public class MainView extends Activity implements OnClickListener {
     		
     		
     	    // Test GeoLoc
-    	    d1 = BasicLogReading.getDateFromString("07-25-2011 10:50:16");
-		    d2 = BasicLogReading.getDateFromString("07-25-2011 10:55:16");
-		    FileLoggingIO<LocationGPSReading> fioG = new FileLoggingIO<LocationGPSReading>();
-		    HashMap<Date,List<LocationGPSReading>> mapG = fioG.readFromTXTLogFile(LocationGPSLogger.SENSOR_NAME, new LocationGPSReading(), null,d1,d2);
-		    String hm = mapG.toString();
-    		fioG.write2test("testGeo", hm);
+//    	    d1 = BasicLogReading.getDateFromString("07-25-2011 10:50:16");
+//		    d2 = BasicLogReading.getDateFromString("07-25-2011 10:55:16");
+//		    FileLoggingIO<LocationGPSReading> fioG = new FileLoggingIO<LocationGPSReading>();
+//		    HashMap<Date,List<LocationGPSReading>> mapG = fioG.readFromTXTLogFile(LocationGPSLogger.SENSOR_NAME, new LocationGPSReading(), null,d1,d2);
+//		    String hm = mapG.toString();
+//    		fioG.write2test("testGeo", hm);
     	//-------------------------
 
-//		if (v.getId() == refresh.getId()) {
-//			Calendar cal = Calendar.getInstance();
-//			cal.add(Calendar.MINUTE, -5);
-//			Date d1 = cal.getTime();
-//		    Date d2 = Calendar.getInstance().getTime();
-//
-//    	    FileLoggingIO<ContextReading> fio = new FileLoggingIO<ContextReading>();
-//            HashMap<Date,List<ContextReading>> map = fio.readFromTXTLogFile(ContextLogger.SENSOR_NAME, new ContextReading(), null,d1,d2);
-//    		String outputString = "";//map.toString();
-//    		
-//    		
-//    		Set<Date> es = map.keySet();
-//    		TreeSet<Date> ts = new TreeSet<Date>(es);
-//    		
-//    		for (Date key : ts) {
-//    			outputString += "-------------" + key.toString() + "-------------\n";
-//				for (ContextReading cr: map.get(key)) {
-//					 String s = String.format
-//					 ("%.2f probability of %s\n", cr.getProbability(), cr.getContextName());
-//					outputString += s;
-//				}
-//				outputString += "--------------------------------------------------------------------\n\n";
-//			}
-//    		
-//    		outputView.setText(outputString);
-//			
-//		} else {
-//			isLogging = !isLogging;
-//			if(isLogging) {
-//				toggleLogging.setText(R.string.stop);
-//				this.logger.initiateAllLogging();
-//			} else {
-//				toggleLogging.setText(R.string.start);
-//				this.logger.terminateAllLogging();
-//
-//			}
-//		}
+		if (v.getId() == refresh.getId()) {
+			Calendar cal = Calendar.getInstance();
+			cal.add(Calendar.MINUTE, -5);
+			Date d1 = cal.getTime();
+		    Date d2 = Calendar.getInstance().getTime();
+
+    	    FileLoggingIO<ContextReading> fio = new FileLoggingIO<ContextReading>();
+            HashMap<Date,List<ContextReading>> map = fio.readFromTXTLogFile(ContextLogger.SENSOR_NAME, new ContextReading(), null,d1,d2);
+    		String outputString = "";//map.toString();
+    		
+    		
+    		Set<Date> es = map.keySet();
+    		TreeSet<Date> ts = new TreeSet<Date>(es);
+    		
+    		for (Date key : ts) {
+    			outputString += "-------------" + key.toString() + "-------------\n";
+				for (ContextReading cr: map.get(key)) {
+					 String s = String.format
+					 ("%.2f probability of %s\n", cr.getProbability(), cr.getContextName());
+					outputString += s;
+				}
+				outputString += "--------------------------------------------------------------------\n\n";
+			}
+    		
+    		outputView.setText(outputString);
+			
+		} else {
+			isLogging = !isLogging;
+			if(isLogging) {
+				toggleLogging.setText(R.string.stop);
+				this.logger.initiateAllLogging();
+			} else {
+				toggleLogging.setText(R.string.start);
+				this.logger.terminateAllLogging();
+
+			}
+		}
 	}
 
 
