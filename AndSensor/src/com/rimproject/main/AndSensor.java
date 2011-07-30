@@ -1,4 +1,4 @@
-package com.rimproject.andsensor;
+package com.rimproject.main;
 
 import android.content.Context;
 

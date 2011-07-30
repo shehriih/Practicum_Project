@@ -1,4 +1,4 @@
-package com.rimproject.logreadings;
+package com.rimproject.logreader;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

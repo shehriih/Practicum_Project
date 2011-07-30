@@ -1,9 +1,9 @@
-package com.rimproject.logreadings;
+package com.rimproject.logreader;
 
 import java.io.Serializable;
 import java.util.Date;
 
-import com.rimproject.andsensor.BasicLogger;
+import com.rimproject.logger.BasicLogger;
 
 /*
  * Class to hold any accelerometer reading, it should be used when writing to the file

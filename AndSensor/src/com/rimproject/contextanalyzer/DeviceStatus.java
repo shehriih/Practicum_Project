@@ -1,4 +1,4 @@
-package com.rimproject.context;
+package com.rimproject.contextanalyzer;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -33,12 +33,13 @@ import android.os.BatteryManager;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
-import com.rimproject.andsensor.*;
 import com.rimproject.fileio.FileLoggingIO;
-import com.rimproject.logreadings.AccelerometerReading;
-import com.rimproject.logreadings.LightReading;
-import com.rimproject.logreadings.LocationGPSReading;
-import com.rimproject.logreadings.WifiReading;
+import com.rimproject.logger.*;
+import com.rimproject.logreader.AccelerometerReading;
+import com.rimproject.logreader.LightReading;
+import com.rimproject.logreader.LocationGPSReading;
+import com.rimproject.logreader.WifiReading;
+import com.rimproject.main.AndSensor;
 
 public class DeviceStatus {
 	

@@ -1,4 +1,4 @@
-package com.rimproject.andsensor;
+package com.rimproject.logger;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -16,7 +16,7 @@ import android.os.Environment;
 import android.util.Log;
 
 import com.rimproject.fileio.FileLoggingIO;
-import com.rimproject.logreadings.BasicLogReading;
+import com.rimproject.logreader.BasicLogReading;
 
 /* Example of how this class and its timer's will work:
  * 

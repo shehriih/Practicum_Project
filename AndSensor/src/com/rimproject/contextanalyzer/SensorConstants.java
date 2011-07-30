@@ -1,4 +1,4 @@
-package com.rimproject.context;
+package com.rimproject.contextanalyzer;
 
 public class SensorConstants {
 	public static final String LOCATION_HOME = "home";

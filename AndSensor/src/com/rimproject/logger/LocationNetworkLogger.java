@@ -1,4 +1,4 @@
-package com.rimproject.andsensor;
+package com.rimproject.logger;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -6,7 +6,8 @@ import java.util.Date;
 import android.location.Location;
 import android.location.LocationManager;
 
-import com.rimproject.logreadings.LocationNetworkReading;
+import com.rimproject.logreader.LocationNetworkReading;
+import com.rimproject.main.AndSensor;
 
 public class LocationNetworkLogger extends BasicLogger
 {

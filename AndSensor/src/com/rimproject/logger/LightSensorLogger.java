@@ -1,4 +1,4 @@
-package com.rimproject.andsensor;
+package com.rimproject.logger;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -7,21 +7,23 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
 
-import com.rimproject.fileio.FileLoggingIO;
-import com.rimproject.logreadings.AccelerometerReading;
+import com.rimproject.logreader.LightReading;
+import com.rimproject.main.AndSensor;
 
-public class AccelerometerLogger extends BasicTimedDurationLogger
+public class LightSensorLogger extends BasicTimedDurationLogger
 {
 	SensorManager sensorManager;
 	Sensor sensor;
-	public static final String SENSOR_NAME="Accelerometer";
-
+	public static final String SENSOR_NAME="Light";
 	
-	public AccelerometerLogger() 
+	public LightSensorLogger() 
 	{
 		super();
 		this.sensorManager = (SensorManager) AndSensor.getContext().getSystemService(android.content.Context.SENSOR_SERVICE);
-		this.sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+		this.sensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
+		
+		this.setDelayBetweenLogging(60*1000);
+		this.setLoggingDuration(5*1000);
 	}
 	
 	public void startLogging() {
@@ -32,6 +34,7 @@ public class AccelerometerLogger extends BasicTimedDurationLogger
 	protected void stopLogging() 
 	{
 		super.stopLogging();
+		
 		this.sensorManager.unregisterListener(this);
 	}
 	
@@ -46,16 +49,12 @@ public class AccelerometerLogger extends BasicTimedDurationLogger
 		float[] values = event.values;
 		
 		synchronized (this) {
-            if (sensor == Sensor.TYPE_ACCELEROMETER) {
-            	//flio.writeToSERLogFile(SENSOR_NAME,new AccelerometerReading(new Date(event.timestamp),values[0], values[1], values[2]));
-            	// for debugging writing the same data to txt file
-            	flio.writeToTXTLogFile(SENSOR_NAME,new AccelerometerReading(Calendar.getInstance().getTime(),values[0], values[1], values[2]));
-
+            if (sensor == Sensor.TYPE_LIGHT) {
+            	flio.writeToTXTLogFile(SENSOR_NAME,new LightReading(Calendar.getInstance().getTime(),values[0]));
             } else {
             	System.out.println(this+" ERROR: Unexpected sensor reading from sensor "+sensor);
             }
         }
 	}
-	
 
 }

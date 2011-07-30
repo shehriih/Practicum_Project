@@ -1,4 +1,4 @@
-package com.rimproject.andsensor;
+package com.rimproject.logger;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -8,7 +8,8 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 
-import com.rimproject.logreadings.LocationGPSReading;
+import com.rimproject.logreader.LocationGPSReading;
+import com.rimproject.main.AndSensor;
 
 public class LocationGPSLogger extends BasicLogger implements LocationListener
 {

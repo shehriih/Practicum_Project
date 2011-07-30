@@ -1,4 +1,4 @@
-package com.rimproject.andsensor;
+package com.rimproject.main;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -15,12 +15,18 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.rimproject.context.DeviceStatus;
+import com.rimproject.andsensor.R;
+import com.rimproject.andsensor.R.id;
+import com.rimproject.andsensor.R.layout;
+import com.rimproject.andsensor.R.string;
+import com.rimproject.contextanalyzer.DeviceStatus;
 import com.rimproject.fileio.FileLoggingIO;
-import com.rimproject.logreadings.AccelerometerReading;
-import com.rimproject.logreadings.BasicLogReading;
-import com.rimproject.logreadings.ContextReading;
-import com.rimproject.logreadings.LocationGPSReading;
+import com.rimproject.logger.ContextLogger;
+import com.rimproject.logger.LoggerManager;
+import com.rimproject.logreader.AccelerometerReading;
+import com.rimproject.logreader.BasicLogReading;
+import com.rimproject.logreader.ContextReading;
+import com.rimproject.logreader.LocationGPSReading;
 
 public class MainView extends Activity implements OnClickListener {
 	Button toggleLogging;

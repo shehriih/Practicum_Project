@@ -1,4 +1,4 @@
-package com.rimproject.andsensor;
+package com.rimproject.logger;
 
 public interface LoggerInterface {
 	public void initiateRepeatedLogging();

@@ -28,8 +28,8 @@ import java.util.List;
 import android.os.Environment;
 import android.util.Log;
 
-import com.rimproject.logreadings.AccelerometerReading;
-import com.rimproject.logreadings.BasicLogReading;
+import com.rimproject.logreader.AccelerometerReading;
+import com.rimproject.logreader.BasicLogReading;
 
 public class FileLoggingIO<T extends BasicLogReading>
 {

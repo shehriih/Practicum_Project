@@ -1,4 +1,4 @@
-package com.rimproject.logreadings;
+package com.rimproject.logreader;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -6,7 +6,7 @@ import java.util.List;
 
 import android.net.wifi.ScanResult;
 
-import com.rimproject.andsensor.BasicLogger;
+import com.rimproject.logger.BasicLogger;
 
 public class WifiReading extends BasicLogReading implements Serializable
 {

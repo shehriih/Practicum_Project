@@ -1,4 +1,4 @@
-package com.rimproject.andsensor;
+package com.rimproject.logger;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -12,7 +12,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.util.Log;
 
-import com.rimproject.logreadings.BluetoothReading;
+import com.rimproject.logreader.BluetoothReading;
+import com.rimproject.main.AndSensor;
 
 public class NearbyBluetoothLogger extends BasicTimedDurationLogger
 {	

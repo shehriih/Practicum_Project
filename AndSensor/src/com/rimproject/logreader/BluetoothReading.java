@@ -1,4 +1,4 @@
-package com.rimproject.logreadings;
+package com.rimproject.logreader;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -7,7 +7,7 @@ import java.util.List;
 
 import android.bluetooth.BluetoothDevice;
 
-import com.rimproject.andsensor.BasicLogger;
+import com.rimproject.logger.BasicLogger;
 
 public class BluetoothReading extends BasicLogReading implements Serializable{
 	/**

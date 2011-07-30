@@ -1,7 +1,8 @@
-package com.rimproject.context;
+package com.rimproject.contextanalyzer;
 
 import java.util.*;
-import com.rimproject.andsensor.BasicTimedDurationLogger;
+
+import com.rimproject.logger.BasicTimedDurationLogger;
 
 public class UserActivities {
 

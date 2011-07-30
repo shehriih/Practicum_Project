@@ -1,4 +1,4 @@
-package com.rimproject.context;
+package com.rimproject.contextanalyzer;
 
 import java.util.Calendar;
 

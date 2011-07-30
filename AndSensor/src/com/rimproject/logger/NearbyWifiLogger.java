@@ -1,9 +1,10 @@
-package com.rimproject.andsensor;
+package com.rimproject.logger;
 
 import java.util.Calendar;
 import java.util.List;
 
-import com.rimproject.logreadings.WifiReading;
+import com.rimproject.logreader.WifiReading;
+import com.rimproject.main.AndSensor;
 
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
