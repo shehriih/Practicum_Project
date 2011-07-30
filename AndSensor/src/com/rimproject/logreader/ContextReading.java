@@ -14,9 +14,16 @@ public class ContextReading extends BasicLogReading implements Serializable
 	private static final long serialVersionUID = -1412251076778561174L;
 	private String contextName;
 	private double probability;
+	private String optionalTags;
 	
 	
 	
+	public String getOptionalTags() {
+		return optionalTags;
+	}
+	public void setOptionalTags(String optionalTags) {
+		this.optionalTags = optionalTags;
+	}
 	public String getContextName() {
 		return contextName;
 	}
@@ -29,11 +36,12 @@ public class ContextReading extends BasicLogReading implements Serializable
 	public void setProbability(double probability) {
 		this.probability = probability;
 	}
-	public ContextReading(Date dateTimeStamp, String contextName, double probability)
+	public ContextReading(Date dateTimeStamp, String contextName, double probability, String optionalTags)
 	{
 		super(dateTimeStamp);
 		this.contextName = contextName;
 		this.probability=probability;
+		this.optionalTags = optionalTags;
 	}
 	public ContextReading() {
 		super();
@@ -50,13 +58,17 @@ public class ContextReading extends BasicLogReading implements Serializable
 		
 		String[] params =  lineArr[1].split(BasicLogger.genericDel);
 
-		ContextReading cr = new ContextReading(dateTime,params[0],Double.parseDouble(params[1]));
+		ContextReading cr = new ContextReading(dateTime,params[0],Double.parseDouble(params[1]), params[2]);
 		return cr;
 	}
 	
 	public String toString()
 	{
-		return BasicLogReading.getStringFormattedDateTime(getDateTimeStamp())+BasicLogger.timeStampDel+contextName+BasicLogger.genericDel+probability+"\n";
+		return BasicLogReading.getStringFormattedDateTime(
+				getDateTimeStamp())+BasicLogger.timeStampDel
+				+contextName+BasicLogger.genericDel
+				+probability+BasicLogger.genericDel
+				+optionalTags+"\n";
 	}
 	
 

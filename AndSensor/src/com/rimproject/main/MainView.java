@@ -144,7 +144,7 @@ public class MainView extends Activity implements OnClickListener {
     			outputString += "-------------" + key.toString() + "-------------\n";
 				for (ContextReading cr: map.get(key)) {
 					 String s = String.format
-					 ("%.2f probability of %s\n", cr.getProbability(), cr.getContextName());
+					 ("%.2f probability of %s [%s]\n", cr.getProbability(), cr.getContextName(), cr.getOptionalTags());
 					outputString += s;
 				}
 				outputString += "--------------------------------------------------------------------\n\n";

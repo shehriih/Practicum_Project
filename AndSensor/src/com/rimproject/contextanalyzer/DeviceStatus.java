@@ -47,10 +47,13 @@ public class DeviceStatus {
 	
 	static HashMap<String,ArrayList<String>> definedWifiLocations = new HashMap<String,ArrayList<String>>();
 	
-	static // static Initialization block to populate the predeined set of mac addresses for Home location
+	static // static Initialization block to populate the predefined set of mac addresses for Home location
 	{
 		ArrayList<String> wifiMACAddresses = new ArrayList<String>();
-		wifiMACAddresses.add("c4:3d:c7:aa:22:3a"); // Ibrahim Home Wifi
+		//wifiMACAddresses.add("c4:3d:c7:aa:22:3a"); // Ibrahim Home Wifi
+		wifiMACAddresses.add("00:0f:7d:0a:7a:51"); // CMU bld 19
+		wifiMACAddresses.add("00:0f:7d:37:99:51"); // CMU bld 19
+		wifiMACAddresses.add("00:0f:7d:37:99:51"); // CMU bld 19
 		definedWifiLocations.put("HOME", wifiMACAddresses);
 	}
 	
@@ -122,8 +125,7 @@ public class DeviceStatus {
 		boolean result = false;
 		double accelerometerActivityLevel = checkAccelerometerActivityLevel(duration);
 		if((accelerometerActivityLevel > SensorConstants.MIN_ACCELEROMETER_STATIONARY_LEVEL 
-		  && accelerometerActivityLevel < SensorConstants.MAX_ACCELEROMETER_STATIONARY_LEVEL) 
-		 // commented the logic for isLocationChanged as it is not complete yet 
+		  && accelerometerActivityLevel < SensorConstants.MAX_ACCELEROMETER_STATIONARY_LEVEL)  
 		  && isLocationChanged(duration)
 		  ){
 			result = true;
