@@ -141,16 +141,14 @@ public class DeviceStatus {
 		}
 		else{
 			if(isWIFIAvailable()){
+				//TODO: Add Ibrahim's logic to check if WIFI location changed
 					
 			}
 			else if(isBluetoothAvailable()){
-				
-			}
-			else if(isWIFIAvailable()){
-				
+				//TODO : Add logic to check if Bluetooth location changed
 			}
 			else if(isNetworkAvailable()){
-				
+				//TODO: Add logic to check if Network Triangulation changed
 			}
 		}
 		return result;
