@@ -37,10 +37,47 @@ import com.rimproject.fileio.FileLoggingIO;
 import com.rimproject.logreadings.AccelerometerReading;
 import com.rimproject.logreadings.LightReading;
 import com.rimproject.logreadings.LocationGPSReading;
+import com.rimproject.logreadings.WifiReading;
 
 public class DeviceStatus {
 	
 	static int batteryCharging = -1;
+	
+	static HashMap<String,ArrayList<String>> definedWifiLocations = new HashMap<String,ArrayList<String>>();
+	
+	static // static Initialization block to populate the predeined set of mac addresses for Home location
+	{
+		ArrayList<String> wifiMACAddresses = new ArrayList<String>();
+		wifiMACAddresses.add("c4:3d:c7:aa:22:3a"); // Ibrahim Home Wifi
+		definedWifiLocations.put("HOME", wifiMACAddresses);
+	}
+	
+	
+	public boolean isWithinHomeWifiRange(int duration)
+	{
+		
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.SECOND, -duration);
+		Date d1 = cal.getTime();
+	    Date d2 = Calendar.getInstance().getTime();
+
+	    FileLoggingIO<WifiReading> fio = new FileLoggingIO<WifiReading>();
+        HashMap<Date,List<WifiReading>> map = fio.readFromTXTLogFile(NearbyWifiLogger.SENSOR_NAME, new WifiReading(), null,d1,d2);
+        
+        Set<Date> es = map.keySet();
+        TreeSet<Date> ts = new TreeSet<Date>(es);
+        
+	
+		for (Date key : ts) {
+			for (WifiReading reading: map.get(key)) {
+				 String macAddress = reading.getBSSID();
+				 if (definedWifiLocations.get("HOME").contains(macAddress))
+					 return true;
+			}
+		}
+
+		return false;
+	}
 	
 	public boolean isIdle(int duration){
 		boolean result = false;
@@ -81,7 +118,7 @@ public class DeviceStatus {
 	
 	public boolean isStationary(int duration){
 		boolean result = false;
-		double accelerometerActivityLevel = 9.1;//checkAccelerometerActivityLevel(duration);
+		double accelerometerActivityLevel = checkAccelerometerActivityLevel(duration);
 		if((accelerometerActivityLevel > SensorConstants.MIN_ACCELEROMETER_STATIONARY_LEVEL 
 		  && accelerometerActivityLevel < SensorConstants.MAX_ACCELEROMETER_STATIONARY_LEVEL) 
 		 // commented the logic for isLocationChanged as it is not complete yet 

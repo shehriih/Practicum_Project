@@ -1,7 +1,9 @@
 package com.rimproject.context;
 
 import java.util.Calendar;
-import java.util.Date;
+
+import android.test.IsolatedContext;
+
 
 
 public class ContextDetector {
@@ -96,6 +98,9 @@ public class ContextDetector {
 		}
 		double deviceUseFactor = deviceUseWeighting * deviceUseScore;
 
-		return timeFactor + lightFactor + deviceIsChargingFactor + stationaryFactor + deviceUseFactor;
+		//return timeFactor + lightFactor + deviceIsChargingFactor + stationaryFactor + deviceUseFactor;
+		return  deviceStatus.isWithinHomeWifiRange(durationToConsider) ? 1.0 : 0.0;
 	}
+	
+	
 }
