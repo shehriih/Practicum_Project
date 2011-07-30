@@ -301,5 +301,62 @@ public class FileLoggingIO<T extends BasicLogReading>
 				
 				return map;
 		 }
+		 
+		 public HashMap<Date,List<T>> readFromTXTLogFile(String contentType , BasicLogReading readingObj, Date date)
+		 {
+			 HashMap<Date,List<T>> map = new HashMap<Date,List<T>>();
+			 List<T> list = new ArrayList<T>();
+			 
+			
+			 try{
+				 	
+				   File sdCardDir = Environment.getExternalStorageDirectory();
+		           File dir = new File (sdCardDir.getAbsolutePath() + "/"+DIR);
+		           dir.mkdirs();
+		           File file = new File(dir,getFileName(contentType,date)+TXT);
+			       boolean exists = file.exists();
+			       
+				   
+				 
+			       FileInputStream fileIS = new FileInputStream(file);
+				 
+				   BufferedReader buf = new BufferedReader(new InputStreamReader(fileIS));
+				 
+				   String readString = null;
+				   String tempString;
+				  
+				  
+				   while((tempString = buf.readLine())!= null){
+					   
+					  readString = tempString;
+				   }
+				   
+				   String lastLine = readString;
+					  T newObj =(T) readingObj.parseObjFromString(lastLine); 
+					  Date timeStamp= newObj.getDateTimeStamp();
+					  
+					  if(map.get(timeStamp)==null){
+							  list = new ArrayList<T>();
+							  map.put(timeStamp, list);
+					  }
+					  list = map.get(timeStamp);
+					  list.add(newObj);
+				      map.put(timeStamp,list );
+						  
+				      Log.d("line: ", newObj.toString());
+				 
+				   
+				} catch (FileNotFoundException e) {
+				 
+				   e.printStackTrace();
+				 
+				} catch (IOException e){
+				 
+				   e.printStackTrace();
+				 
+				}
+				
+				return map;
+		 }
 
 }

@@ -69,8 +69,8 @@ public class MainView extends Activity implements OnClickListener {
 		// it is also useful to demo how to use the read method
 		//-------------------------
 
-//		 Date d1 = BasicLogReading.getDateFromString("07-09-2011 20:42:23");
-//		    Date d2 = BasicLogReading.getDateFromString("07-09-2011 20:42:28");
+//		 Date d1 = BasicLogReading.getDateFromString("07-30-2011 20:42:23");
+//		    Date d2 = BasicLogReading.getDateFromString("07-30-2011 20:42:28");
 //		    
 //    	    FileLoggingIO<AccelerometerReading> fio = new FileLoggingIO<AccelerometerReading>();
 //            HashMap<Date,List<AccelerometerReading>> map = fio.readFromTXTLogFile(AccelerometerLogger.SENSOR_NAME, new AccelerometerReading(), null,d1,d2);
@@ -102,15 +102,24 @@ public class MainView extends Activity implements OnClickListener {
 //    		fioW.write2test("testWifi", hm); 
     		
     		
-    	    // Test GeoLoc
-//    	    d1 = BasicLogReading.getDateFromString("07-25-2011 10:50:16");
-//		    d2 = BasicLogReading.getDateFromString("07-25-2011 10:55:16");
+//    	     Test GeoLoc
+//    	    d1 = BasicLogReading.getDateFromString("07-30-2011 04:23:16");
+//		    d2 = BasicLogReading.getDateFromString("07-30-2011 10:24:16");
 //		    FileLoggingIO<LocationGPSReading> fioG = new FileLoggingIO<LocationGPSReading>();
 //		    HashMap<Date,List<LocationGPSReading>> mapG = fioG.readFromTXTLogFile(LocationGPSLogger.SENSOR_NAME, new LocationGPSReading(), null,d1,d2);
 //		    String hm = mapG.toString();
 //    		fioG.write2test("testGeo", hm);
     	//-------------------------
 
+		   /*Test getLocation*/
+//		    FileLoggingIO<LocationGPSReading> fioG = new FileLoggingIO<LocationGPSReading>();
+//		    HashMap<Date,List<LocationGPSReading>> mapG = fioG.readFromTXTLogFile(LocationGPSLogger.SENSOR_NAME, new LocationGPSReading(), null);
+//		    DeviceStatus deviceStatus = new DeviceStatus();
+//		    
+//		    String location = deviceStatus.getLocation(mapG);
+//		    outputView.setText("Current Location : "+location);
+		
+		
 		if (v.getId() == refresh.getId()) {
 			Calendar cal = Calendar.getInstance();
 			cal.add(Calendar.MINUTE, -5);
@@ -148,6 +157,7 @@ public class MainView extends Activity implements OnClickListener {
 
 			}
 		}
+  
 	}
 
 

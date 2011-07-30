@@ -12,6 +12,7 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -362,18 +363,33 @@ public class DeviceStatus {
 	}
 	
 	
-	public String getLocation(){
+	public String getLocation(HashMap<Date,List<LocationGPSReading>> mapG){
 		String[] location = new String[3];
 		String street, city, state;
 		String businessName = "";
-		LocationGPSReading locationGPSReading = new LocationGPSReading();
-		double latitude = locationGPSReading.getLatitude();
-		double longitude = locationGPSReading.getLongitude();
-		location = translateCoordinatesToAddress(latitude,longitude);
-		street = location[0];
-		city = location[1];
-		state = location[2];
-		businessName = fetchBusinessName(street,city,state);
+		
+        Collection<List<LocationGPSReading>> locationLists = mapG.values();
+
+		
+        Iterator<List<LocationGPSReading>> locationListsIterator = locationLists.iterator();
+        List<LocationGPSReading> locationGPSReadingList = locationListsIterator.next();
+        Iterator<LocationGPSReading> locationGPSReadingListIterator = locationGPSReadingList.iterator();
+        LocationGPSReading locationGPSReading = locationGPSReadingListIterator.next();
+
+        double latitude = (null != locationGPSReading)?locationGPSReading.getLatitude():0.0;
+        double longitude = (null != locationGPSReading)?locationGPSReading.getLongitude():0.0;
+        Log.d("GPS LATITUDE", "Latitude :"+latitude);
+        Log.d("GPS LONGITUDE", "longitude : "+ longitude);
+		if(longitude != 0.0 && latitude != 0.0){
+			location = translateCoordinatesToAddress(latitude,longitude);
+			street = location[0];
+			city = location[1];
+			state = location[2];
+			businessName = fetchBusinessName(street,city,state);
+		}
+		else{
+			businessName = "Location Unknown";
+		}
 		
 		return businessName;
 		
@@ -383,10 +399,13 @@ public class DeviceStatus {
 		String[] location = new String[3];
 		try{
 			Geocoder geocoder = new Geocoder(AndSensor.getContext());
-			Address address = (Address) geocoder.getFromLocation(latitude, longitude, 1);
-			location[0] = address.getAddressLine(0);
-			location[1] = address.getLocality();
-			location[2] = address.getAdminArea();
+			List<Address> address = new ArrayList<Address>();
+			address = geocoder.getFromLocation(latitude, longitude, 1);
+			
+			Address geocoderAddress = address.get(0);
+			location[0] = geocoderAddress.getAddressLine(0);
+			location[1] = geocoderAddress.getLocality();
+			location[2] = geocoderAddress.getAdminArea();
 			
 		}catch(IOException e){
 			e.printStackTrace();
@@ -396,10 +415,11 @@ public class DeviceStatus {
 	
 	public String fetchBusinessName(String street, String city, String state){
 		String businessName = null;
+		street = street.replace(" ", "%20");
+		city = city.replace(" ", "%20");
 		String constructUrl = "http://api.whitepages.com/reverse_address/1.0/?street="+street+";city="+city+";state="+state+";api_key=4d2234c06b2c4c279a67accd0324d977";
 		try {
 			URL url = new URL(constructUrl);
-			StringBuffer fileContent = new StringBuffer();
 			HttpURLConnection httpUrlConnection = (HttpURLConnection)url.openConnection();
 			httpUrlConnection.connect();
 			InputStreamReader inputStreamReader = new InputStreamReader((InputStream) httpUrlConnection.getContent());
@@ -417,14 +437,15 @@ public class DeviceStatus {
 			businessName = businessName.replace("<wp:businessname>", "");
 			businessName = businessName.replace("</wp:businessname>", "");
 			businessName = businessName.trim();
-		
+			Log.d("BUSINESS NAME", "Business Name:"+businessName);
+			
 		} catch (MalformedURLException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		catch (IOException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
+ catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return businessName;
 	}
