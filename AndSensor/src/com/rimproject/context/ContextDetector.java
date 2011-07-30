@@ -98,8 +98,8 @@ public class ContextDetector {
 		}
 		double deviceUseFactor = deviceUseWeighting * deviceUseScore;
 
-		//return timeFactor + lightFactor + deviceIsChargingFactor + stationaryFactor + deviceUseFactor;
-		return  deviceStatus.isWithinHomeWifiRange(durationToConsider) ? 1.0 : 0.0;
+		return timeFactor + lightFactor + deviceIsChargingFactor + stationaryFactor + deviceUseFactor;
+		//return  deviceStatus.isWithinHomeWifiRange(durationToConsider) ? 1.0 : 0.0;
 	}
 	
 	
