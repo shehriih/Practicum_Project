@@ -5,6 +5,7 @@ public class SensorConstants {
 	public static final String LOCATION_WORK = "work";
 	public static final double LIGHT_DIM = 10.0;
 	public static final int GPS_STATIONARY = 0;
+	public static final double ACCEPTABLE_WIFI_CHANGE_VALUE = 0.1;
 	
 	// accelerometer vector reading range, see  getACCVector() @ AccelerometerReading Class 
 	public static final double MIN_ACCELEROMETER_STATIONARY_LEVEL=8.7;

@@ -51,9 +51,10 @@ public class DeviceStatus {
 	{
 		ArrayList<String> wifiMACAddresses = new ArrayList<String>();
 		//wifiMACAddresses.add("c4:3d:c7:aa:22:3a"); // Ibrahim Home Wifi
-		wifiMACAddresses.add("00:0f:7d:0a:7a:51"); // CMU bld 19
-		wifiMACAddresses.add("00:0f:7d:37:99:51"); // CMU bld 19
-		wifiMACAddresses.add("00:0f:7d:37:99:51"); // CMU bld 19
+		wifiMACAddresses.add("f8:1e:df:fc:4e:0d"); // Chris Home WiFi
+		//wifiMACAddresses.add("00:0f:7d:0a:7a:51"); // CMU bld 19
+		//wifiMACAddresses.add("00:0f:7d:37:99:51"); // CMU bld 19
+		//wifiMACAddresses.add("00:0f:7d:37:99:51"); // CMU bld 19
 		definedWifiLocations.put("HOME", wifiMACAddresses);
 	}
 	
@@ -123,7 +124,7 @@ public class DeviceStatus {
 	
 	public boolean isStationary(int duration){
 		boolean result = false;
-		double accelerometerActivityLevel = checkAccelerometerActivityLevel(duration);
+		double accelerometerActivityLevel = 9.1;//checkAccelerometerActivityLevel(duration);
 		if((accelerometerActivityLevel > SensorConstants.MIN_ACCELEROMETER_STATIONARY_LEVEL 
 		  && accelerometerActivityLevel < SensorConstants.MAX_ACCELEROMETER_STATIONARY_LEVEL)  
 		  && isLocationChanged(duration)
@@ -138,21 +139,20 @@ public class DeviceStatus {
 	public boolean isLocationChanged(int duration){
 		boolean result = false;
 		if(isGPSAvailable()){
-			if(checkIfGPSChanging(duration) >= SensorConstants.GPS_STATIONARY){
+			if(checkIfGPSChanging(duration) > SensorConstants.GPS_STATIONARY){
 				result = true;
 			}
 		}
-		else{
-			if(isWIFIAvailable()){
-				//TODO: Add Ibrahim's logic to check if WIFI location changed
-					
+		if(isWIFIAvailable()){
+			if(checkIfWIFIChanging(duration) > SensorConstants.ACCEPTABLE_WIFI_CHANGE_VALUE) {
+				result = true;
 			}
-			else if(isBluetoothAvailable()){
-				//TODO : Add logic to check if Bluetooth location changed
-			}
-			else if(isNetworkAvailable()){
+		}
+		else if(isBluetoothAvailable()){
+			//TODO : Add logic to check if Bluetooth location changed
+		}
+		else if(isNetworkAvailable()){
 				//TODO: Add logic to check if Network Triangulation changed
-			}
 		}
 		return result;
 	}
@@ -352,7 +352,48 @@ public class DeviceStatus {
 	}
 	
 	public double checkIfWIFIChanging(int duration){
+		//increases the result by 0.1 per change 
+		//(number of wifi networks that used to be here that are now gone, or new ones that have appeared)
+		
 		double result = 0.0;
+		
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.SECOND, -duration);
+		Date d1 = cal.getTime();
+	    Date d2 = Calendar.getInstance().getTime();
+
+	    //FIXME: for some reason this doesn't get any wifi networks (ie map is empty)
+	    FileLoggingIO<WifiReading> fio = new FileLoggingIO<WifiReading>();
+        HashMap<Date,List<WifiReading>> map = fio.readFromTXTLogFile(NearbyWifiLogger.SENSOR_NAME, new WifiReading(), null,d1,d2);
+        Collection<List<WifiReading>> wifiLists = map.values();
+        
+        
+		List<WifiReading> previousList = null; 
+		for (List<WifiReading> list : wifiLists) {
+			if (previousList == null) {
+				previousList = list;
+			} else {
+				for (WifiReading wifiReading : previousList) {
+					if (!previousList.contains(wifiReading)) {
+						if (result == 1.0) {
+							return result;
+						} else {
+							result = result + 0.1;
+						}
+					}
+				}
+			}
+			
+			for (WifiReading wifiReading : list) {
+				if (!previousList.contains(wifiReading)) {
+					if (result == 1.0) {
+						return result;
+					} else {
+						result = result + 0.1;
+					}
+				}
+			}
+		}
 		
 		return result;
 	}
