@@ -149,8 +149,11 @@ public class MainView extends Activity implements OnClickListener {
 				}
 				outputString += "--------------------------------------------------------------------\n\n";
 			}
-    		
+			
     		outputView.setText(outputString);
+    		
+			//DeviceStatus ds = new DeviceStatus();
+			//outputView.setText(ds.checkIfWIFIChanging(60)+"");
 			
 		} else {
 			isLogging = !isLogging;

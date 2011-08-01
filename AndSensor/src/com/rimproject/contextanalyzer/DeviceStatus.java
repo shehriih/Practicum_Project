@@ -358,8 +358,10 @@ public class DeviceStatus {
 		//increases the result by 0.1 per change 
 		//(number of wifi networks that used to be here that are now gone, or new ones that have appeared)
 		
-		double result = 0.0;
+		int result = 0;
 		
+		
+		// Getting the set of non duplicat wifi mac addresses within the given duration
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.SECOND, -duration);
 		Date d1 = cal.getTime();
@@ -370,9 +372,65 @@ public class DeviceStatus {
         HashMap<Date,List<WifiReading>> map = fio.readFromTXTLogFile(NearbyWifiLogger.SENSOR_NAME, new WifiReading(), null,d1,d2);
         Collection<List<WifiReading>> wifiLists = map.values();
         
+        Set<String> nonDublicatMacAddressesWithinDurationSet = new TreeSet<String>();
         
-		List<WifiReading> previousList = null; 
+        for(List<WifiReading> wifiList : wifiLists)
+        {
+        	for(WifiReading wifiReading:wifiList)
+        	{
+        		nonDublicatMacAddressesWithinDurationSet.add(wifiReading.getBSSID());
+        	}
+        }
+        
+
+		// Getting the set of non duplicat wifi mac addresses within a previous  duration of the given one
+        // e.g. if we are getting the data of last 60 sec , then we will compare it with the data of the 
+        //60 sec before it.
+		Calendar cal2 = Calendar.getInstance();
+		
+		cal2.setTime(d1);
+		cal2.add(Calendar.SECOND, -duration);
+		Date d1PreDuration = cal2.getTime();
+		Date d2PreDuration = d1;
+	   
+
+	    //FIXME: for some reason this doesn't get any wifi networks (ie map is empty)
+	    FileLoggingIO<WifiReading> fioPreDuration = new FileLoggingIO<WifiReading>();
+        HashMap<Date,List<WifiReading>> mapPreDuration = fioPreDuration.readFromTXTLogFile(NearbyWifiLogger.SENSOR_NAME, new WifiReading(), null,d1PreDuration,d2PreDuration);
+        Collection<List<WifiReading>> wifiListsPreDuration = mapPreDuration.values();
+        
+        Set<String> nonDublicatMacAddressesWithinPreDurationSet = new TreeSet<String>();
+        
+        for(List<WifiReading> wifiListPreDuration : wifiListsPreDuration)
+        {
+        	for(WifiReading wifiReadingPreDuration:wifiListPreDuration)
+        	{
+        		nonDublicatMacAddressesWithinPreDurationSet.add(wifiReadingPreDuration.getBSSID());
+        	}
+        }
+        
+       
+        
+		for(String mac:nonDublicatMacAddressesWithinDurationSet)
+		{
+			
+				if (!nonDublicatMacAddressesWithinPreDurationSet.contains(mac))
+					result+=0.1;
+			
+		}
+		
+		for(String mac2:nonDublicatMacAddressesWithinPreDurationSet)
+		{
+			
+				if (!nonDublicatMacAddressesWithinDurationSet.contains(mac2))
+					result+=0.1;
+			
+		}
+        
+        
+		/*List<WifiReading> previousList = null; 
 		for (List<WifiReading> list : wifiLists) {
+			
 			if (previousList == null) {
 				previousList = list;
 			} else {
@@ -396,9 +454,9 @@ public class DeviceStatus {
 					}
 				}
 			}
-		}
+		}*/
 		
-		return result;
+		return result/10.0;
 	}
 	
 	public double checkIfNetworkChanging(int duration){
