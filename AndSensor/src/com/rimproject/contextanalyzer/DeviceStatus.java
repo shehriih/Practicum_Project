@@ -43,7 +43,7 @@ import com.rimproject.main.AndSensor;
 
 public class DeviceStatus {
 	
-	static int batteryCharging = -1;
+	static int batteryCharging = 0;
 	
 	static HashMap<String,ArrayList<String>> definedWifiLocations = new HashMap<String,ArrayList<String>>();
 	
@@ -124,7 +124,7 @@ public class DeviceStatus {
 	
 	public boolean isStationary(int duration){
 		boolean result = false;
-		double accelerometerActivityLevel = checkAccelerometerActivityLevel(duration);
+		double accelerometerActivityLevel = 9.1;//checkAccelerometerActivityLevel(duration);
 		if((accelerometerActivityLevel > SensorConstants.MIN_ACCELEROMETER_STATIONARY_LEVEL 
 		  && accelerometerActivityLevel < SensorConstants.MAX_ACCELEROMETER_STATIONARY_LEVEL)  
 		  && isLocationChanged(duration)
@@ -163,7 +163,7 @@ public class DeviceStatus {
 			
 			AndSensor.getContext().registerReceiver(broadCastReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
 			
-			if(batteryCharging == -1){
+			if(batteryCharging == 0){
 				try {
 					Thread.sleep(10);
 				} catch (InterruptedException e) {

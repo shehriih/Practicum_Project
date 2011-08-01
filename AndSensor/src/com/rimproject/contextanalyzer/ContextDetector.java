@@ -97,7 +97,14 @@ public class ContextDetector {
 			deviceUseScore = 1.0;
 		}
 		double deviceUseFactor = deviceUseWeighting * deviceUseScore;
-
+		
+		System.out.println("!!!!!!!" 
+				+ "time: [" + timeFactor + "], "  
+				+ "light: [" + lightFactor + "], "
+				+ "charging: [" + deviceIsChargingFactor + "], "
+				+ "stationary: [" + stationaryFactor + "], "
+				+ "in-use: [" + deviceUseFactor + "], "
+				);
 		return timeFactor + lightFactor + deviceIsChargingFactor + stationaryFactor + deviceUseFactor;
 	}
 	
