@@ -127,7 +127,7 @@ public class DeviceStatus {
 		double accelerometerActivityLevel = 9.1;//checkAccelerometerActivityLevel(duration);
 		if((accelerometerActivityLevel > SensorConstants.MIN_ACCELEROMETER_STATIONARY_LEVEL 
 		  && accelerometerActivityLevel < SensorConstants.MAX_ACCELEROMETER_STATIONARY_LEVEL)  
-		  && isLocationChanged(duration)
+		  && !isLocationChanged(duration)
 		  ){
 			result = true;
 		}

@@ -139,18 +139,19 @@ public class MainView extends Activity implements OnClickListener {
     		
     		Set<Date> es = map.keySet();
     		TreeSet<Date> ts = new TreeSet<Date>(es);
-    		
+    		String lastReading="";
     		for (Date key : ts) {
     			outputString += "-------------" + key.toString() + "-------------\n";
 				for (ContextReading cr: map.get(key)) {
 					 String s = String.format
 					 ("%.2f probability of %s [%s]\n", cr.getProbability(), cr.getContextName(), cr.getOptionalTags());
 					outputString += s;
+					lastReading = BasicLogReading.getStringFormattedDateTime(key)+"--"+cr.getProbability()+"--"+ cr.getContextName();
 				}
 				outputString += "--------------------------------------------------------------------\n\n";
 			}
 			
-    		outputView.setText(outputString);
+    		outputView.setText(lastReading);
     		
 			//DeviceStatus ds = new DeviceStatus();
 			//outputView.setText(ds.checkIfWIFIChanging(60)+"");

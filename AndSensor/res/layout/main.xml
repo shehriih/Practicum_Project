@@ -4,16 +4,12 @@
 	android:orientation="vertical">
 	<Button android:text="Button" android:id="@+id/toggleLogging"
 		android:layout_width="fill_parent" android:layout_height="wrap_content"></Button>
-	<Button android:text="Button" android:id="@+id/refresh"
-		android:layout_width="fill_parent" android:layout_height="wrap_content"></Button>
-	<ScrollView android:id="@+id/ScrollView01"
+	<Button android:text="Button" android:layout_height="wrap_content" android:layout_width="fill_parent" android:id="@+id/refresh"></Button>
+	<!--  <ScrollView android:id="@+id/ScrollView01"
 		android:layout_width="fill_parent"
-		android:layout_height="fill_parent">
-	<TextView  
- 		android:id="@+id/output"
-    	android:layout_width="fill_parent" 
-    	android:layout_height="wrap_content" 
-    	android:textSize="22px"
-    	android:text="@string/hello"/>
-    </ScrollView>
+		android:layout_height="fill_parent">-->
+	<TextView android:id="@+id/output" android:layout_height="fill_parent" android:text="@string/hello" android:layout_width="fill_parent" android:textSize="30px"></TextView>
+    	
+  <!--    </ScrollView>-->
+	
 </LinearLayout>
