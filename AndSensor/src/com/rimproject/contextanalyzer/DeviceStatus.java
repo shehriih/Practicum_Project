@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -14,6 +15,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -283,9 +285,12 @@ public class DeviceStatus {
 		boolean result = false;
 		ConnectivityManager connectivity = (ConnectivityManager) AndSensor.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo networkInfo = connectivity.getActiveNetworkInfo();
-		if(networkInfo.isAvailable()){
-			result = true;
+		if(null != networkInfo){
+			if(networkInfo.isAvailable()){
+				result = true;
+			}
 		}
+		
 		return result;				
 	}
 	
@@ -466,36 +471,47 @@ public class DeviceStatus {
 	}
 	
 	
-	public String getLocation(HashMap<Date,List<LocationGPSReading>> mapG){
+	public String[] getLocation(){
 		String[] location = new String[3];
 		String street, city, state;
-		String businessName = "";
-		
-        Collection<List<LocationGPSReading>> locationLists = mapG.values();
+		String[] businessName = new String[2];
+		try{
+			
+			FileLoggingIO<LocationGPSReading> fio = new FileLoggingIO<LocationGPSReading>();
+	        HashMap<Date,List<LocationGPSReading>> mapG = fio.readFromTXTLogFile(LocationGPSLogger.SENSOR_NAME, new LocationGPSReading(), null);
+	        
+	        Collection<List<LocationGPSReading>> locationLists = mapG.values();
+	        
+	        Iterator<List<LocationGPSReading>> locationListsIterator = locationLists.iterator();
+	        List<LocationGPSReading> locationGPSReadingList = locationListsIterator.next();
+	        Iterator<LocationGPSReading> locationGPSReadingListIterator = locationGPSReadingList.iterator();
+	        LocationGPSReading locationGPSReading = locationGPSReadingListIterator.next();
 
-		
-        Iterator<List<LocationGPSReading>> locationListsIterator = locationLists.iterator();
-        List<LocationGPSReading> locationGPSReadingList = locationListsIterator.next();
-        Iterator<LocationGPSReading> locationGPSReadingListIterator = locationGPSReadingList.iterator();
-        LocationGPSReading locationGPSReading = locationGPSReadingListIterator.next();
-
-        double latitude = (null != locationGPSReading)?locationGPSReading.getLatitude():0.0;
-        double longitude = (null != locationGPSReading)?locationGPSReading.getLongitude():0.0;
-        Log.d("GPS LATITUDE", "Latitude :"+latitude);
-        Log.d("GPS LONGITUDE", "longitude : "+ longitude);
-		if(longitude != 0.0 && latitude != 0.0){
-			location = translateCoordinatesToAddress(latitude,longitude);
-			street = location[0];
-			city = location[1];
-			state = location[2];
-			businessName = fetchBusinessName(street,city,state);
-		}
-		else{
-			businessName = "Location Unknown";
+	        double latitude = (null != locationGPSReading)?locationGPSReading.getLatitude():0.0;
+	        double longitude = (null != locationGPSReading)?locationGPSReading.getLongitude():0.0;
+	        SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy hh:m:s");
+	        businessName[0] = dateFormat.format(locationGPSReading.getLocationRecordingTime());
+			if(longitude != 0.0 && latitude != 0.0){
+				location = translateCoordinatesToAddress(latitude,longitude);
+				street = location[0];
+				city = location[1];
+				state = location[2];
+				String fetchBusinessName = fetchBusinessName(street,city,state);
+				if(null == fetchBusinessName){
+					businessName[1] = "Location Unknown";
+				}
+				else{
+					businessName[1] = fetchBusinessName;
+				}
+				
+			}
+			Log.d("BUSINESS NAME", businessName[1]);
+			
+		}catch(NoSuchElementException e){
+			businessName = null;
 		}
 		
 		return businessName;
-		
 	}
 	
 	public String[] translateCoordinatesToAddress(double latitude, double longitude){
@@ -521,12 +537,15 @@ public class DeviceStatus {
 		street = street.replace(" ", "%20");
 		city = city.replace(" ", "%20");
 		String constructUrl = "http://api.whitepages.com/reverse_address/1.0/?street="+street+";city="+city+";state="+state+";api_key=4d2234c06b2c4c279a67accd0324d977";
+//		String constructUrl = "http://api.whitepages.com/reverse_address/1.0/?street=1050%20Benton%20St;city=Santa%20Clara;state=California;api_key=4d2234c06b2c4c279a67accd0324d977";
+		Log.d("URL", constructUrl);
 		try {
 			URL url = new URL(constructUrl);
 			HttpURLConnection httpUrlConnection = (HttpURLConnection)url.openConnection();
 			httpUrlConnection.connect();
 			InputStreamReader inputStreamReader = new InputStreamReader((InputStream) httpUrlConnection.getContent());
 			BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+			if(bufferedReader != null){
 			String content;
 			do{
 				//<wp:businessname>Starlight High School</wp:businessname>
@@ -535,22 +554,34 @@ public class DeviceStatus {
 					businessName = content.toString();
 					break;
 				}
+				else{
+					break;
+				}
+				
 				//System.out.println(content);
 			}while(null != content);
-			businessName = businessName.replace("<wp:businessname>", "");
-			businessName = businessName.replace("</wp:businessname>", "");
-			businessName = businessName.trim();
-			Log.d("BUSINESS NAME", "Business Name:"+businessName);
-			
+				if(null != businessName){
+					businessName = businessName.replace("<wp:businessname>", "");
+					businessName = businessName.replace("</wp:businessname>", "");
+					businessName = businessName.trim();
+					Log.d("BUSINESS NAME", "Business Name:"+businessName);
+				}
+				else{
+					Log.d("BUSINESS NAME", "NULL");
+				}
+				
+			}
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
  catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		return businessName;
 	}
-	
+		
 }

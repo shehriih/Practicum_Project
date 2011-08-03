@@ -3,6 +3,7 @@ package com.rimproject.contextanalyzer;
 import java.util.Calendar;
 
 import android.test.IsolatedContext;
+import android.util.Log;
 
 
 
@@ -80,7 +81,7 @@ public class ContextDetector {
 		//Change it to boolean later
 		double deviceIsChargingScore = deviceStatus.isDeviceCharging() != 0 ? 1.0 : 0.0;
 		double deviceIsChargingFactor = deviceIsChargingWeighting * deviceIsChargingScore;
-
+		
 
 		final double stationaryWeighting = 0.25;
 		double stationaryScore = deviceStatus.isStationary(durationToConsider) ? 1.0 : 0.0;
