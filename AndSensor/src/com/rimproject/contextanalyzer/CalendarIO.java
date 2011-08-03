@@ -1,6 +1,7 @@
 package com.rimproject.contextanalyzer;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -14,6 +15,25 @@ import com.rimproject.main.AndSensor;
 public class CalendarIO
 {
 	
+	 /**
+	  * get all current events information that are within [one hour before now , one hour after after] 
+	  * @return
+	  */
+	 public List<EventDetail>  getCurrentEventList()
+	  {
+	    	
+			Calendar cal = Calendar.getInstance();
+			cal.add(Calendar.HOUR, -1);
+			Date d1 = cal.getTime();
+			cal = Calendar.getInstance();
+			cal.add(Calendar.HOUR, 1);
+		    Date d2 = cal.getTime();
+		    
+	    	return getEventList(d1, d2);
+	    	
+	    }
+	 
+	 
     public  List<EventDetail> getEventList(Date d1, Date d2)
     {
     	
