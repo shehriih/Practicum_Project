@@ -1,17 +1,13 @@
 package com.rimproject.logreader;
 
-import java.io.Serializable;
+
 import java.util.Date;
 
 import com.rimproject.logger.BasicLogger;
 
-public class LightReading extends BasicLogReading implements Serializable, Comparable<LightReading>
+public class LightReading extends BasicLogReading implements Comparable<LightReading>
 {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -6246900206720400255L;
 	private float lightValue;
 	
 	

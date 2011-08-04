@@ -1,6 +1,6 @@
 package com.rimproject.logreader;
 
-import java.io.Serializable;
+
 import java.util.Date;
 
 import com.rimproject.logger.BasicLogger;
@@ -9,13 +9,10 @@ import com.rimproject.logger.BasicLogger;
  * Class to hold any accelerometer reading, it should be used when writing to the file
  * and when parsing the file
  */
-public class AccelerometerReading extends BasicLogReading implements Serializable {
+public class AccelerometerReading extends BasicLogReading{
 	
 
-		/**
-	 * 
-	 */
-	private static final long serialVersionUID = 4378294751034466809L;
+	
 		private float x,y,z;
 
 		public AccelerometerReading(Date dateTimeStamp, float x, float y, float z)
@@ -53,11 +50,14 @@ public class AccelerometerReading extends BasicLogReading implements Serializabl
 			this.z = z;
 		}
 		
-		// method to find the Acceleration vector reading
+		/*
+		 *  method to find the Acceleration vector reading
+		 */
 		public double getACCVector()
 		{
 			return Math.sqrt(getX()*getX() + getY()*getY() + getZ()*getZ() );
 		}
+		
 		
 		
 		public AccelerometerReading parseObjFromString (String inputFromLogFile)

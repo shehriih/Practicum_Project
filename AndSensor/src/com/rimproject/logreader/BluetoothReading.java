@@ -1,19 +1,13 @@
 package com.rimproject.logreader;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-
-import android.bluetooth.BluetoothDevice;
-
 import com.rimproject.logger.BasicLogger;
 
-public class BluetoothReading extends BasicLogReading implements Serializable{
+public class BluetoothReading extends BasicLogReading{
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 5958605740599140570L;
+	
 	String name,address;
 	int type;
 

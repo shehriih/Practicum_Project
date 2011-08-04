@@ -1,21 +1,13 @@
 package com.rimproject.logreader;
 
-import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
 
-import android.net.wifi.ScanResult;
+import java.util.Date;
+
 
 import com.rimproject.logger.BasicLogger;
 
-public class WifiReading extends BasicLogReading implements Serializable
+public class WifiReading extends BasicLogReading
 {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -7240837943675023465L;
-	
 	
 	private String SSID,BSSID;
 

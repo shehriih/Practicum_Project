@@ -1,17 +1,12 @@
 package com.rimproject.logreader;
 
-import java.io.Serializable;
 import java.util.Date;
-
 import com.rimproject.logger.BasicLogger;
 
-public class ContextReading extends BasicLogReading implements Serializable 
+public class ContextReading extends BasicLogReading 
 {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -1412251076778561174L;
+	
 	private String contextName;
 	private double probability;
 	private String optionalTags;

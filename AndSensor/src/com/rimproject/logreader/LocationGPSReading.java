@@ -1,17 +1,14 @@
 package com.rimproject.logreader;
 
-import java.io.Serializable;
+
 import java.util.Date;
 
 import com.rimproject.logger.BasicLogger;
 
-public class LocationGPSReading extends BasicLogReading implements Serializable 
+public class LocationGPSReading extends BasicLogReading
 {
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -717519922945736631L;
+	
 	private Date locationRecordingTime;
 	private double latitude,longitude, altitude;
 	private float accuracy;
