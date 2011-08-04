@@ -58,7 +58,9 @@ public class DeviceStatus {
 		definedWifiLocations.put("HOME", wifiMACAddresses);
 	}
 	
-	
+	/* Checks whether the device is within the home wifi range
+	 * @duration: Time in seconds for which the sensor reading will be observed
+	 */
 	public boolean isWithinHomeWifiRange(int duration)
 	{
 		
@@ -85,6 +87,10 @@ public class DeviceStatus {
 		return false;
 	}
 	
+	/* Checks if the device is idle
+	 * @duration: The time in seconds for which each sensor reading will be observed
+	 * 
+	 */
 	public boolean isIdle(int duration){
 		boolean result = false;
 		if(!isDeviceInUse(duration) && isStationary(duration)){
@@ -93,6 +99,11 @@ public class DeviceStatus {
 		return result;
 	}
 	
+	/*Checks if there's any active phone call.
+	 * @duration : The time in seconds for which TelephonyManager reading will be observed
+	 * 
+	 * 
+	 */
 	public boolean isActive(int duration){
 		boolean result = false;
 		TelephonyManager telephonyManager = (TelephonyManager) AndSensor.getContext().getSystemService(Context.TELEPHONY_SERVICE);
@@ -105,6 +116,11 @@ public class DeviceStatus {
 		return result;
 	}
 	
+	/*Checks if any music is being played on the device.
+	 * @duration : Time in seconds for which the AudioManager readings will be observed
+	 * 
+	 */
+	
 	public boolean isPassive(int duration){
 		boolean result = false;
 		AudioManager audioManager = (AudioManager) AndSensor.getContext().getSystemService(Context.AUDIO_SERVICE);
@@ -114,6 +130,12 @@ public class DeviceStatus {
 		return result;
 	}
 	
+	/*Checks if the device is in use
+	 * This function calls isActive and isPassive and returns a boolean
+	 * based on the readings of each function.
+	 * @duration : Time in seconds to be passed for isActive and isPassive
+	 * 
+	 */
 	public boolean isDeviceInUse(int duration){
 		boolean result = false;
 		if(isActive(duration) || isPassive(duration)) {
@@ -122,6 +144,9 @@ public class DeviceStatus {
 		return result;
 	}
 	
+	/* Checks if the device is stationary by observe accelerometer readings
+	 * @duration : Time in seconds for which accelerometer readings will be observed
+	 */
 	public boolean isStationary(int duration){
 		boolean result = false;
 		double accelerometerActivityLevel = checkAccelerometerActivityLevel(duration);
@@ -135,7 +160,11 @@ public class DeviceStatus {
 	}
 	
 	
-	
+	/* Checks if the user location is changed.  
+	 * Observes GPS, WIFI, Bluetooth and Network triangulation information
+	 * @duration : Time in seconds for which the required sensor reading will be observed
+	 * 
+	 */
 	public boolean isLocationChanged(int duration){
 		boolean result = false;
 		if(isGPSAvailable()){
@@ -157,11 +186,13 @@ public class DeviceStatus {
 		return result;
 	}
 	
-	
-		public int isDeviceCharging(){
-			
-			
-			AndSensor.getContext().registerReceiver(broadCastReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+		
+	/* Checks if the device is charging
+	 * 
+	 */
+	public int isDeviceCharging(){
+
+		AndSensor.getContext().registerReceiver(broadCastReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
 			
 			if(batteryCharging == 0){
 				try {
@@ -190,6 +221,12 @@ public class DeviceStatus {
 			}
 
 		};
+		
+		
+	/*Checks the light level in the surrounding environment
+	 * @duration : Time in seconds for which the light sensor readings will be observed
+	 * 	
+	 */
 	public double checkLightLevel(int duration){
 		double result = -1.0;
 		
@@ -243,6 +280,10 @@ public class DeviceStatus {
 		return result;
 	}
 	
+	/*Checks the accelerometer activity level
+	 * @duration : Time in seconds to consider for the accelerometer readings will be observed
+	 * 
+	 */
 	public double checkAccelerometerActivityLevel(int duration){
 		double result = 0;
 		
@@ -270,6 +311,9 @@ public class DeviceStatus {
 		return result;
 	}
 	
+	/* Checks if GPS is available
+	 * 
+	 */
 	public boolean isGPSAvailable(){
 		boolean result = false;
 		LocationManager locationManager = (LocationManager) AndSensor.getContext().getSystemService(Context.LOCATION_SERVICE); 
@@ -279,6 +323,9 @@ public class DeviceStatus {
 		return result;
 	}
 	
+	/*Checks if network triangulation is available
+	 * 
+	 */
 	public boolean isNetworkAvailable(){
 		boolean result = false;
 		ConnectivityManager connectivity = (ConnectivityManager) AndSensor.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -289,6 +336,9 @@ public class DeviceStatus {
 		return result;				
 	}
 	
+	/*Checks if WiFi on the device is turned on and available
+	 * 
+	 */
 	public boolean isWIFIAvailable(){
 		boolean result = false;
 		ConnectivityManager connectivity = (ConnectivityManager) AndSensor.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -299,6 +349,9 @@ public class DeviceStatus {
 		return result;
 	}
 	
+	/*Checks if Bluetooth on the device is turned on and available
+	 * 
+	 */
 	public boolean isBluetoothAvailable(){
 		boolean result = false;
 		BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -313,6 +366,9 @@ public class DeviceStatus {
 		return result;
 	}
 	
+	/* Checks if GPS information is changing
+	 * @duration : Time in seconds for which GPS readings will be observed
+	 */
 	public double checkIfGPSChanging(int duration){
 		double maxDistance = 0.0;
 		
@@ -354,6 +410,10 @@ public class DeviceStatus {
 		return maxDistance;
 	}
 	
+	/* Checks if WiFi information is changing
+	 * @duration : Time in seconds for which WiFi readings will be observed
+	 * 
+	 */
 	public double checkIfWIFIChanging(int duration){
 		//increases the result by 0.1 per change 
 		//(number of wifi networks that used to be here that are now gone, or new ones that have appeared)
@@ -428,44 +488,19 @@ public class DeviceStatus {
 		}
         
         
-		/*List<WifiReading> previousList = null; 
-		for (List<WifiReading> list : wifiLists) {
-			
-			if (previousList == null) {
-				previousList = list;
-			} else {
-				for (WifiReading wifiReading : previousList) {
-					if (!previousList.contains(wifiReading)) {
-						if (result == 1.0) {
-							return result;
-						} else {
-							result = result + 0.1;
-						}
-					}
-				}
-			}
-			
-			for (WifiReading wifiReading : list) {
-				if (!previousList.contains(wifiReading)) {
-					if (result == 1.0) {
-						return result;
-					} else {
-						result = result + 0.1;
-					}
-				}
-			}
-		}*/
+		
 		
 		return result/10.0;
 	}
 	
-	public double checkIfNetworkChanging(int duration){
-		double result = 0.0;
-		
-		return result;
-	}
 	
-	
+	/* Translates geo-coordinates to physical address 
+	 * and then uses the Whitepages API to reverse code the 
+	 * translated address to a business name
+	 * 
+	 * @mapG : reads the LocationGPSReading file and returns GPS data as hashmap
+	 * 
+	 */
 	public String getLocation(HashMap<Date,List<LocationGPSReading>> mapG){
 		String[] location = new String[3];
 		String street, city, state;
@@ -498,6 +533,11 @@ public class DeviceStatus {
 		
 	}
 	
+	/* Uses geocoder to translate geo-coordinates to a physical addresss
+	 * @latitude : latitude of the location
+	 * @longitude : longitude of the location
+	 * 
+	 */
 	public String[] translateCoordinatesToAddress(double latitude, double longitude){
 		String[] location = new String[3];
 		try{
@@ -516,6 +556,12 @@ public class DeviceStatus {
 		return location;
 	}
 	
+	/* Converts physical address to business name
+	 * @street : street address obtained by a call translateCoordinatesToAddress function
+	 * @city : city obtained by a call translateCoordinatesToAddress function
+	 * @state : state obtained by a call translateCoordinatesToAddress function
+	 * 
+	 */
 	public String fetchBusinessName(String street, String city, String state){
 		String businessName = null;
 		street = street.replace(" ", "%20");

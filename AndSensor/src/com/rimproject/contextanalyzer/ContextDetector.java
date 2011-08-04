@@ -2,11 +2,14 @@ package com.rimproject.contextanalyzer;
 
 import java.util.Calendar;
 
-import android.test.IsolatedContext;
-
 
 
 public class ContextDetector {
+	
+	/*Computes the probability of sleep based on various sensor readings
+	 * @durationToConsider : The time in seconds for which each sensor reading will be observed
+	 * 
+	 */
 	public static double probabilityOfSleeping(int durationToConsider) {
 		DeviceStatus deviceStatus = new DeviceStatus();
 
@@ -77,7 +80,7 @@ public class ContextDetector {
 
 
 		final double deviceIsChargingWeighting = 0.1;
-		//Change it to boolean later
+		
 		double deviceIsChargingScore = deviceStatus.isDeviceCharging() != 0 ? 1.0 : 0.0;
 		double deviceIsChargingFactor = deviceIsChargingWeighting * deviceIsChargingScore;
 

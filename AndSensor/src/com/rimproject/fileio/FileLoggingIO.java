@@ -1,23 +1,14 @@
 package com.rimproject.fileio;
 
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -28,7 +19,6 @@ import java.util.List;
 import android.os.Environment;
 import android.util.Log;
 
-import com.rimproject.logreader.AccelerometerReading;
 import com.rimproject.logreader.BasicLogReading;
 
 public class FileLoggingIO<T extends BasicLogReading>
@@ -37,7 +27,6 @@ public class FileLoggingIO<T extends BasicLogReading>
 	 											 // it would be in the sdcard folder
 	
 	private static final String TXT=".txt";       // readable file end with .txt
-	private static final String SERIALIZED=".ser";// binary file end with the convension for serialzed files .ser
 	/*
 	 * it will form the file name based on contentType_date
 	 * example light_23-06-2011
@@ -134,100 +123,7 @@ public class FileLoggingIO<T extends BasicLogReading>
 
 		
 
-		/*
-		 * Write to a binary SER file for the analysis objective of the framework.
-	     * @contentType : the name of the sensor or activity that will be used to form the file name
-		 * @reading : the object to be serialized
-		 */
-		/* public void writeToSERLogFile(String contentType , BasicLogReading reading )
-		 {
-			   File sdCardDir = Environment.getExternalStorageDirectory();
-	           File dir = new File (sdCardDir.getAbsolutePath() + "/"+DIR);
-	           dir.mkdirs();
-	           File file = new File(dir,getFileName(contentType,null)+SERIALIZED);
-		       boolean exists = file.exists();
-		       
-		    try
-		    	{
-		    	  OutputStream os = new FileOutputStream( file,true );
-		          OutputStream buffer = new BufferedOutputStream( os );
-		      
-		         System.out.println(exists);
-		         ObjectOutputStream output;
-		    
-		         if(!exists)
-		    	    output = new ObjectOutputStream( buffer );
-		        else
-		    	    output = new AppendableObjectOutputStream( buffer );
-		     
-		        try
-		       {
-		         output.writeObject(reading);
-		         
-		       }
-		       finally
-		       {
-		        output.close();
-		       }
-		    }  
-		    catch(IOException ex){
-		     ex.printStackTrace();
-		    }
-
-		 }*/
-		 
-		 /*
-		  * Binary read , not working currently !
-		  */
-		/* public void readFromSERLogFile(String contentType ,BasicLogReading reading, Date date)
-		 {
-			 
-			   File sdCardDir = Environment.getExternalStorageDirectory();
-	           File dir = new File (sdCardDir.getAbsolutePath() + "/"+DIR);
-	           dir.mkdirs();
-	           File file = new File(dir,getFileName(contentType,date)+SERIALIZED);
-		       boolean exists = file.exists();
-		       System.out.println("can read ? "+file.canRead());
-		      if(exists)
-		      {
-					try{
-					      //use buffering
-					      InputStream is = new FileInputStream(file);
-					      InputStream buffer = new BufferedInputStream( is );
-					      ObjectInput input = new ObjectInputStream ( buffer );
-					      try{
-					        //deserialize the List
-					    	  while(true)
-					    		    {
-					    		     AccelerometerReading obj = (AccelerometerReading) input.readObject();
-					    	         System.out.println(input.readObject());
-					    		    }
-					    		
-					      }
-					      finally{
-					        input.close();
-					      }
-					    }
-					    
-						catch(ClassCastException ex)
-						{
-							ex.printStackTrace();
-						}
-					    catch(ClassNotFoundException ex){
-					      ex.printStackTrace();
-					    }
-					    catch(EOFException ex){
-					    	
-					    	System.out.println("done with the file !");
-					    	
-					    }
-					    catch(IOException ex){
-					     ex.printStackTrace();
-					    }
-
-		      }
-		 
-		 }*/
+		
 		 
 		 
 		 /*
@@ -250,10 +146,7 @@ public class FileLoggingIO<T extends BasicLogReading>
 		           File dir = new File (sdCardDir.getAbsolutePath() + "/"+DIR);
 		           dir.mkdirs();
 		           File file = new File(dir,getFileName(contentType,date)+TXT);
-			       boolean exists = file.exists();
-			       
-				   
-				 
+			      
 			       FileInputStream fileIS = new FileInputStream(file);
 				 
 				   BufferedReader buf = new BufferedReader(new InputStreamReader(fileIS));
@@ -265,7 +158,8 @@ public class FileLoggingIO<T extends BasicLogReading>
 				   while((readString = buf.readLine())!= null){
 					   
 					 
-					  T newObj =(T) readingObj.parseObjFromString(readString); 
+					  @SuppressWarnings("unchecked")
+					T newObj =(T) readingObj.parseObjFromString(readString); 
 					  Date timeStamp= newObj.getDateTimeStamp();
 					 
 					  if(timeStamp.equals(dateTimeFrom) || timeStamp.after(dateTimeFrom))
@@ -314,10 +208,7 @@ public class FileLoggingIO<T extends BasicLogReading>
 		           File dir = new File (sdCardDir.getAbsolutePath() + "/"+DIR);
 		           dir.mkdirs();
 		           File file = new File(dir,getFileName(contentType,date)+TXT);
-			       boolean exists = file.exists();
-			       
-				   
-				 
+			     
 			       FileInputStream fileIS = new FileInputStream(file);
 				 
 				   BufferedReader buf = new BufferedReader(new InputStreamReader(fileIS));
@@ -332,7 +223,8 @@ public class FileLoggingIO<T extends BasicLogReading>
 				   }
 				   
 				   String lastLine = readString;
-					  T newObj =(T) readingObj.parseObjFromString(lastLine); 
+					  @SuppressWarnings("unchecked")
+					T newObj =(T) readingObj.parseObjFromString(lastLine); 
 					  Date timeStamp= newObj.getDateTimeStamp();
 					  
 					  if(map.get(timeStamp)==null){
