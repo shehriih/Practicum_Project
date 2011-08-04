@@ -93,41 +93,7 @@ public class FileLoggingIO<T extends BasicLogReading>
 	               }
 	         }
 	    }
-	 	
-	 public void writeToTXTLogFile(String contentType , String[] reading )
-	 {
-	     BufferedWriter bw = null;
-	     String writeToFile = reading[0]+" @ "+reading[1]+ " %&#";
-	         
-	         try
-	         {
-	        	Log.v("Logger",Environment.getExternalStorageState()); 
-	         	File sdCardDir = Environment.getExternalStorageDirectory();
-	         	File dir = new File (sdCardDir.getAbsolutePath() + "/"+DIR);
-	         	dir.mkdirs();
-	            File file = new File(dir,getFileName(contentType,null)+TXT);
-	            
-	         	bw = new BufferedWriter(new FileWriter(file,true));
-	            bw.append(writeToFile);
-	            
-	         }
-	         catch(IOException e)
-	         {
-	         	e.printStackTrace();
-	         }
-	        finally
-	         {
-	         	try
-	         	{
-	         		if (bw !=null)
-	         			bw.close();
-	         	}
-	         	  catch(IOException e)
-	               {
-	               	e.printStackTrace();
-	               }
-	         }
-	    }
+
 	 
 	 /*
 	  * test method that dump string data to a text named "contentType"
@@ -285,18 +251,18 @@ public class FileLoggingIO<T extends BasicLogReading>
 		           dir.mkdirs();
 		           File file = new File(dir,getFileName(contentType,date)+TXT);
 			       boolean exists = file.exists();
-			     
-			       if(exists){
-			    	   Log.d("LOCATION GPS", "FILE EXISTS");
-			    	   FileInputStream fileIS = new FileInputStream(file);
-			    	   
-			    	   BufferedReader buf = new BufferedReader(new InputStreamReader(fileIS));
+			       
+				   
 				 
-			    	   String readString = new String();
+			       FileInputStream fileIS = new FileInputStream(file);
+				 
+				   BufferedReader buf = new BufferedReader(new InputStreamReader(fileIS));
+				 
+				   String readString = new String();
 				 
 				  
 				  
-			    	   while((readString = buf.readLine())!= null){
+				   while((readString = buf.readLine())!= null){
 					   
 					 
 					  T newObj =(T) readingObj.parseObjFromString(readString); 
@@ -322,10 +288,7 @@ public class FileLoggingIO<T extends BasicLogReading>
 					  }
 				 
 				   }
-			       }
-			       else{
-			    	   Log.d("LOCATION GPS", "FILE DOESNT EXIST");
-			       }
+				   
 				} catch (FileNotFoundException e) {
 				 
 				   e.printStackTrace();
