@@ -12,8 +12,7 @@ public class ContextLogger extends BasicLogger
 	
 	public ContextLogger() {
 		super();
-		
-		setDelayBetweenLogging(60*1000);
+		setDelayBetweenLogging(20*1000);
 	}
 	
 	public void startLogging() {
@@ -28,7 +27,7 @@ public class ContextLogger extends BasicLogger
 	protected void performLogging() {
 		super.performLogging();
 		String contextName = "Sleeping";
-		int durationToConsider = 300;
+		int durationToConsider = 120;
 		double probability = ContextDetector.probabilityOfSleeping(durationToConsider);
 		
 		String optionalTags = "None";
@@ -41,58 +40,3 @@ public class ContextLogger extends BasicLogger
 	}
 
 }
-
-
-
-//old stuff
-
-//
-//public class ContextLogger {
-//
-//	BasicTimedDurationLogger basicLogger = new BasicTimedDurationLogger();
-//	String activityDetails;
-//	String activity;
-//	public void logSleeping(){
-//		int counter = 0;
-//		 activity = "Sleeping";
-//		
-//		while(counter <= 60){
-//			activityDetails = Calendar.getInstance().getTime() + ":" + ContextDetector.probabilityOfSleeping(60) + "/n";
-//			//basicLogger.writeToLogFile(activity,activityDetails);	
-//		}
-//		
-//	}
-//	
-//	public void logDriving(){
-//		int counter = 0;
-//		 activity = "Sleeping";
-//		
-//		while(counter <= 60){
-//			activityDetails = Calendar.getInstance().getTime() + ":" + ContextDetector.probabilityOfSleeping() + "/n";
-//			basicLogger.writeToLogFile(activity,activityDetails);	
-//		}
-//		
-//	}
-//	
-//	public void logEating(){
-//		int counter = 0;
-//		 activity = "Sleeping";
-//		
-//		while(counter <= 60){
-//			activityDetails = Calendar.getInstance().getTime() + ":" + ContextDetector.probabilityOfSleeping() + "/n";
-//			basicLogger.writeToLogFile(activity,activityDetails);	
-//		}
-//		
-//	}
-//	
-//	public void logWalking(){
-//		int counter = 0;
-//		 activity = "Sleeping";
-//		
-//		while(counter <= 60){
-//			activityDetails = Calendar.getInstance().getTime() + ":" + ContextDetector.probabilityOfSleeping() + "/n";
-//			basicLogger.writeToLogFile(activity,activityDetails);	
-//		}
-//		
-//	}
-//}

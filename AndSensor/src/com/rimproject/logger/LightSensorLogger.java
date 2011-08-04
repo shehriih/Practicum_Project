@@ -1,7 +1,6 @@
 package com.rimproject.logger;
 
 import java.util.Calendar;
-import java.util.Date;
 
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -22,7 +21,6 @@ public class LightSensorLogger extends BasicTimedDurationLogger
 		this.sensorManager = (SensorManager) AndSensor.getContext().getSystemService(android.content.Context.SENSOR_SERVICE);
 		this.sensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
 		
-		this.setDelayBetweenLogging(60*1000);
 		this.setLoggingDuration(5*1000);
 	}
 	
@@ -38,6 +36,7 @@ public class LightSensorLogger extends BasicTimedDurationLogger
 		this.sensorManager.unregisterListener(this);
 	}
 	
+	//we don't care about accuracy changing for light sensor
 	public void onAccuracyChanged(Sensor sensor, int accuracy)
 	{
 		System.out.println("onAccuracyChanged: " + sensor + ", accuracy: " + accuracy);

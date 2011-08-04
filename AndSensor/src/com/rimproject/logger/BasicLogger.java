@@ -1,10 +1,5 @@
 package com.rimproject.logger;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -12,32 +7,31 @@ import java.util.TimerTask;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
-import android.os.Environment;
-import android.util.Log;
 
 import com.rimproject.fileio.FileLoggingIO;
-import com.rimproject.logreader.BasicLogReading;
 
-/* Example of how this class and its timer's will work:
+/* Example of how this class and its timer will work:
  * 
- * Timer 1 -> 10 seconds has passed 
- * 		Sensor recording start
- * 		Perform work
- * 		sensor recording stop
+ * initiateRepeatedLogging called
+ * 		Timer 1 -> 10 seconds has passed 
+ * 			Sensor recording start
+ * 			Perform work
+ * 			sensor recording stop
  * 
- * Timer 1 -> 10 seconds has passed 
- * 		Sensor recording start
- * 		Perform work
- * 		sensor recording stop
+ * 		Timer 1 -> 10 seconds has passed 
+ * 			Sensor recording start
+ * 			Perform work
+ * 			sensor recording stop
+ * terminateRepeatedLogging called
  * 	etc.
  */
 
 public abstract class BasicLogger extends TimerTask  implements LoggerInterface, SensorEventListener
 {
-	private Timer delayBetweenLoggingTimer; // Timer 1
+	private Timer delayBetweenLoggingTimer; //Timer 1
 	private long delayBetweenLogging;
 	
-	public static final String genericDel=" %&# "; //delimiter to be used between dfferent values like x,y,z in Acc reading
+	public static final String genericDel=" %&# "; //delimiter to be used between different values like x,y,z in Accelerometer reading
     public static final String timeStampDel= " @ "; // delimiter to be used between the timestamp and values
 	protected FileLoggingIO flio = new FileLoggingIO();
 
@@ -55,6 +49,7 @@ public abstract class BasicLogger extends TimerTask  implements LoggerInterface,
 		this.delayBetweenLoggingTimer.scheduleAtFixedRate(this, 0, this.delayBetweenLogging); //0 == triggers immediately
 	}
 	
+	//Note immediate only used in subclass BasicTimedDurationLogger
 	public void terminateRepeatedLogging(boolean immidiate) 
 	{
 		this.cancel();
@@ -103,6 +98,11 @@ public abstract class BasicLogger extends TimerTask  implements LoggerInterface,
 		performLogging();
 	}
 	
+	/*
+	 * Used in when writing data to files, as it simplifies the process of seeing what logger the data
+	 * is coming from
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
 		return this.getClass().getSimpleName();
@@ -111,6 +111,4 @@ public abstract class BasicLogger extends TimerTask  implements LoggerInterface,
 	protected void performLogging() {
 		System.out.println(this+" : "+Calendar.getInstance().getTime()+" @ Perform logging");
 	}
-	
-	
 }

@@ -10,7 +10,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.util.Log;
 
 import com.rimproject.logreader.BluetoothReading;
 import com.rimproject.main.AndSensor;
@@ -26,11 +25,9 @@ public class NearbyBluetoothLogger extends BasicTimedDurationLogger
 	public NearbyBluetoothLogger() 
 	{
 		super();
-		setLoggingDuration(20 * 1000);
-		
 		this.bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-		
 		this.bluetoothReceiver = new BluetoothReceiver(this);
+		setLoggingDuration(20 * 1000);
 	}
 	
 	class BluetoothReceiver extends BroadcastReceiver {
@@ -49,9 +46,6 @@ public class NearbyBluetoothLogger extends BasicTimedDurationLogger
 	            BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
 	            // Add the name and address to an array adapter to show in a ListView
 	            this.logger.bluetoothDevices.add(device);
-	            
-	            // debugging
-	            Log.v("Bluetooth :",device.toString());
 	        }
 	    }
 	}

@@ -1,13 +1,11 @@
 package com.rimproject.logger;
 
 import java.util.Calendar;
-import java.util.Date;
 
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
 
-import com.rimproject.fileio.FileLoggingIO;
 import com.rimproject.logreader.AccelerometerReading;
 import com.rimproject.main.AndSensor;
 
@@ -27,6 +25,7 @@ public class AccelerometerLogger extends BasicTimedDurationLogger
 	
 	public void startLogging() {
 		super.startLogging();
+		//application does not need "game level" accuracy
 		this.sensorManager.registerListener(this, this.sensor, SensorManager.SENSOR_DELAY_NORMAL);
 	}
 	
@@ -48,10 +47,7 @@ public class AccelerometerLogger extends BasicTimedDurationLogger
 		
 		synchronized (this) {
             if (sensor == Sensor.TYPE_ACCELEROMETER) {
-            	//flio.writeToSERLogFile(SENSOR_NAME,new AccelerometerReading(new Date(event.timestamp),values[0], values[1], values[2]));
-            	// for debugging writing the same data to txt file
             	flio.writeToTXTLogFile(SENSOR_NAME,new AccelerometerReading(Calendar.getInstance().getTime(),values[0], values[1], values[2]));
-
             } else {
             	System.out.println(this+" ERROR: Unexpected sensor reading from sensor "+sensor);
             }

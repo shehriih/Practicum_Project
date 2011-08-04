@@ -1,8 +1,12 @@
 package com.rimproject.logger;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
-
+/*
+ * Handles the batch turning on and off of the sensor loggers
+ */
 public class LoggerManager 
 {
   HashMap<String, BasicLogger> listOfSensors;
