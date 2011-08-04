@@ -146,7 +146,7 @@ public class MainView extends Activity implements OnClickListener {
 					 String s = String.format
 					 ("%.2f probability of %s [%s]\n", cr.getProbability(), cr.getContextName(), cr.getOptionalTags());
 					outputString += s;
-					lastReading = BasicLogReading.getStringFormattedDateTime(key)+"--"+cr.getProbability()+"--"+ cr.getContextName();
+					lastReading = BasicLogReading.getStringFormattedDateTime(key)+"\n"+cr.getProbability()+" : "+ cr.getContextName();
 				}
 				outputString += "--------------------------------------------------------------------\n\n";
 			}
