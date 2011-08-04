@@ -17,10 +17,9 @@ public class NearbyWifiLogger extends BasicLogger
 	
 	public NearbyWifiLogger() 
 	{
-		super();
-		setDelayBetweenLogging(60 * 1000);
-		
+		super();		
 		this.wifiManager = (WifiManager) AndSensor.getContext().getSystemService(android.content.Context.WIFI_SERVICE);
+		setDelayBetweenLogging(60 * 1000);
 	}
 	
 	protected void performLogging() {
