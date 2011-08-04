@@ -58,7 +58,6 @@ public class MainView extends Activity implements OnClickListener {
 
     	    FileLoggingIO<ContextReading> fio = new FileLoggingIO<ContextReading>();
             HashMap<Date,List<ContextReading>> map = fio.readFromTXTLogFile(ContextLogger.SENSOR_NAME, new ContextReading(), null,d1,d2);
-    		String outputString = "";
     		
     		
     		Set<Date> es = map.keySet();
@@ -66,16 +65,14 @@ public class MainView extends Activity implements OnClickListener {
     		String lastReading="";
     		for (Date key : ts) {
     			
-				for (ContextReading cr: map.get(key)) {
-
-					lastReading = BasicLogReading.getStringFormattedDateTime(key)+"--"+cr.getProbability()+"--"+ cr.getContextName();
+				for (ContextReading cr: map.get(key))
+				{
+					lastReading = BasicLogReading.getStringFormattedDateTime(key)+"\n"+cr.getProbability()+" : "+ cr.getContextName();
 				}
-				
-			}
 			
     		outputView.setText(lastReading);
 
-			
+    		}
 		} else {
 			isLogging = !isLogging;
 			if(isLogging) {
